@@ -4,6 +4,7 @@ import { Navbar } from "../components/Navbar";
 import { Footer } from "../components/Footer";
 import { PROJECTS } from "../data/projects";
 import { PROJECT_CONTENT } from "../data/projectContent";
+import { CodeFragmentsCanvas } from "../components/CodeFragmentsCanvas";
 
 export const ProjectDetail = () => {
   const { slug } = useParams();
@@ -21,10 +22,11 @@ export const ProjectDetail = () => {
   }
 
   return (
-    <div className="min-h-screen bg-background text-foreground overflow-x-hidden">
+    <div className="min-h-screen bg-background text-foreground overflow-x-hidden relative">
+      <CodeFragmentsCanvas />
       <Navbar />
 
-      <main className="pt-32 pb-24 px-4">
+      <main className="relative z-10 pt-32 pb-24 px-4">
         <div className="container mx-auto max-w-4xl">
 
           {/* Back link */}

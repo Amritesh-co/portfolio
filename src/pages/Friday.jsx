@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Navbar } from "../components/Navbar";
 import { Footer } from "../components/Footer";
 import { FlowDiagram } from "../components/FlowDiagram";
+import { CodeFragmentsCanvas } from "../components/CodeFragmentsCanvas";
 import {
   Network,
   Zap,
@@ -249,10 +250,11 @@ export const Friday = () => {
   }, []);
 
   return (
-    <div className="min-h-screen bg-background text-foreground overflow-x-hidden">
+    <div className="min-h-screen bg-background text-foreground overflow-x-hidden relative">
+      <CodeFragmentsCanvas />
       <Navbar />
 
-      <main className="pt-32 pb-24 px-4 md:px-8">
+      <main className="relative z-10 pt-32 pb-24 px-4 md:px-8">
         <div className="container mx-auto max-w-6xl space-y-16">
 
           {/* Header Section */}
