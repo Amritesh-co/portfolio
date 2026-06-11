@@ -6,7 +6,7 @@ const IMAGES = [
   { src: "/beyond-ide/img2.jpeg",       label: "Rotaract Club of R.V.C.E." },
   { src: "/beyond-ide/travel.jpeg",     label: "Travel" },
   { src: "/beyond-ide/cycling.jpeg",    label: "Cycling" },
-  { src: "/beyond-ide/img5.jpeg",       label: "Trekking" },
+  { src: "/beyond-ide/trekking.jpeg",   label: "Trekking" },
   { src: "/beyond-ide/badminton.jpeg",  label: "Badminton" },
 ];
 
