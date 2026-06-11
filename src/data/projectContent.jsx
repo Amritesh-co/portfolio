@@ -1,3 +1,5 @@
+import { useState, useEffect } from "react";
+import { FlowDiagram } from "../components/FlowDiagram";
 import {
   siHuggingface, siElevenlabs, siMongoose, siUpstash, siCloudinary,
   siGithubactions, siVitest, siChakraui, siGoogleearthengine, siLeaflet,
@@ -36,6 +38,11 @@ const LOCAL_LOGO = {
   GitHub:               "/logos/github.svg",
   "GitHub Actions":     "/logos/github.svg",
   "GitHub Pages":       "/logos/github.svg",
+  Linux:                "/logos/linux.svg",
+  Ubuntu:               "/logos/ubuntu.svg",
+  Tailscale:            "/logos/tailscale.svg",
+  Cloudflare:           "/logos/cloudflare.svg",
+  Nextcloud:            "/logos/nextcloud.svg",
 };
 
 /* simple-icons fallback for techs without a local file */
@@ -566,7 +573,61 @@ export const PROJECT_CONTENT = {
     </div>
   ),
 
-  /* ── 4. Gemma UI ───────────────────────────────────────────── */
+  /* ── 4. Portfolio ─────────────────────────────────────────── */
+  "portfolio": () => (
+    <div className="space-y-10 text-muted-foreground">
+
+      <Section title="Overview">
+        <p className="text-sm leading-relaxed">
+          A dark-themed personal portfolio built entirely with React, Vite, and Tailwind CSS — no
+          backend required. The site is a single-page application with smooth hash-based section
+          scrolling, an animated floating code canvas on the hero, and a fully responsive layout.
+          Project detail pages are data-driven: adding a new project only requires an entry in
+          a central data file. The resume page pulls content from a structured data object and
+          supports one-click PDF export via the browser print API. The contact form is wired to
+          Web3Forms and delivers messages directly to Gmail with zero server-side code.
+        </p>
+      </Section>
+
+      <Section title="Page & Route Map">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 font-mono text-xs">
+          {[
+            { method: "SPA",   path: "/",                  desc: "Home — hero, about, skills, projects, home lab, beyond IDE, contact" },
+            { method: "ROUTE", path: "/projects",           desc: "Full project grid — all cards from central data source" },
+            { method: "ROUTE", path: "/projects/:slug",     desc: "Dynamic detail page — architecture diagrams, tech stack, features" },
+            { method: "ROUTE", path: "/resume",             desc: "Two-column resume with circular photo, print-to-PDF support" },
+            { method: "ROUTE", path: "/friday",             desc: "Home Lab Friday — self-hosted cloud infrastructure showcase" },
+          ].map(({ method, path, desc }) => (
+            <div key={path} className={`rounded-lg border px-3 py-2 ${method === "SPA" ? violet : sky}`}>
+              <span className="font-bold mr-2">{method}</span>
+              <span className="opacity-80">{path}</span>
+              <div className="text-[10px] opacity-50 mt-0.5">{desc}</div>
+            </div>
+          ))}
+        </div>
+      </Section>
+
+      <Section title="Tech Stack">
+        <TechStack items={["React", "Vite", "Tailwind CSS", "TypeScript", "shadcn/ui", "Framer Motion", "GitHub Pages"]} />
+      </Section>
+
+      <Section title="Key Features">
+        <Features items={[
+          "Animated CodeFragmentsCanvas — a canvas element floats 70 syntax-highlighted code tokens upward on the hero background with randomised speed, size, and opacity.",
+          "Data-driven project system: projects.js + projectContent.jsx decouple card data from detail content — one entry added in both files produces a full routed detail page.",
+          "Resume page uses a scoped CSS injection to override the global text-align: center cascade without touching global styles, ensuring correct left-alignment in the two-column layout.",
+          "Print-to-PDF on the resume page via window.print() with @media print rules: nav, footer, and action bar hidden; colours inverted to white-on-black for clean paper output.",
+          "Web3Forms contact form — no backend. Submissions POST to the Web3Forms API with the access key injected from an env variable (VITE_WEB3FORMS_KEY), landing in Gmail.",
+          "Home Lab (Friday) page renders live infrastructure status widgets, animated network topology, and Cloudflare tunnel diagrams for the self-hosted cloud project.",
+          "Navbar supports both hash-scroll links (home sections) and React Router routes (sub-pages) from a single nav config array, with active-state detection for both.",
+          "shadcn/ui toast system surfaces form feedback — success/error toasts appear top-right with the same dark theme tokens as the rest of the UI.",
+        ]} />
+      </Section>
+
+    </div>
+  ),
+
+  /* ── 5. Gemma UI ───────────────────────────────────────────── */
   "gemma-ui": () => (
     <div className="space-y-10 text-muted-foreground">
 
@@ -1032,4 +1093,174 @@ export const PROJECT_CONTENT = {
     </div>
   ),
 
+  "friday": () => <FridayContent />,
+};
+
+const FridayContent = () => {
+  const [flowDirection, setFlowDirection] = useState("TB");
+
+  useEffect(() => {
+    const checkDirection = () => {
+      setFlowDirection(window.innerWidth >= 768 ? "LR" : "TB");
+    };
+    checkDirection();
+    window.addEventListener("resize", checkDirection);
+    return () => window.removeEventListener("resize", checkDirection);
+  }, []);
+
+  const FLOWCHART_NODES = [
+    {
+      id: "1",
+      type: "flowNode",
+      data: {
+        label: "Public Request",
+        sub: "amriteshsahu.me · HTTPS",
+        c: "border-sky-500/50 bg-sky-950/40 text-sky-200"
+      }
+    },
+    {
+      id: "2",
+      type: "flowNode",
+      data: {
+        label: "Cloudflare Edge",
+        sub: "SSL termination · DDoS · DNS",
+        c: "border-orange-400/50 bg-orange-950/40 text-orange-200"
+      }
+    },
+    {
+      id: "3",
+      type: "flowNode",
+      data: {
+        label: "cloudflared Tunnel",
+        sub: "0 open inbound ports",
+        c: "border-primary/60 bg-indigo-950/50 text-primary shadow-[0_0_18px_rgba(139,92,246,0.25)]"
+      }
+    },
+    {
+      id: "4",
+      type: "flowNode",
+      data: {
+        label: "Ubuntu Server",
+        sub: "ubuntu-core-01 · LAN only",
+        c: "border-violet-400/50 bg-violet-950/40 text-violet-200"
+      }
+    },
+    {
+      id: "5",
+      type: "flowNode",
+      data: {
+        label: "Docker Bridge",
+        sub: "container network · NAT",
+        c: "border-blue-400/50 bg-blue-950/40 text-blue-200"
+      }
+    },
+    {
+      id: "6",
+      type: "flowNode",
+      data: {
+        label: "Nextcloud",
+        sub: "cloud storage · :8080",
+        c: "border-emerald-400/50 bg-emerald-950/40 text-emerald-200"
+      }
+    },
+    {
+      id: "7",
+      type: "flowNode",
+      data: {
+        label: "OpenClaw",
+        sub: "AI agent workspace · :3000",
+        c: "border-amber-400/50 bg-amber-950/40 text-amber-200"
+      }
+    }
+  ];
+
+  const FLOWCHART_EDGES = [
+    { id: "e1-2", source: "1", target: "2", label: "HTTPS" },
+    { id: "e2-3", source: "2", target: "3", label: "Zero Trust" },
+    { id: "e3-4", source: "3", target: "4", label: "outbound only" },
+    { id: "e4-5", source: "4", target: "5", label: "bridge net" },
+    { id: "e5-6", source: "5", target: "6", label: ":8080" },
+    { id: "e5-7", source: "5", target: "7", label: ":3000" }
+  ];
+
+  return (
+    <div className="space-y-10 text-muted-foreground">
+      <Section title="Overview">
+        <p className="text-sm leading-relaxed">
+          Friday is a fully self-hosted private cloud running 24/7 on a bare-metal Ubuntu Server box.
+          It replicates enterprise cloud infrastructure — compute, storage, networking, and AI inference —
+          entirely on-prem, with zero inbound router ports exposed.
+          All external access flows through outbound-only encrypted tunnels, making it as secure as a managed cloud
+          without any subscription cost.
+        </p>
+      </Section>
+
+      <Section title="System Architecture Flowchart">
+        <div className="rounded-xl border border-border/40 overflow-hidden w-full bg-[#1e1e2e]/50 p-4">
+          <FlowDiagram
+            nodes={FLOWCHART_NODES}
+            edges={FLOWCHART_EDGES}
+            direction={flowDirection}
+          />
+        </div>
+      </Section>
+
+      <Section title="Development & Configuration Phases">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs">
+          {[
+            {
+              title: "Phase 1: Linux Admin",
+              desc: "Ubuntu Server installation, user configuration, SSH key pairing, systemctl daemon configuration, and journalctl logging audit setup.",
+              color: violet
+            },
+            {
+              title: "Phase 2: Network Design",
+              desc: "Static IP routing configuration using Netplan yaml parameters. Priority metric definition to failover ethernet connection automatically to wireless.",
+              color: violet
+            },
+            {
+              title: "Phase 3: Mesh VPN",
+              desc: "Tailscale WireGuard overlay tunnel implementation. Set up direct peer-to-peer communication path traversal across external routers.",
+              color: violet
+            },
+            {
+              title: "Phase 4 & 5: DNS Records",
+              desc: "Configuration of nameservers and routing edge logic in Cloudflare DNS for secure domain routing.",
+              color: violet
+            },
+            {
+              title: "Phase 6: Reverse Tunnels",
+              desc: "Deployment of cloudflared connector service running outbound TCP streams, closing all incoming network vulnerabilities.",
+              color: violet
+            },
+            {
+              title: "Phase 7: Virtualization",
+              desc: "Docker container runtime stack implementation with independent virtual bridge subnets and volumes.",
+              color: violet
+            },
+          ].map(({ title, desc, color }) => (
+             <div key={title} className={`rounded-lg border p-3.5 ${color}`}>
+               <div className="font-bold mb-1">{title}</div>
+               <div className="opacity-70 leading-relaxed">{desc}</div>
+             </div>
+          ))}
+        </div>
+      </Section>
+
+      <Section title="Tech Stack">
+        <TechStack items={["Linux", "Ubuntu", "Tailscale", "Cloudflare", "Nextcloud", "Docker"]} />
+      </Section>
+
+      <Section title="Key Infrastructure Capabilities">
+        <Features items={[
+          "Outbound-only secure Cloudflare tunnel closes all inbound firewall vectors, preventing external penetration attempts.",
+          "Persistent containerized Docker microservices keep system data storage and execution runtimes completely isolated.",
+          "Encrypted WireGuard mesh network allows secure admin remote terminal access from any mobile or laptop device globally.",
+          "Automated failover routing metrics configured on Netplan switch automatically between primary Ethernet and secondary 5G wireless.",
+          "Trusted domains and reverse proxy headers configured for Nextcloud platform, solving OAuth redirects and CORS blocks.",
+          "Docker-based multi-model AI agent environment with Ollama and OpenClaw platform, allowing automated workflows.",
+        ]} />
+      </Section>
+    </div>
+  );
 };

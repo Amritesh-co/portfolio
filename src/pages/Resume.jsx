@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import { Navbar } from "../components/Navbar";
 import { Footer } from "../components/Footer";
 import {
-  FileText, Download, Mail, Phone, MapPin,
+  FileText, Download, Mail, MapPin,
   Github, Linkedin, ArrowLeft, Calendar,
   Briefcase, GraduationCap, Wrench, Award, ExternalLink,
 } from "lucide-react";
@@ -12,10 +12,9 @@ import {
 ───────────────────────────────────────────── */
 const CONTACT = [
   { icon: Mail,    label: "amriteshsahu96@gmail.com", href: "mailto:amriteshsahu96@gmail.com" },
-  { icon: Phone,   label: "+91-8252406988",            href: "tel:+918252406988" },
   { icon: MapPin,  label: "Bengaluru, India",          href: null },
-  { icon: Github,  label: "GitHub",                    href: "https://github.com" },
-  { icon: Linkedin,label: "LinkedIn",                  href: "https://linkedin.com" },
+  { icon: Github,  label: "GitHub",                    href: "https://github.com/Amritesh-co" },
+  { icon: Linkedin,label: "LinkedIn",                  href: "https://www.linkedin.com/in/amriteshsahu/" },
 ];
 
 const EDUCATION = [

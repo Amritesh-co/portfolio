@@ -33,6 +33,17 @@ export const PROJECTS = [
     github: "https://github.com/Amritesh-co/furniture_store",
   },
   {
+    slug: "portfolio",
+    name: "Portfolio",
+    tagline: "Personal Developer Portfolio",
+    description:
+      "A dark-themed personal portfolio built with React, Vite, and Tailwind CSS. Features a multi-section single-page layout with animated code canvas, project detail pages with architecture diagrams, a printable resume page, and a working contact form via Web3Forms.",
+    tags: ["React", "Vite", "Tailwind CSS", "shadcn/ui", "Web3Forms"],
+    gradient: "from-sky-500 to-indigo-600",
+    url: "github.com/Amritesh-co/portfolio",
+    github: "https://github.com/Amritesh-co/portfolio",
+  },
+  {
     slug: "gemma-ui",
     name: "Gemma UI",
     tagline: "Local LLM Interaction Interface",
@@ -86,5 +97,16 @@ export const PROJECTS = [
     gradient: "from-green-500 to-emerald-600",
     url: "github.com/Amritesh-co/Eco-tracker",
     github: "https://github.com/Amritesh-co/Eco-tracker",
+  },
+  {
+    slug: "friday",
+    name: "Project Friday",
+    tagline: "Self-Hosted Private Cloud Platform",
+    description:
+      "An enterprise-replicated cloud ecosystem built on Ubuntu Server to host a personal storage cloud, WireGuard overlay VPN, Zero-Trust Cloudflare edge tunnels, and multi-model AI agent workspaces.",
+    tags: ["Ubuntu Server", "Docker", "Tailscale", "Cloudflare Tunnel", "Nextcloud"],
+    gradient: "from-indigo-600 to-violet-700",
+    url: "github.com/Amritesh-co/portfolio",
+    github: "https://github.com/Amritesh-co/portfolio",
   },
 ];

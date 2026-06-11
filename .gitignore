@@ -23,6 +23,11 @@ dist-ssr
 *.sln
 *.sw?
 
+# Environment variables (never commit)
+.env
+.env.local
+.env.*.local
+
 # Raw Assets & Reference Projects
 pro pic.png
 pro pic 2.png
