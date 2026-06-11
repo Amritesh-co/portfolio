@@ -252,12 +252,12 @@ export const Resume = () => {
                   <div className="space-y-3">
                     {SKILLS.map(({ label, items }) => (
                       <div key={label}>
-                        <p className="text-[10px] font-bold font-mono text-slate-500 uppercase tracking-wider mb-1.5">{label}</p>
+                        <p className="text-[11px] font-bold font-mono text-slate-500 uppercase tracking-wider mb-1.5">{label}</p>
                         <div className="flex flex-wrap gap-1">
                           {items.map((s) => (
                             <span
                               key={s}
-                              className="skill-tag text-[10px] px-1.5 py-0.5 rounded bg-zinc-900/80 border border-border/20 font-mono text-slate-300"
+                              className="skill-tag text-[11px] px-2 py-0.5 rounded bg-zinc-900/80 border border-border/20 font-mono text-slate-300"
                             >
                               {s}
                             </span>
@@ -273,7 +273,7 @@ export const Resume = () => {
                   <SectionHeading icon={Award}>Achievements</SectionHeading>
                   <ul className="space-y-2.5">
                     {ACHIEVEMENTS.map((a, i) => (
-                      <li key={i} className="flex gap-2 text-[11px] text-muted-foreground leading-relaxed">
+                      <li key={i} className="flex gap-2 text-xs text-muted-foreground leading-relaxed">
                         <span className="text-primary shrink-0 mt-0.5">▸</span>
                         <span>{a}</span>
                       </li>
@@ -292,16 +292,15 @@ export const Resume = () => {
                   <div className="space-y-6">
                     {PROJECTS.map((p) => (
                       <div key={p.name} className="space-y-2">
-                        {/* Name on its own line, stack pill below */}
                         <div>
-                          <h4 className="text-xs font-bold text-slate-200 leading-snug">{p.name}</h4>
-                          <span className="inline-block mt-1 text-[10px] font-mono text-primary/70 bg-primary/5 border border-primary/15 px-2 py-0.5 rounded-full">
+                          <h4 className="text-sm font-bold text-slate-200 leading-snug">{p.name}</h4>
+                          <span className="inline-block mt-1 text-[11px] font-mono text-primary/70 bg-primary/5 border border-primary/15 px-2 py-0.5 rounded-full">
                             {p.stack}
                           </span>
                         </div>
                         <ul className="space-y-1 pl-3 border-l border-border/10">
                           {p.bullets.map((b, i) => (
-                            <li key={i} className="flex gap-2 text-[11px] text-muted-foreground leading-relaxed">
+                            <li key={i} className="flex gap-2 text-xs text-muted-foreground leading-relaxed">
                               <span className="text-primary/50 shrink-0 mt-[3px]">•</span>
                               <span>{b}</span>
                             </li>
@@ -320,16 +319,16 @@ export const Resume = () => {
                       <div key={l.role} className="space-y-2">
                         <div className="flex flex-wrap items-baseline justify-between gap-2">
                           <div>
-                            <h4 className="text-xs font-bold text-slate-200">{l.role}</h4>
-                            <p className="text-[11px] text-muted-foreground mt-0.5">{l.org}</p>
+                            <h4 className="text-sm font-bold text-slate-200">{l.role}</h4>
+                            <p className="text-xs text-muted-foreground mt-0.5">{l.org}</p>
                           </div>
-                          <span className="flex items-center gap-1 text-[10px] font-mono text-muted-foreground/60 shrink-0">
+                          <span className="flex items-center gap-1 text-[11px] font-mono text-muted-foreground/60 shrink-0">
                             <Calendar className="h-2.5 w-2.5" />{l.period}
                           </span>
                         </div>
                         <ul className="space-y-1 pl-3 border-l border-border/10">
                           {l.bullets.map((b, i) => (
-                            <li key={i} className="flex gap-2 text-[11px] text-muted-foreground leading-relaxed">
+                            <li key={i} className="flex gap-2 text-xs text-muted-foreground leading-relaxed">
                               <span className="text-primary/50 shrink-0 mt-[3px]">•</span>
                               <span>{b}</span>
                             </li>
@@ -345,12 +344,6 @@ export const Resume = () => {
             </div>
           </div>
 
-          {/* ── footer note ── */}
-          <p className="text-center text-xs text-muted-foreground/50 mt-6 px-6 print-hide font-mono">
-            Use <span className="text-primary">Save PDF</span> to export · Or drop{" "}
-            <code className="bg-zinc-800 px-1 rounded">Amritesh_s_Resume.pdf</code> in{" "}
-            <code className="bg-zinc-800 px-1 rounded">public/</code> to enable direct download
-          </p>
 
       </main>
 
