@@ -14,18 +14,56 @@ export const ContactSection = () => {
   const { toast } = useToast();
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     setIsSubmitting(true);
 
-    setTimeout(() => {
+    const accessKey = import.meta.env.VITE_WEB3FORMS_KEY;
+
+    if (!accessKey) {
       toast({
-        title: "Message sent!",
-        description: "Thank you for your message. I'll get back to you soon.",
+        title: "Configuration Error",
+        description: "Web3Forms Access Key is missing. Please create a .env file with VITE_WEB3FORMS_KEY.",
+        variant: "destructive",
       });
       setIsSubmitting(false);
-      e.target.reset(); // clear form inputs on success
-    }, 1500);
+      return;
+    }
+
+    const formData = new FormData(e.target);
+    formData.append("access_key", accessKey);
+    formData.append("subject", "New Message from Portfolio");
+
+    try {
+      const response = await fetch("https://api.web3forms.com/submit", {
+        method: "POST",
+        body: formData,
+      });
+
+      const data = await response.json();
+
+      if (data.success) {
+        toast({
+          title: "Message sent!",
+          description: "Thank you for your message. I'll get back to you soon.",
+        });
+        e.target.reset();
+      } else {
+        toast({
+          title: "Failed to send message",
+          description: data.message || "Something went wrong. Please try again.",
+          variant: "destructive",
+        });
+      }
+    } catch (error) {
+      toast({
+        title: "Error sending message",
+        description: "A network error occurred. Please check your connection and try again.",
+        variant: "destructive",
+      });
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
