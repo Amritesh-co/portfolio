@@ -1,0 +1,39 @@
+direction: down
+
+classes: {
+  red: {
+    style.fill: "#1c0505"
+    style.stroke: "#dc2626"
+    style.font-color: "#fca5a5"
+    style.border-radius: 8
+  }
+  muted: {
+    style.fill: "#10111a"
+    style.stroke: "#2d3748"
+    style.font-color: "#8896aa"
+    style.border-radius: 8
+  }
+}
+
+featcoll: "FeatureCollection\n/fires/points response" { class: red }
+feature: "Feature objects" { class: muted }
+geometry: "geometry\ntype: \"Point\"" { class: muted }
+coords: "coordinates\n[longitude, latitude]" { class: muted }
+properties: "properties\nfire metadata" { class: red }
+fdate: "date\nYYYY-MM-DD" { class: muted }
+fconf: "confidence\n0–100" { class: muted }
+ffrp: "frp\nFire Radiative Power" { class: muted }
+fdnbr: "dnbr\nfloat" { class: muted }
+fsev: "severity\nUnburned|Low|Moderate|High" { class: muted }
+fsat: "satellite\nNOAA-20 · Terra · Aqua" { class: muted }
+
+featcoll -> feature
+feature -> geometry
+feature -> properties
+geometry -> coords
+properties -> fdate
+properties -> fconf
+properties -> ffrp
+properties -> fdnbr
+properties -> fsev
+properties -> fsat

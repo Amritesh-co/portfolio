@@ -1,0 +1,59 @@
+direction: down
+
+classes: {
+  red: {
+    style.fill: "#1c0505"
+    style.stroke: "#dc2626"
+    style.font-color: "#fca5a5"
+    style.border-radius: 8
+  }
+  amber: {
+    style.fill: "#1c1204"
+    style.stroke: "#d97706"
+    style.font-color: "#fbbf24"
+    style.border-radius: 8
+  }
+  emerald: {
+    style.fill: "#022c22"
+    style.stroke: "#10b981"
+    style.font-color: "#6ee7b7"
+    style.border-radius: 8
+  }
+  muted: {
+    style.fill: "#10111a"
+    style.stroke: "#2d3748"
+    style.font-color: "#8896aa"
+    style.border-radius: 8
+  }
+}
+
+fireevent: "Fire event\nlat · lon · acq_date" { class: muted }
+prefirewin: "GEE pre-fire window\nacq_date − 30d to − 5d" { class: red }
+postfirewin: "GEE post-fire window\nacq_date + 1d to +10d" { class: red }
+prefire: "Pre-fire Sentinel-2\nBand B8 (NIR) · Band B12 (SWIR)" { class: muted }
+nbr_pre: "NBR_pre\n(B8−B12)/(B8+B12)" { class: red }
+postfire: "Post-fire Sentinel-2\nBand B8 (NIR) · Band B12 (SWIR)" { class: muted }
+nbr_post: "NBR_post\n(B8−B12)/(B8+B12)" { class: red }
+dnbr: "dNBR\nNBR_pre − NBR_post" { class: red }
+unburned: "dNBR < 0.1\nUnburned / Recovered" { class: emerald }
+low_sev: "0.1 – 0.27\nLow Severity" { class: amber }
+mod_sev: "0.27 – 0.44\nModerate Severity" { class: amber }
+high_sev: "≥ 0.44\nHigh Severity" { class: red }
+geojson: "GeoJSON Point Feature\ndate · confidence · frp · dnbr · severity" { class: muted }
+
+fireevent -> prefirewin: "Sentinel-2 L2A query"
+fireevent -> postfirewin
+prefirewin -> prefire
+postfirewin -> postfire
+prefire -> nbr_pre
+postfire -> nbr_post
+nbr_pre -> dnbr
+nbr_post -> dnbr
+dnbr -> unburned
+dnbr -> low_sev
+dnbr -> mod_sev
+dnbr -> high_sev
+unburned -> geojson
+low_sev -> geojson
+mod_sev -> geojson
+high_sev -> geojson

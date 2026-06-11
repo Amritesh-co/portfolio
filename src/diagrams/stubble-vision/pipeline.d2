@@ -1,0 +1,45 @@
+direction: down
+
+classes: {
+  red: {
+    style.fill: "#1c0505"
+    style.stroke: "#dc2626"
+    style.font-color: "#fca5a5"
+    style.border-radius: 8
+  }
+  muted: {
+    style.fill: "#10111a"
+    style.stroke: "#2d3748"
+    style.font-color: "#8896aa"
+    style.border-radius: 8
+  }
+}
+
+firms: "FIRMS CSV\nsatellite fire data — data/firms/" { class: muted }
+loaddata: "ml/load_data.py\nread CSV · parse lat/lon/acq_date/confidence/frp" { class: red }
+firedet: "ml/fire_detection.py\nconvert dtypes · drop null coords · label ≥ 70" { class: red }
+severity: "ml/severity_estimation.py\nGoogle Earth Engine API · batch_size=50" { class: red }
+export: "ml/export_results.py\nfire_severity_all.geojson · metrics.json" { class: muted }
+fastapi: "FastAPI :8000\nbackend/main.py · Uvicorn" { class: red }
+fires_ep: "/fires/points\nGeoJSON served" { class: muted }
+dash_ep: "/dashboard/*\n5 metric endpoints" { class: muted }
+nextjs: "Next.js 13 :3000\nReact 18 · Chakra UI" { class: red }
+mappage: "/map\nLeaflet · GeoJSON overlay" { class: muted }
+dashpage: "/dashboard\nKPI cards + Recharts" { class: muted }
+theory: "/theory\ndNBR methodology" { class: muted }
+
+firms -> loaddata
+loaddata -> firedet
+firedet -> severity
+severity -> export
+export -> fastapi
+
+fastapi -> fires_ep
+fastapi -> dash_ep
+
+fires_ep -> nextjs
+dash_ep -> nextjs
+
+nextjs -> mappage
+nextjs -> dashpage
+nextjs -> theory

@@ -929,100 +929,52 @@ export const PROJECT_CONTENT = {
       </Section>
 
       <Section title="System Architecture">
-        <FlowDiagram title="end-to-end ML pipeline → API → frontend"
-          nodes={[
-            n('firms',    'FIRMS CSV',            'satellite fire data — data/firms/',                  muted),
-            n('loaddata', 'ml/load_data.py',      'read CSV · parse lat/lon/acq_date/confidence/frp',   red),
-            n('firedet',  'ml/fire_detection.py', 'convert dtypes · drop null coords · label ≥ 70',     red),
-            n('severity', 'ml/severity_estimation.py','Google Earth Engine API · batch_size=50',         red),
-            n('export',   'ml/export_results.py', 'fire_severity_all.geojson · metrics.json',           muted),
-            n('fastapi',  'FastAPI :8000',         'backend/main.py · Uvicorn',                         red),
-            n('fires_ep', '/fires/points',         'GeoJSON served',                                    muted),
-            n('dash_ep',  '/dashboard/*',          '5 metric endpoints',                                muted),
-            n('nextjs',   'Next.js 13 :3000',      'React 18 · Chakra UI',                              red),
-            n('mappage',  '/map',                  'Leaflet · GeoJSON overlay',                         muted),
-            n('dashpage', '/dashboard',            'KPI cards + Recharts',                              muted),
-            n('theory',   '/theory',               'dNBR methodology',                                  muted),
-          ]}
-          edges={[
-            e('e1',  'firms',    'loaddata'),
-            e('e2',  'loaddata', 'firedet'),
-            e('e3',  'firedet',  'severity'),
-            e('e4',  'severity', 'export'),
-            e('e5',  'export',   'fastapi'),
-            e('e6',  'fastapi',  'fires_ep'),
-            e('e7',  'fastapi',  'dash_ep'),
-            e('e8',  'fires_ep', 'nextjs'),
-            e('e9',  'dash_ep',  'nextjs'),
-            e('e10', 'nextjs',   'mappage'),
-            e('e11', 'nextjs',   'dashpage'),
-            e('e12', 'nextjs',   'theory'),
-          ]}
-        />
+        <div className="space-y-6">
+          {/* end-to-end ML pipeline → API → frontend */}
+          <div className="rounded-xl border border-border/40 overflow-hidden w-full">
+            <p className="text-xs font-semibold text-foreground/80 tracking-wide uppercase text-center py-3 px-4 border-b border-border/30">
+              end-to-end ML pipeline → API → frontend
+            </p>
+            <div className="w-full flex justify-center bg-[#1e1e2e] p-4">
+              <img
+                src="/diagrams/stubble-vision/pipeline.svg"
+                alt="end-to-end ML pipeline → API → frontend"
+                style={{ width: '100%', maxWidth: '648px', height: 'auto' }}
+                loading="lazy"
+              />
+            </div>
+          </div>
 
-        <FlowDiagram title="dNBR burn severity computation (per fire · Sentinel-2)"
-          nodes={[
-            n('fireevent',  'Fire event',          'lat · lon · acq_date',                             muted),
-            n('prefirewin', 'GEE pre-fire window',  'acq_date − 30d to − 5d',                          red),
-            n('postfirewin','GEE post-fire window', 'acq_date + 1d to +10d',                           red),
-            n('prefire',    'Pre-fire Sentinel-2',  'Band B8 (NIR) · Band B12 (SWIR)',                 muted),
-            n('nbr_pre',    'NBR_pre',              '(B8−B12)/(B8+B12)',                               red),
-            n('postfire',   'Post-fire Sentinel-2', 'Band B8 (NIR) · Band B12 (SWIR)',                 muted),
-            n('nbr_post',   'NBR_post',             '(B8−B12)/(B8+B12)',                               red),
-            n('dnbr',       'dNBR',                 'NBR_pre − NBR_post',                              red),
-            n('unburned',   'dNBR < 0.1',           'Unburned / Recovered',                            'border-green-500/50 bg-green-500/10 text-green-300'),
-            n('low_sev',    '0.1 – 0.27',           'Low Severity',                                    amber),
-            n('mod_sev',    '0.27 – 0.44',          'Moderate Severity',                               amber),
-            n('high_sev',   '≥ 0.44',               'High Severity',                                   red),
-            n('geojson',    'GeoJSON Point Feature', 'date · confidence · frp · dnbr · severity',      muted),
-          ]}
-          edges={[
-            e('e1',  'fireevent',  'prefirewin',  'Sentinel-2 L2A query'),
-            e('e2',  'fireevent',  'postfirewin'),
-            e('e3',  'prefirewin', 'prefire'),
-            e('e4',  'postfirewin','postfire'),
-            e('e5',  'prefire',    'nbr_pre'),
-            e('e6',  'postfire',   'nbr_post'),
-            e('e7',  'nbr_pre',    'dnbr'),
-            e('e8',  'nbr_post',   'dnbr'),
-            e('e9',  'dnbr',       'unburned'),
-            e('e10', 'dnbr',       'low_sev'),
-            e('e11', 'dnbr',       'mod_sev'),
-            e('e12', 'dnbr',       'high_sev'),
-            e('e13', 'unburned',   'geojson'),
-            e('e14', 'low_sev',    'geojson'),
-            e('e15', 'mod_sev',    'geojson'),
-            e('e16', 'high_sev',   'geojson'),
-          ]}
-        />
+          {/* dNBR burn severity computation (per fire · Sentinel-2) */}
+          <div className="rounded-xl border border-border/40 overflow-hidden w-full">
+            <p className="text-xs font-semibold text-foreground/80 tracking-wide uppercase text-center py-3 px-4 border-b border-border/30">
+              dNBR burn severity computation (per fire · Sentinel-2)
+            </p>
+            <div className="w-full flex justify-center bg-[#1e1e2e] p-4">
+              <img
+                src="/diagrams/stubble-vision/dnbr.svg"
+                alt="dNBR burn severity computation (per fire · Sentinel-2)"
+                style={{ width: '100%', maxWidth: '730px', height: 'auto' }}
+                loading="lazy"
+              />
+            </div>
+          </div>
 
-        <FlowDiagram title="GeoJSON feature schema"
-          nodes={[
-            n('featcoll',  'FeatureCollection',   '/fires/points response',                            red),
-            n('feature',   'Feature objects',      null,                                               muted),
-            n('geometry',  'geometry',             'type: "Point"',                                    muted),
-            n('coords',    'coordinates',          '[longitude, latitude]',                            muted),
-            n('properties','properties',           'fire metadata',                                    red),
-            n('fdate',     'date',                 'YYYY-MM-DD',                                       muted),
-            n('fconf',     'confidence',           '0–100',                                            muted),
-            n('ffrp',      'frp',                  'Fire Radiative Power',                             muted),
-            n('fdnbr',     'dnbr',                 'float',                                            muted),
-            n('fsev',      'severity',             'Unburned|Low|Moderate|High',                       muted),
-            n('fsat',      'satellite',            'NOAA-20 · Terra · Aqua',                           muted),
-          ]}
-          edges={[
-            e('e1',  'featcoll',   'feature'),
-            e('e2',  'feature',    'geometry'),
-            e('e3',  'feature',    'properties'),
-            e('e4',  'geometry',   'coords'),
-            e('e5',  'properties', 'fdate'),
-            e('e6',  'properties', 'fconf'),
-            e('e7',  'properties', 'ffrp'),
-            e('e8',  'properties', 'fdnbr'),
-            e('e9',  'properties', 'fsev'),
-            e('e10', 'properties', 'fsat'),
-          ]}
-        />
+          {/* GeoJSON feature schema */}
+          <div className="rounded-xl border border-border/40 overflow-hidden w-full">
+            <p className="text-xs font-semibold text-foreground/80 tracking-wide uppercase text-center py-3 px-4 border-b border-border/30">
+              GeoJSON feature schema
+            </p>
+            <div className="w-full flex justify-center bg-[#1e1e2e] p-4">
+              <img
+                src="/diagrams/stubble-vision/schema.svg"
+                alt="GeoJSON feature schema"
+                style={{ width: '100%', maxWidth: '1225px', height: 'auto' }}
+                loading="lazy"
+              />
+            </div>
+          </div>
+        </div>
       </Section>
 
       <Section title="Tech Stack">
