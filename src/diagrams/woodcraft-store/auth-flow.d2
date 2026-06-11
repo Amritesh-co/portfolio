@@ -1,0 +1,54 @@
+direction: down
+
+classes: {
+  amber: {
+    style.fill: "#1c1204"
+    style.stroke: "#d97706"
+    style.font-color: "#fbbf24"
+    style.border-radius: 8
+  }
+  muted: {
+    style.fill: "#10111a"
+    style.stroke: "#2d3748"
+    style.font-color: "#8896aa"
+    style.border-radius: 8
+  }
+}
+
+custb: "Customer Browser\nstorefont" { class: muted }
+adminb: "Admin Browser\nERP panel" { class: muted }
+midware: "proxy.js (NextAuth)\nguards /admin/* · /cart · /checkout" { class: amber }
+approuter: "Next.js App Router\napp/api/**/route.js — Route Handlers" { class: amber }
+ratelimit: "Upstash Redis\nsliding-window rate limiter" { class: amber }
+ratevars: "rate limits\nregister 5/hr · upload 10/hr · contact 3/hr" { class: muted }
+adminsess: "requireAdminSession()\nlib/auth/session.js" { class: amber }
+rolecheck: "role === \"admin\" check" { class: muted }
+validate: "Payload validation\nlib/validation/*.js" { class: amber }
+vtypes: "validators\nproduct · order · common · mongodb" { class: muted }
+services: "Services layer\norderService · invoiceService · inventoryService" { class: amber }
+mongodb: "MongoDB\nMongoose 9.3 ODM · lib/mongodb.js" { class: amber }
+cloudinary: "Cloudinary\nimage transform + CDN" { class: muted }
+nodemailer: "Nodemailer\nSMTP invoice email" { class: muted }
+pdfkit: "PDFKit\ninvoice PDF generation" { class: muted }
+response: "successResponse()\nlib/api/response.js — JSON envelopes" { class: muted }
+
+custb -> midware
+adminb -> midware
+midware -> approuter
+approuter -> ratelimit
+approuter -> adminsess
+approuter -> validate
+ratelimit -> ratevars
+adminsess -> rolecheck
+validate -> vtypes
+ratevars -> services
+rolecheck -> services
+vtypes -> services
+services -> mongodb
+services -> cloudinary
+services -> nodemailer
+services -> pdfkit
+mongodb -> response
+cloudinary -> response
+nodemailer -> response
+pdfkit -> response

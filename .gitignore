@@ -22,3 +22,11 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# Raw Assets & Reference Projects
+pro pic.png
+pro pic 2.png
+proflie photo.png
+1RV23CD006.png
+references/
+threejs_skills_analysis.md

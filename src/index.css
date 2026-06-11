@@ -47,6 +47,11 @@
       transform: translateY(0);
     }
   }
+  @keyframes blink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0; }
+  }
+
   @keyframes meteor {
     0% {
       transform: rotate(215deg) translateX(0);
@@ -160,3 +165,18 @@
   padding: 0;
   text-align: center;
 }
+
+/* ── React Flow: reset node container so custom nodes own all styling ── */
+.react-flow__node-flowNode {
+  padding: 0 !important;
+  border: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+  border-radius: 0 !important;
+  width: auto !important;
+}
+.react-flow__handle {
+  min-width: 0 !important;
+  min-height: 0 !important;
+}
+

@@ -8,12 +8,13 @@ export const Footer = () => {
         {" "}
         &copy; {new Date().getFullYear()} Pedrotech.co. All rights reserved.
       </p>
-      <a
-        href="#hero"
-        className="p-2 rounded-full bg-primary/10 hover:bg-primary/20 text-primary transition-colors"
+      <button
+        onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+        className="p-2 rounded-full bg-primary/10 hover:bg-primary/20 text-primary transition-colors cursor-pointer"
+        aria-label="Scroll to top"
       >
         <ArrowUp size={20} />
-      </a>
+      </button>
     </footer>
   );
 };

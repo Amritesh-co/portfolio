@@ -1,0 +1,38 @@
+direction: down
+
+classes: {
+  amber: {
+    style.fill: "#1c1204"
+    style.stroke: "#d97706"
+    style.font-color: "#fbbf24"
+    style.border-radius: 8
+  }
+  muted: {
+    style.fill: "#10111a"
+    style.stroke: "#2d3748"
+    style.font-color: "#8896aa"
+    style.border-radius: 8
+  }
+}
+
+post_orders: "POST /api/orders\ncustomerInfo · products[] · total" { class: amber }
+order_svc: "orderService.js\ngenerate orderId: DDMMYYYY + sequence (IST tz)" { class: amber }
+order_seq: "OrderSequence model\nupsert daily counter → pad to 3 digits" { class: muted }
+stock: "Adjust stock\ninventoryService → InventoryLog audit entry" { class: amber }
+invoice_auto: "invoiceService.auto()\nauto-trigger on create · retry on status update" { class: amber }
+pdfkit: "PDFKit\nlib/pdfGenerator.js" { class: muted }
+pdf_buffer: "PDF buffer in memory" { class: muted }
+nodemailer: "Nodemailer SMTP\nlib/emailSender.js" { class: muted }
+email_attach: "invoice attached" { class: muted }
+saved: "Invoice saved + emailed" { class: amber }
+
+post_orders -> order_svc
+order_svc -> order_seq: "e.g. 11062025001"
+order_seq -> stock
+stock -> invoice_auto
+invoice_auto -> pdfkit
+invoice_auto -> nodemailer
+pdfkit -> pdf_buffer
+pdf_buffer -> saved
+nodemailer -> email_attach
+email_attach -> saved
