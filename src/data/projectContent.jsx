@@ -666,7 +666,7 @@ export const PROJECT_CONTENT = {
           "Data-driven project system: projects.js + projectContent.jsx decouple card data from detail content — one entry added in both files produces a full routed detail page.",
           "Resume page uses a scoped CSS injection to override the global text-align: center cascade without touching global styles, ensuring correct left-alignment in the two-column layout.",
           "Print-to-PDF on the resume page via window.print() with @media print rules: nav, footer, and action bar hidden; colours inverted to white-on-black for clean paper output.",
-          "Web3Forms contact form — no backend. Submissions POST to the Web3Forms API with the access key injected from an env variable (VITE_WEB3FORMS_KEY), landing in Gmail.",
+          "Web3Forms contact form — no backend. Submissions POST to the Web3Forms API using the access key, landing directly in Gmail.",
           "Home Lab (Friday) page renders live infrastructure status widgets, animated network topology, and Cloudflare tunnel diagrams for the self-hosted cloud project.",
           "Navbar supports both hash-scroll links (home sections) and React Router routes (sub-pages) from a single nav config array, with active-state detection for both.",
           "shadcn/ui toast system surfaces form feedback — success/error toasts appear top-right with the same dark theme tokens as the rest of the UI.",

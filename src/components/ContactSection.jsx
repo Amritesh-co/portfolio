@@ -18,17 +18,7 @@ export const ContactSection = () => {
     e.preventDefault();
     setIsSubmitting(true);
 
-    const accessKey = import.meta.env.VITE_WEB3FORMS_KEY;
-
-    if (!accessKey) {
-      toast({
-        title: "Configuration Error",
-        description: "Web3Forms Access Key is missing. Please create a .env file with VITE_WEB3FORMS_KEY.",
-        variant: "destructive",
-      });
-      setIsSubmitting(false);
-      return;
-    }
+    const accessKey = "06c5a4e4-1770-476c-afd1-eb88518ab45c";
 
     const formData = new FormData(e.target);
     formData.append("access_key", accessKey);
