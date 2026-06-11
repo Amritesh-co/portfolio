@@ -600,7 +600,7 @@ export const PROJECT_CONTENT = {
               <img
                 src="/diagrams/portfolio/architecture.svg"
                 alt="site architecture — browser to services"
-                style={{ width: '100%', maxWidth: '896px', height: 'auto' }}
+                style={{ width: '100%', height: 'auto' }}
                 loading="lazy"
               />
             </div>
@@ -615,7 +615,7 @@ export const PROJECT_CONTENT = {
               <img
                 src="/diagrams/portfolio/deployment.svg"
                 alt="deployment flow — dev machine to cloudflare edge"
-                style={{ width: '100%', maxWidth: '480px', height: 'auto' }}
+                style={{ width: '100%', maxWidth: '300px', height: 'auto' }}
                 loading="lazy"
               />
             </div>
