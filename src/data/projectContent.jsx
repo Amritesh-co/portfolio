@@ -589,6 +589,55 @@ export const PROJECT_CONTENT = {
         </p>
       </Section>
 
+      <Section title="System Architecture">
+        <div className="space-y-6">
+          {/* site architecture */}
+          <div className="rounded-xl border border-border/40 overflow-hidden w-full">
+            <p className="text-xs font-semibold text-foreground/80 tracking-wide uppercase text-center py-3 px-4 border-b border-border/30">
+              site architecture — browser to services
+            </p>
+            <div className="w-full flex justify-center bg-[#1e1e2e] p-4">
+              <img
+                src="/diagrams/portfolio/architecture.svg"
+                alt="site architecture — browser to services"
+                style={{ width: '100%', maxWidth: '896px', height: 'auto' }}
+                loading="lazy"
+              />
+            </div>
+          </div>
+
+          {/* deployment flow */}
+          <div className="rounded-xl border border-border/40 overflow-hidden w-full">
+            <p className="text-xs font-semibold text-foreground/80 tracking-wide uppercase text-center py-3 px-4 border-b border-border/30">
+              deployment flow — dev machine to cloudflare edge
+            </p>
+            <div className="w-full flex justify-center bg-[#1e1e2e] p-4">
+              <img
+                src="/diagrams/portfolio/deployment.svg"
+                alt="deployment flow — dev machine to cloudflare edge"
+                style={{ width: '100%', maxWidth: '480px', height: 'auto' }}
+                loading="lazy"
+              />
+            </div>
+          </div>
+
+          {/* data-driven project system */}
+          <div className="rounded-xl border border-border/40 overflow-hidden w-full">
+            <p className="text-xs font-semibold text-foreground/80 tracking-wide uppercase text-center py-3 px-4 border-b border-border/30">
+              data-driven project system — source to rendered page
+            </p>
+            <div className="w-full flex justify-center bg-[#1e1e2e] p-4">
+              <img
+                src="/diagrams/portfolio/dataflow.svg"
+                alt="data-driven project system — source to rendered page"
+                style={{ width: '100%', maxWidth: '896px', height: 'auto' }}
+                loading="lazy"
+              />
+            </div>
+          </div>
+        </div>
+      </Section>
+
       <Section title="Page & Route Map">
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 font-mono text-xs">
           {[
@@ -1114,7 +1163,7 @@ export const PROJECT_CONTENT = {
             <img
               src="/diagrams/friday/architecture.svg"
               alt="edge routing and container virtualization topology"
-              style={{ width: '100%', maxWidth: '938px', height: 'auto' }}
+              style={{ width: '100%', maxWidth: '450px', height: 'auto' }}
               loading="lazy"
             />
           </div>
