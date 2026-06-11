@@ -101,7 +101,7 @@ const ACHIEVEMENTS = [
 ───────────────────────────────────────────── */
 function SectionHeading({ icon: Icon, children }) {
   return (
-    <h3 className="flex items-center gap-2 text-[11px] font-bold uppercase tracking-[0.18em] font-mono text-primary border-b border-primary/20 pb-2.5 mb-4">
+    <h3 className="flex items-center gap-2 text-xs font-bold uppercase tracking-[0.18em] font-mono text-primary border-b border-primary/20 pb-2.5 mb-4">
       <Icon className="h-3.5 w-3.5 shrink-0" />
       {children}
     </h3>
@@ -190,10 +190,10 @@ export const Resume = () => {
                 {/* Name + subtitle + contacts */}
                 <div className="flex-1 min-w-0 space-y-3">
                   <div>
-                    <h1 className="text-3xl md:text-4xl font-extrabold tracking-tight text-white leading-tight">
+                    <h1 className="text-4xl md:text-5xl font-extrabold tracking-tight text-white leading-tight">
                       Amritesh Sahu
                     </h1>
-                    <p className="text-xs md:text-sm font-mono text-primary font-medium tracking-wide mt-1">
+                    <p className="text-sm md:text-base font-mono text-primary font-medium tracking-wide mt-1.5">
                       Data Science Undergraduate — AI/ML + Backend Systems — LeetCode Enthusiast
                     </p>
                   </div>
@@ -206,14 +206,14 @@ export const Resume = () => {
                           href={href}
                           target={href.startsWith("http") ? "_blank" : undefined}
                           rel="noopener noreferrer"
-                          className="flex items-center gap-1.5 text-[11px] font-mono text-slate-400 hover:text-primary transition-colors"
+                          className="flex items-center gap-1.5 text-sm font-mono text-slate-400 hover:text-primary transition-colors"
                         >
                           <Icon className="h-3 w-3 shrink-0 text-primary/70" />
                           {label}
                           {href.startsWith("http") && <ExternalLink className="h-2.5 w-2.5 opacity-50" />}
                         </a>
                       ) : (
-                        <span key={label} className="flex items-center gap-1.5 text-[11px] font-mono text-slate-400">
+                        <span key={label} className="flex items-center gap-1.5 text-sm font-mono text-slate-400">
                           <Icon className="h-3 w-3 shrink-0 text-primary/70" />
                           {label}
                         </span>
@@ -236,9 +236,9 @@ export const Resume = () => {
                   <div className="space-y-4">
                     {EDUCATION.map((e) => (
                       <div key={e.degree}>
-                        <p className="text-sm font-bold text-slate-200 leading-snug">{e.degree}</p>
-                        <p className="text-xs text-muted-foreground mt-0.5 leading-snug">{e.institution}</p>
-                        <p className="flex items-center gap-1 text-[11px] text-muted-foreground/60 font-mono mt-1">
+                        <p className="text-base font-bold text-slate-200 leading-snug">{e.degree}</p>
+                        <p className="text-sm text-muted-foreground mt-0.5 leading-snug">{e.institution}</p>
+                        <p className="flex items-center gap-1 text-xs text-muted-foreground/60 font-mono mt-1">
                           <Calendar className="h-2.5 w-2.5 shrink-0" />{e.period}
                         </p>
                       </div>
@@ -252,12 +252,12 @@ export const Resume = () => {
                   <div className="space-y-3">
                     {SKILLS.map(({ label, items }) => (
                       <div key={label}>
-                        <p className="text-[11px] font-bold font-mono text-slate-500 uppercase tracking-wider mb-1.5">{label}</p>
-                        <div className="flex flex-wrap gap-1">
+                        <p className="text-xs font-bold font-mono text-slate-500 uppercase tracking-wider mb-1.5">{label}</p>
+                        <div className="flex flex-wrap gap-1.5">
                           {items.map((s) => (
                             <span
                               key={s}
-                              className="skill-tag text-[11px] px-2 py-0.5 rounded bg-zinc-900/80 border border-border/20 font-mono text-slate-300"
+                              className="skill-tag text-xs px-2.5 py-0.5 rounded bg-zinc-900/80 border border-border/20 font-mono text-slate-300"
                             >
                               {s}
                             </span>
@@ -273,7 +273,7 @@ export const Resume = () => {
                   <SectionHeading icon={Award}>Achievements</SectionHeading>
                   <ul className="space-y-2.5">
                     {ACHIEVEMENTS.map((a, i) => (
-                      <li key={i} className="flex gap-2 text-xs text-muted-foreground leading-relaxed">
+                      <li key={i} className="flex gap-2 text-sm text-muted-foreground leading-relaxed">
                         <span className="text-primary shrink-0 mt-0.5">▸</span>
                         <span>{a}</span>
                       </li>
@@ -293,14 +293,14 @@ export const Resume = () => {
                     {PROJECTS.map((p) => (
                       <div key={p.name} className="space-y-2">
                         <div>
-                          <h4 className="text-sm font-bold text-slate-200 leading-snug">{p.name}</h4>
-                          <span className="inline-block mt-1 text-[11px] font-mono text-primary/70 bg-primary/5 border border-primary/15 px-2 py-0.5 rounded-full">
+                          <h4 className="text-base font-bold text-slate-200 leading-snug">{p.name}</h4>
+                          <span className="inline-block mt-1 text-xs font-mono text-primary/70 bg-primary/5 border border-primary/15 px-2.5 py-0.5 rounded-full">
                             {p.stack}
                           </span>
                         </div>
                         <ul className="space-y-1 pl-3 border-l border-border/10">
                           {p.bullets.map((b, i) => (
-                            <li key={i} className="flex gap-2 text-xs text-muted-foreground leading-relaxed">
+                            <li key={i} className="flex gap-2 text-sm text-muted-foreground leading-relaxed">
                               <span className="text-primary/50 shrink-0 mt-[3px]">•</span>
                               <span>{b}</span>
                             </li>
@@ -319,16 +319,16 @@ export const Resume = () => {
                       <div key={l.role} className="space-y-2">
                         <div className="flex flex-wrap items-baseline justify-between gap-2">
                           <div>
-                            <h4 className="text-sm font-bold text-slate-200">{l.role}</h4>
-                            <p className="text-xs text-muted-foreground mt-0.5">{l.org}</p>
+                            <h4 className="text-base font-bold text-slate-200">{l.role}</h4>
+                            <p className="text-sm text-muted-foreground mt-0.5">{l.org}</p>
                           </div>
-                          <span className="flex items-center gap-1 text-[11px] font-mono text-muted-foreground/60 shrink-0">
+                          <span className="flex items-center gap-1 text-xs font-mono text-muted-foreground/60 shrink-0">
                             <Calendar className="h-2.5 w-2.5" />{l.period}
                           </span>
                         </div>
                         <ul className="space-y-1 pl-3 border-l border-border/10">
                           {l.bullets.map((b, i) => (
-                            <li key={i} className="flex gap-2 text-xs text-muted-foreground leading-relaxed">
+                            <li key={i} className="flex gap-2 text-sm text-muted-foreground leading-relaxed">
                               <span className="text-primary/50 shrink-0 mt-[3px]">•</span>
                               <span>{b}</span>
                             </li>

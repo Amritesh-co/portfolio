@@ -1,5 +1,5 @@
 import { cn } from "@/lib/utils";
-import { Menu, Moon, Sun, X } from "lucide-react";
+import { Menu, X } from "lucide-react";
 import { useEffect, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 
@@ -17,19 +17,11 @@ const navItems = [
 export const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [isDarkMode, setIsDarkMode] = useState(false);
   const location = useLocation();
   const isHomePage = location.pathname === "/";
 
   useEffect(() => {
-    const storedTheme = localStorage.getItem("theme");
-    if (storedTheme === "dark") {
-      setIsDarkMode(true);
-      document.documentElement.classList.add("dark");
-    } else {
-      localStorage.setItem("theme", "light");
-      setIsDarkMode(false);
-    }
+    document.documentElement.classList.add("dark");
   }, []);
 
   useEffect(() => {
@@ -39,18 +31,6 @@ export const Navbar = () => {
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
-
-  const toggleTheme = () => {
-    if (isDarkMode) {
-      document.documentElement.classList.remove("dark");
-      localStorage.setItem("theme", "light");
-      setIsDarkMode(false);
-    } else {
-      document.documentElement.classList.add("dark");
-      localStorage.setItem("theme", "dark");
-      setIsDarkMode(true);
-    }
-  };
 
   return (
     <nav
@@ -94,32 +74,10 @@ export const Navbar = () => {
               </a>
             );
           })}
-          <button
-            onClick={toggleTheme}
-            className="p-2 rounded-full transition-colors duration-300 focus:outline-none"
-            aria-label="Toggle theme"
-          >
-            {isDarkMode ? (
-              <Sun className="h-5 w-5 text-yellow-400" />
-            ) : (
-              <Moon className="h-5 w-5 text-foreground/70" />
-            )}
-          </button>
         </div>
 
-        {/* mobile: theme toggle + hamburger */}
+        {/* mobile: hamburger */}
         <div className="flex md:hidden items-center gap-2">
-          <button
-            onClick={toggleTheme}
-            className="p-2 rounded-full transition-colors duration-300 focus:outline-none"
-            aria-label="Toggle theme"
-          >
-            {isDarkMode ? (
-              <Sun className="h-5 w-5 text-yellow-400" />
-            ) : (
-              <Moon className="h-5 w-5 text-foreground/70" />
-            )}
-          </button>
           <button
             onClick={() => setIsMenuOpen((prev) => !prev)}
             className="p-2 text-foreground z-50"
