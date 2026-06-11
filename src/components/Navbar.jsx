@@ -9,6 +9,7 @@ const navItems = [
   { name: "Skills", href: "#skills" },
   { name: "Projects", href: "/projects", isRoute: true },
   { name: "Home Lab", href: "/friday", isRoute: true },
+  { name: "Beyond IDE", href: "#beyond-ide" },
   { name: "Contact", href: "#contact" },
 ];
 
