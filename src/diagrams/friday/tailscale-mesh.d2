@@ -1,0 +1,55 @@
+direction: right
+
+classes: {
+  sky: {
+    style.fill: "#021520"
+    style.stroke: "#0ea5e9"
+    style.font-color: "#38bdf8"
+    style.border-radius: 8
+  }
+  indigo: {
+    style.fill: "#0f0e2a"
+    style.stroke: "#6366f1"
+    style.font-color: "#a5b4fc"
+    style.border-radius: 8
+  }
+  violet: {
+    style.fill: "#1e1033"
+    style.stroke: "#7c3aed"
+    style.font-color: "#c4b5fd"
+    style.border-radius: 8
+  }
+  muted: {
+    style.fill: "#10111a"
+    style.stroke: "#2d3748"
+    style.font-color: "#8896aa"
+    style.border-radius: 8
+  }
+}
+
+devices: "Client Devices" {
+  style.fill: "#060b14"
+  style.stroke: "#1e3a5f"
+  style.font-color: "#8896aa"
+  style.border-radius: 8
+
+  macbook: "MacBook\n100.114.92.10" { class: sky }
+  phone: "Phone\n100.78.44.21" { class: sky }
+  desktop: "Desktop\n100.90.12.55" { class: sky }
+}
+
+tailnet: "Tailscale Network\nWireGuard encrypted mesh\nprivate 100.x.x.x addresses" { class: indigo }
+
+server: "Ubuntu Server\n100.101.24.43\nubuntu-core-01" { class: violet }
+
+ssh: "SSH Admin\nport 22 · terminal access" { class: muted }
+nextcloud: "Nextcloud\ncloud.amriteshsahu.me" { class: muted }
+openclaw: "OpenClaw\nai.amriteshsahu.me" { class: muted }
+
+devices.macbook -> tailnet: "WireGuard"
+devices.phone -> tailnet: "WireGuard"
+devices.desktop -> tailnet: "WireGuard"
+tailnet -> server: "private P2P\nNAT traversal"
+server -> ssh
+server -> nextcloud
+server -> openclaw

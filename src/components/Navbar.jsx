@@ -19,6 +19,12 @@ export const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const location = useLocation();
   const isHomePage = location.pathname === "/";
+  const [activeSection, setActiveSection] = useState(() => {
+    if (window.location.hash) {
+      return window.location.hash.slice(1);
+    }
+    return "hero";
+  });
 
   useEffect(() => {
     document.documentElement.classList.add("dark");
@@ -31,6 +37,36 @@ export const Navbar = () => {
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
+
+  useEffect(() => {
+    if (!isHomePage) {
+      setActiveSection("");
+      return;
+    }
+
+    const sections = ["hero", "about", "skills", "beyond-ide", "contact"];
+    
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            setActiveSection(entry.target.id);
+          }
+        });
+      },
+      {
+        rootMargin: "-30% 0px -50% 0px",
+        threshold: 0.05,
+      }
+    );
+
+    sections.forEach((id) => {
+      const el = document.getElementById(id);
+      if (el) observer.observe(el);
+    });
+
+    return () => observer.disconnect();
+  }, [location.pathname, isHomePage]);
 
   return (
     <nav
@@ -57,21 +93,41 @@ export const Navbar = () => {
         <div className="hidden md:flex items-center space-x-8">
           {navItems.map((item, key) => {
             const href = item.isRoute ? item.href : (isHomePage ? item.href : `/${item.href}`);
+            const isActive = item.isRoute 
+              ? location.pathname.startsWith(item.href) 
+              : (isHomePage && activeSection === item.href.slice(1));
+
             return item.isRoute ? (
               <Link
                 key={key}
                 to={href}
-                className="text-foreground/80 hover:text-primary transition-colors duration-300"
+                className={cn(
+                  "text-sm transition-colors duration-300 relative py-1",
+                  isActive 
+                    ? "text-primary font-semibold" 
+                    : "text-foreground/80 hover:text-primary"
+                )}
               >
                 {item.name}
+                {isActive && (
+                  <span className="absolute bottom-0 left-0 right-0 h-[2px] bg-primary rounded-full animate-pulse-subtle shadow-[0_0_8px_rgba(139,92,246,0.5)]" />
+                )}
               </Link>
             ) : (
               <a
                 key={key}
                 href={href}
-                className="text-foreground/80 hover:text-primary transition-colors duration-300"
+                className={cn(
+                  "text-sm transition-colors duration-300 relative py-1",
+                  isActive 
+                    ? "text-primary font-semibold" 
+                    : "text-foreground/80 hover:text-primary"
+                )}
               >
                 {item.name}
+                {isActive && (
+                  <span className="absolute bottom-0 left-0 right-0 h-[2px] bg-primary rounded-full animate-pulse-subtle shadow-[0_0_8px_rgba(139,92,246,0.5)]" />
+                )}
               </a>
             );
           })}
@@ -101,11 +157,20 @@ export const Navbar = () => {
           <div className="flex flex-col space-y-8 text-xl">
             {navItems.map((item, key) => {
               const href = item.isRoute ? item.href : (isHomePage ? item.href : `/${item.href}`);
+              const isActive = item.isRoute 
+                ? location.pathname.startsWith(item.href) 
+                : (isHomePage && activeSection === item.href.slice(1));
+
               return item.isRoute ? (
                 <Link
                   key={key}
                   to={href}
-                  className="text-foreground/80 hover:text-primary transition-colors duration-300"
+                  className={cn(
+                    "transition-colors duration-300 relative py-1 text-center",
+                    isActive 
+                      ? "text-primary font-semibold" 
+                      : "text-foreground/80 hover:text-primary"
+                  )}
                   onClick={() => setIsMenuOpen(false)}
                 >
                   {item.name}
@@ -114,7 +179,12 @@ export const Navbar = () => {
                 <a
                   key={key}
                   href={href}
-                  className="text-foreground/80 hover:text-primary transition-colors duration-300"
+                  className={cn(
+                    "transition-colors duration-300 relative py-1 text-center",
+                    isActive 
+                      ? "text-primary font-semibold" 
+                      : "text-foreground/80 hover:text-primary"
+                  )}
                   onClick={() => setIsMenuOpen(false)}
                 >
                   {item.name}

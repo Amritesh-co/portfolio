@@ -1,4 +1,4 @@
-direction: down
+direction: right
 
 classes: {
   sky: {
@@ -28,16 +28,12 @@ classes: {
 }
 
 dev: "Dev Machine\nnpm run build" { class: sky }
-dist: "dist/ folder\nstatic HTML + JS + CSS" { class: muted }
-copy: "sudo cp -r dist/*\n/var/www/html/" { class: muted }
-nginx: "Nginx\nport 80 · static file server\nUbuntu Server" { class: sky }
-tunnel: "Cloudflare Tunnel\ncloudflared · no port forwarding\nTunnel ID: 96a35dbb" { class: indigo }
+nginx: "Nginx\nport 80\nUbuntu Server" { class: sky }
+tunnel: "Cloudflare Tunnel\ncloudflared\nno port forwarding" { class: indigo }
 cf: "Cloudflare Edge\nDNS + TLS + CDN\namriteshsahu.me" { class: orange }
-visitor: "Visitor Browser\nHTTPS" { class: muted }
+visitor: "Visitor\nHTTPS" { class: muted }
 
-dev -> dist: "vite build"
-dist -> copy
-copy -> nginx: "web root"
+dev -> nginx: "dist/ → /var/www/html"
 nginx -> tunnel: "http://localhost:80"
 tunnel -> cf: "encrypted tunnel"
 cf -> visitor: "HTTPS"

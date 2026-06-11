@@ -1,0 +1,70 @@
+direction: down
+
+classes: {
+  emerald: {
+    style.fill: "#064e3b"
+    style.stroke: "#10b981"
+    style.font-color: "#a7f3d0"
+    style.border-radius: 8
+  }
+  sky: {
+    style.fill: "#021520"
+    style.stroke: "#0ea5e9"
+    style.font-color: "#38bdf8"
+    style.border-radius: 8
+  }
+  violet: {
+    style.fill: "#1e1033"
+    style.stroke: "#7c3aed"
+    style.font-color: "#c4b5fd"
+    style.border-radius: 8
+  }
+  muted: {
+    style.fill: "#10111a"
+    style.stroke: "#2d3748"
+    style.font-color: "#8896aa"
+    style.border-radius: 8
+  }
+  amber: {
+    style.fill: "#1c1204"
+    style.stroke: "#d97706"
+    style.font-color: "#fbbf24"
+    style.border-radius: 8
+  }
+}
+
+nextcloud: "Nextcloud\ncloud.amriteshsahu.me" { class: emerald }
+
+rbac: "RBAC Layer\nSharing & Permissions Engine" { class: violet }
+
+users: "Users" {
+  style.fill: "#060b14"
+  style.stroke: "#1e3a5f"
+  style.font-color: "#8896aa"
+  style.border-radius: 8
+
+  admin: "Admin\nFull control · all storage" { class: emerald }
+  mom: "Mom\nPersonal space only" { class: sky }
+  collab: "Collaborators\nExplicit shares only" { class: sky }
+}
+
+storage: "Storage" {
+  style.fill: "#060b14"
+  style.stroke: "#1e3a5f"
+  style.font-color: "#8896aa"
+  style.border-radius: 8
+
+  admin_files: "Admin Files\nProjects · Certificates · Personal" { class: emerald }
+  mom_files: "Mom Files\nPhotos · Documents · Receipts" { class: sky }
+  shared: "Shared Folder\nexplicit grant required" { class: amber }
+}
+
+nextcloud -> rbac
+rbac -> users.admin
+rbac -> users.mom
+rbac -> users.collab
+users.admin -> storage.admin_files: "owns"
+users.mom -> storage.mom_files: "owns"
+users.admin -> storage.shared: "creates"
+users.collab -> storage.shared: "granted access"
+users.mom -> storage.shared: "granted access"

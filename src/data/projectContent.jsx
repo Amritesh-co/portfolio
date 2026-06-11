@@ -600,7 +600,7 @@ export const PROJECT_CONTENT = {
               <img
                 src="/diagrams/portfolio/architecture.svg"
                 alt="site architecture — browser to services"
-                style={{ width: '100%', height: 'auto' }}
+                style={{ width: '100%', maxWidth: '896px', height: 'auto' }}
                 loading="lazy"
               />
             </div>
@@ -615,7 +615,7 @@ export const PROJECT_CONTENT = {
               <img
                 src="/diagrams/portfolio/deployment.svg"
                 alt="deployment flow — dev machine to cloudflare edge"
-                style={{ width: '100%', maxWidth: '300px', height: 'auto' }}
+                style={{ width: '100%', maxWidth: '443px', height: 'auto' }}
                 loading="lazy"
               />
             </div>
@@ -1144,70 +1144,135 @@ export const PROJECT_CONTENT = {
 
   "friday": () => (
     <div className="space-y-10 text-muted-foreground">
-      <Section title="Overview">
+
+      <Section title="Project Goal">
         <p className="text-sm leading-relaxed">
-          Friday is a fully self-hosted private cloud running 24/7 on a bare-metal Ubuntu Server box.
-          It replicates enterprise cloud infrastructure — compute, storage, networking, and AI inference —
-          entirely on-prem, with zero inbound router ports exposed.
-          All external access flows through outbound-only encrypted tunnels, making it as secure as a managed cloud
-          without any subscription cost.
+          The objective was to transform an old laptop into a reliable 24/7 server capable of functioning as a personal
+          cloud storage platform — similar to Google Drive or Dropbox — built entirely on open-source technologies.
+          What began as an unused HP Pavilion became a self-hosted cloud platform accessible remotely from multiple
+          devices while maintaining full security, privacy, and data ownership. No subscription costs, no third-party
+          data access, no compromises.
         </p>
       </Section>
 
-      <Section title="System Architecture Flowchart">
-        <div className="rounded-xl border border-border/40 overflow-hidden w-full">
-          <p className="text-xs font-semibold text-foreground/80 tracking-wide uppercase text-center py-3 px-4 border-b border-border/30">
-            edge routing and container virtualization topology
-          </p>
-          <div className="w-full flex justify-center bg-[#1e1e2e] p-4">
-            <img
-              src="/diagrams/friday/architecture.svg"
-              alt="edge routing and container virtualization topology"
-              style={{ width: '100%', maxWidth: '450px', height: 'auto' }}
-              loading="lazy"
-            />
+      <Section title="System Architecture">
+        <div className="space-y-6">
+          {/* cloud edge routing */}
+          <div className="rounded-xl border border-border/40 overflow-hidden w-full">
+            <p className="text-xs font-semibold text-foreground/80 tracking-wide uppercase text-center py-3 px-4 border-b border-border/30">
+              cloud edge routing — internet to containers
+            </p>
+            <div className="w-full flex justify-center bg-[#1e1e2e] p-4">
+              <img
+                src="/diagrams/friday/architecture.svg"
+                alt="cloud edge routing — internet to containers"
+                style={{ width: '100%', maxWidth: '443px', height: 'auto' }}
+                loading="lazy"
+              />
+            </div>
+          </div>
+
+          {/* tailscale mesh */}
+          <div className="rounded-xl border border-border/40 overflow-hidden w-full">
+            <p className="text-xs font-semibold text-foreground/80 tracking-wide uppercase text-center py-3 px-4 border-b border-border/30">
+              tailscale mesh — private device-to-server connectivity
+            </p>
+            <div className="w-full flex justify-center bg-[#1e1e2e] p-4">
+              <img
+                src="/diagrams/friday/tailscale-mesh.svg"
+                alt="tailscale mesh — private device-to-server connectivity"
+                style={{ width: '100%', maxWidth: '896px', height: 'auto' }}
+                loading="lazy"
+              />
+            </div>
+          </div>
+
+          {/* nextcloud multi-user */}
+          <div className="rounded-xl border border-border/40 overflow-hidden w-full">
+            <p className="text-xs font-semibold text-foreground/80 tracking-wide uppercase text-center py-3 px-4 border-b border-border/30">
+              nextcloud multi-user — rbac & storage hierarchy
+            </p>
+            <div className="w-full flex justify-center bg-[#1e1e2e] p-4">
+              <img
+                src="/diagrams/friday/nextcloud-users.svg"
+                alt="nextcloud multi-user — rbac & storage hierarchy"
+                style={{ width: '100%', maxWidth: '896px', height: 'auto' }}
+                loading="lazy"
+              />
+            </div>
           </div>
         </div>
       </Section>
 
       <Section title="Development & Configuration Phases">
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs font-mono">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs font-mono">
           {[
             {
-              title: "Phase 1: Linux Admin",
-              desc: "Ubuntu Server installation, user configuration, SSH key pairing, systemctl daemon configuration, and journalctl logging audit setup.",
+              title: "Phase 1 — Ubuntu Server",
+              desc: "Replaced existing OS with Ubuntu Server (no GUI, lower resource usage). Created a bootable USB, configured hostname, username, and network, then ran apt update && apt upgrade. Installed OpenSSH to enable headless remote management.",
               color: violet
             },
             {
-              title: "Phase 2: Network Design",
-              desc: "Static IP routing configuration using Netplan yaml parameters. Priority metric definition to failover ethernet connection automatically to wireless.",
+              title: "Phase 2 — Static IP",
+              desc: "DHCP meant the server's IP could change on every reboot, breaking SSH and cloud access. Configured a permanent static IP (192.168.29.50) via Netplan yaml. Also set up Wi-Fi failover to keep the server reachable if the primary network dropped.",
               color: violet
             },
             {
-              title: "Phase 3: Mesh VPN",
-              desc: "Tailscale WireGuard overlay tunnel implementation. Set up direct peer-to-peer communication path traversal across external routers.",
+              title: "Phase 3 — Tailscale VPN",
+              desc: "Port forwarding requires router access (unavailable at PG). Installed Tailscale to create a private WireGuard-encrypted mesh. Every device gets a stable private IP — the server became reachable from college, home, or anywhere, with end-to-end encryption and zero public exposure.",
               color: violet
             },
             {
-              title: "Phase 4 & 5: DNS Records",
-              desc: "Configuration of nameservers and routing edge logic in Cloudflare DNS for secure domain routing.",
+              title: "Phase 4 & 5 — Domain & DNS",
+              desc: "Registered amriteshsahu.me and linked it to Cloudflare nameservers. Configured A records, CNAME aliases, and TTL settings for all subdomains — portfolio, cloud storage, and status pages.",
               color: violet
             },
             {
-              title: "Phase 6: Reverse Tunnels",
-              desc: "Deployment of cloudflared connector service running outbound TCP streams, closing all incoming network vulnerabilities.",
+              title: "Phase 6 — Cloudflare Tunnel",
+              desc: "A cloudflared systemd daemon creates a persistent outbound-only TCP tunnel to Cloudflare's edge. Public requests arrive at Cloudflare, travel inward through the tunnel to Nginx on localhost:80. Zero inbound ports open — the entire public exposure problem is eliminated.",
               color: violet
             },
             {
-              title: "Phase 7: Virtualization",
-              desc: "Docker container runtime stack implementation with independent virtual bridge subnets and volumes.",
+              title: "Phase 7 — Docker Stack",
+              desc: "Services run in isolated Docker containers rather than directly on the host. Docker Compose orchestrates Nextcloud, its database, and OpenClaw with persistent volume mounts, bridge networking, and automatic restart policies across reboots.",
+              color: violet
+            },
+            {
+              title: "Phase 8 & 9 — Nextcloud",
+              desc: "Deployed Nextcloud as a Docker container with a dedicated database. Created the admin account and configured trusted_domains and overwrite.cli.url to fix OAuth redirect loops. Nextcloud now provides file sync (documents, images, videos), browser access, and desktop/mobile clients.",
+              color: violet
+            },
+            {
+              title: "Phase 10 — Multi-User & RBAC",
+              desc: "Configured separate user accounts for family members — each with independent credentials, personal storage, and file ownership. Nextcloud's sharing system ensures users only see their own files by default. Shared folders are explicitly granted by the admin.",
+              color: violet
+            },
+            {
+              title: "Phase 11 — AI Workspace",
+              desc: "Deployed OpenClaw to coordinate multi-model routing across OpenRouter and Anthropic APIs. Configured WhatsApp selfChatMode for automated messaging triggers. The server now doubles as a local AI inference and agent orchestration platform.",
               color: violet
             },
           ].map(({ title, desc, color }) => (
-             <div key={title} className={`rounded-lg border p-3.5 ${color}`}>
-               <div className="font-bold mb-1">{title}</div>
-               <div className="opacity-70 leading-relaxed text-[11px]">{desc}</div>
-             </div>
+            <div key={title} className={`rounded-lg border p-3.5 ${color}`}>
+              <div className="font-bold mb-1.5">{title}</div>
+              <div className="opacity-70 leading-relaxed text-[11px]">{desc}</div>
+            </div>
+          ))}
+        </div>
+      </Section>
+
+      <Section title="Challenges">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs font-mono">
+          {[
+            { title: "Linux Administration", desc: "Terminal commands, permissions, systemd services, and journalctl log auditing required significant experimentation before the system was stable.", color: sky },
+            { title: "Networking Concepts", desc: "Static IPs, DNS records, NAT, VPNs, and remote access patterns — each layer had to be understood before the next could be built.", color: sky },
+            { title: "Service Management", desc: "Keeping containers running across reboots, managing volumes without data loss, and debugging compose networking introduced real DevOps workflows.", color: sky },
+            { title: "Security Without Exposure", desc: "Enabling public access without a public IP or open ports was the central design challenge. Cloudflare Tunnel solved the inbound exposure problem entirely.", color: sky },
+          ].map(({ title, desc, color }) => (
+            <div key={title} className={`rounded-lg border p-3.5 ${color}`}>
+              <div className="font-bold mb-1.5">{title}</div>
+              <div className="opacity-70 leading-relaxed text-[11px]">{desc}</div>
+            </div>
           ))}
         </div>
       </Section>
@@ -1216,16 +1281,19 @@ export const PROJECT_CONTENT = {
         <TechStack items={["Linux", "Ubuntu", "Tailscale", "Cloudflare", "Nextcloud", "Docker"]} />
       </Section>
 
-      <Section title="Key Infrastructure Capabilities">
+      <Section title="Outcome">
         <Features items={[
-          "Outbound-only secure Cloudflare tunnel closes all inbound firewall vectors, preventing external penetration attempts.",
-          "Persistent containerized Docker microservices keep system data storage and execution runtimes completely isolated.",
-          "Encrypted WireGuard mesh network allows secure admin remote terminal access from any mobile or laptop device globally.",
-          "Automated failover routing metrics configured on Netplan switch automatically between primary Ethernet and secondary 5G wireless.",
-          "Trusted domains and reverse proxy headers configured for Nextcloud platform, solving OAuth redirects and CORS blocks.",
-          "Docker-based multi-model AI agent environment with Ollama and OpenClaw platform, allowing automated workflows.",
+          "Transformed an old HP Pavilion into a 24/7 Ubuntu Server with no additional hardware cost — the built-in battery acts as a UPS.",
+          "Cloudflare Tunnel creates an outbound-only encrypted pipe to the public internet — zero inbound firewall ports exposed, no router access needed.",
+          "Tailscale WireGuard mesh provides secure SSH and admin access from any device, anywhere in the world, without a public IP.",
+          "Nextcloud delivers a full Google Drive alternative — file sync, browser access, desktop/mobile clients — hosted on private hardware.",
+          "Multi-user architecture with RBAC: each family member has independent storage and credentials; shared folders are explicitly granted.",
+          "Docker Compose stack isolates services with persistent volumes and bridge networking, surviving reboots automatically.",
+          "OpenClaw AI workspace enables multi-model agent orchestration and WhatsApp automation, all running locally on the same server.",
+          "Gained hands-on experience in Linux administration, networking, containerisation, DNS management, zero-trust security, and self-hosting.",
         ]} />
       </Section>
+
     </div>
   ),
 };
