@@ -115,7 +115,7 @@ const TechLogo = ({ name }) => {
 };
 
 const TechStack = ({ items }) => (
-  <div className="flex flex-wrap gap-4">
+  <div className="flex flex-wrap gap-4 justify-center">
     {items.map((name) => <TechLogo key={name} name={name} />)}
   </div>
 );
@@ -137,7 +137,7 @@ const Features = ({ items }) => (
         <span className="shrink-0 mt-0.5 flex h-5 w-5 items-center justify-center rounded-full bg-primary/15 text-primary text-[10px] font-bold">
           {i + 1}
         </span>
-        <span className="text-sm text-muted-foreground leading-relaxed">{f}</span>
+        <span className="text-sm text-muted-foreground leading-relaxed text-justify">{f}</span>
       </div>
     ))}
   </div>
@@ -170,7 +170,7 @@ export const PROJECT_CONTENT = {
     <div className="space-y-10 text-muted-foreground">
 
       <Section title="Overview">
-        <p className="text-sm leading-relaxed">
+        <p className="text-sm leading-relaxed text-justify">
           A production-grade AI medical assistant that routes queries across four specialised agents
           orchestrated by a LangGraph state machine. The system supports text, voice, and medical
           image inputs. A hybrid RAG pipeline (Qdrant + BM25 + cross-encoder reranking) answers
@@ -293,7 +293,7 @@ export const PROJECT_CONTENT = {
     <div className="space-y-10 text-muted-foreground">
 
       <Section title="Overview">
-        <p className="text-sm leading-relaxed">
+        <p className="text-sm leading-relaxed text-justify">
           A fully self-hosted, zero-cloud multi-agent AI framework built on the OpenClaw gateway.
           Five specialised agents — Commander, Researcher, Coder, Analyst, Writer — run on local LLMs
           (Qwen 3 8B, Qwen2.5-Coder 14B, Mistral 7B) via Ollama, communicate over WebSocket at
@@ -453,7 +453,7 @@ export const PROJECT_CONTENT = {
     <div className="space-y-10 text-muted-foreground">
 
       <Section title="Overview">
-        <p className="text-sm leading-relaxed">
+        <p className="text-sm leading-relaxed text-justify">
           A full-stack furniture business platform combining a customer-facing storefront with an
           internal ERP system — built as a monolithic Next.js 16 App Router application. The
           customer side covers browsing, cart (React Context + localStorage), checkout, and order
@@ -578,7 +578,7 @@ export const PROJECT_CONTENT = {
     <div className="space-y-10 text-muted-foreground">
 
       <Section title="Overview">
-        <p className="text-sm leading-relaxed">
+        <p className="text-sm leading-relaxed text-justify">
           A dark-themed personal portfolio built entirely with React, Vite, and Tailwind CSS — no
           backend required. The site is a single-page application with smooth hash-based section
           scrolling, an animated floating code canvas on the hero, and a fully responsive layout.
@@ -681,7 +681,7 @@ export const PROJECT_CONTENT = {
     <div className="space-y-10 text-muted-foreground">
 
       <Section title="Overview">
-        <p className="text-sm leading-relaxed">
+        <p className="text-sm leading-relaxed text-justify">
           A fully offline, ChatGPT-style chat interface for Gemma 4 (gemma4:e4b, 4-bit quantised)
           running locally via Ollama. Built with React 19 + Vite 8, it streams model output
           token-by-token via Fetch API + ReadableStream parsing Ollama's NDJSON format. Multi-session
@@ -784,7 +784,7 @@ export const PROJECT_CONTENT = {
     <div className="space-y-10 text-muted-foreground">
 
       <Section title="Overview">
-        <p className="text-sm leading-relaxed">
+        <p className="text-sm leading-relaxed text-justify">
           An interactive algorithm visualisation platform built with TypeScript, Next.js 14, and
           Zustand. Five algorithm categories — Sorting, Pathfinding, Graph (Floyd-Warshall), Dynamic
           Programming, and N-Queens — are each managed by a dedicated Zustand store that captures
@@ -873,7 +873,7 @@ export const PROJECT_CONTENT = {
     <div className="space-y-10 text-muted-foreground">
 
       <Section title="Overview">
-        <p className="text-sm leading-relaxed">
+        <p className="text-sm leading-relaxed text-justify">
           A full-stack geospatial analytics platform that ingests FIRMS (Fire Information for Resource
           Management System) satellite CSV data, classifies fire events, computes burn severity from
           Sentinel-2 imagery using dNBR (differenced Normalised Burn Ratio) via the Google Earth Engine
@@ -978,7 +978,7 @@ export const PROJECT_CONTENT = {
     <div className="space-y-10 text-muted-foreground">
 
       <Section title="Overview">
-        <p className="text-sm leading-relaxed">
+        <p className="text-sm leading-relaxed text-justify">
           An interactive platform for uploading weighted graphs as CSV edge-list files, visualising
           them as live 3D network graphs using React Three Fiber / @react-three/drei 10, and running
           three pathfinding algorithms — Dijkstra (greedy, non-negative weights), Bellman-Ford
@@ -1062,7 +1062,7 @@ export const PROJECT_CONTENT = {
     <div className="space-y-10 text-muted-foreground">
 
       <Section title="Overview">
-        <p className="text-sm leading-relaxed">
+        <p className="text-sm leading-relaxed text-justify">
           A browser-based environmental monitoring and carbon awareness tool with three integrated
           modules — all in vanilla HTML, CSS, and JavaScript with zero build steps or dependencies.
           The landing page (index.html) explains carbon footprint concepts and drives awareness.
@@ -1146,7 +1146,7 @@ export const PROJECT_CONTENT = {
     <div className="space-y-10 text-muted-foreground">
 
       <Section title="Project Goal">
-        <p className="text-sm leading-relaxed">
+        <p className="text-sm leading-relaxed text-justify">
           The objective was to transform an old laptop into a reliable 24/7 server capable of functioning as a personal
           cloud storage platform — similar to Google Drive or Dropbox — built entirely on open-source technologies.
           What began as an unused HP Pavilion became a self-hosted cloud platform accessible remotely from multiple
