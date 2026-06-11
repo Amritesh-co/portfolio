@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import { Navbar } from "../components/Navbar";
 import { Footer } from "../components/Footer";
 import { PROJECTS } from "../data/projects";
-import { ParticleNetworkCanvas } from "../components/ParticleNetworkCanvas";
+import { CodeFragmentsCanvas } from "../components/CodeFragmentsCanvas";
 
 function LaptopCard({ project }) {
   return (
@@ -107,7 +107,7 @@ function LaptopCard({ project }) {
 export const Projects = () => {
   return (
     <div className="min-h-screen bg-background text-foreground overflow-x-hidden relative">
-      <ParticleNetworkCanvas />
+      <CodeFragmentsCanvas />
       <Navbar />
       <main className="relative z-10 pt-32 pb-24 px-4">
         <div className="container mx-auto max-w-6xl">
