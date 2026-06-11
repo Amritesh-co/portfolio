@@ -2,23 +2,21 @@ import React from "react";
 import { Sparkles } from "lucide-react";
 
 const IMAGES = [
-  { src: "/beyond-ide/badminton.jpeg", label: "Badminton" },
-  { src: "/beyond-ide/img1.jpeg", label: "Adventure & Outdoors" },
-  { src: "/beyond-ide/img2.jpeg", label: "Travel & Culture" },
-  { src: "/beyond-ide/img3.jpeg", label: "Photography & Landscapes" },
-  { src: "/beyond-ide/img4.jpeg", label: "Socials & Community" },
-  { src: "/beyond-ide/img5.jpeg", label: "Recreation & Off-Duty" },
+  { src: "/beyond-ide/img1.jpeg",       label: "Best Rotaractor of the Year" },
+  { src: "/beyond-ide/img2.jpeg",       label: "Rotaract Club of R.V.C.E." },
+  { src: "/beyond-ide/img3.jpeg",       label: "Traveller" },
+  { src: "/beyond-ide/cycling.jpeg",    label: "Cycling" },
+  { src: "/beyond-ide/img5.jpeg",       label: "Trekking" },
+  { src: "/beyond-ide/badminton.jpeg",  label: "Badminton" },
 ];
 
 export const BeyondIDESection = () => {
   return (
     <section id="beyond-ide" className="py-24 px-4 relative bg-zinc-950/40 border-t border-border/10">
-      {/* Background radial glow */}
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 h-[500px] w-[500px] bg-primary/5 rounded-full blur-3xl pointer-events-none" />
 
       <div className="container mx-auto max-w-5xl space-y-12">
-        
-        {/* Section Header */}
+
         <div className="text-center space-y-3 max-w-2xl mx-auto">
           <h2 className="text-3xl md:text-5xl font-bold tracking-tight">
             Beyond the <span className="text-primary">IDE</span>
@@ -28,21 +26,18 @@ export const BeyondIDESection = () => {
           </p>
         </div>
 
-        {/* 3-Column Image Grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 pt-6">
           {IMAGES.map((img, idx) => (
-            <div 
-              key={idx} 
+            <div
+              key={idx}
               className="rounded-2xl overflow-hidden border border-border/20 bg-zinc-900/10 hover:border-border/60 transition-all duration-300 group h-[280px] relative"
             >
-              <img 
-                src={img.src} 
-                alt={img.label} 
+              <img
+                src={img.src}
+                alt={img.label}
                 className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                 loading="lazy"
               />
-              
-              {/* Glassmorphic label panel */}
               <div className="absolute bottom-4 left-4 right-4 bg-zinc-950/80 backdrop-blur-md border border-border/20 py-2.5 px-3.5 rounded-xl transition-colors group-hover:border-primary/30 flex items-center justify-between">
                 <span className="text-xs font-mono font-bold text-slate-200 tracking-wide">
                   {img.label}
