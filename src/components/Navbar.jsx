@@ -43,13 +43,14 @@ export const Navbar = () => {
     >
       <div className="container flex items-center justify-between">
         <a
-          className="text-xl font-bold text-primary flex items-center"
+          className="flex items-center"
           href={isHomePage ? "#hero" : "/#hero"}
         >
-          <span className="relative z-10">
-            <span className="text-glow text-foreground"> Amritesh </span>{" "}
-            Sahu
-          </span>
+          <img
+            src="/high-resolution-color-logo.png"
+            alt="Amritesh Sahu"
+            className="h-8 md:h-10 w-auto object-contain"
+          />
         </a>
 
         {/* desktop nav */}

@@ -294,7 +294,7 @@ export const Resume = () => {
                       <div key={p.name} className="space-y-2">
                         <div>
                           <h4 className="text-base font-bold text-slate-200 leading-snug">{p.name}</h4>
-                          <span className="inline-block mt-1 text-xs font-mono text-primary/70 bg-primary/5 border border-primary/15 px-2.5 py-0.5 rounded-full">
+                          <span className="inline-block mt-1 text-xs font-mono text-primary/70 bg-primary/5 px-2.5 py-0.5 rounded-full">
                             {p.stack}
                           </span>
                         </div>

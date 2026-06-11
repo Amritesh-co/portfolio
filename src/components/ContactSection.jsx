@@ -79,9 +79,9 @@ export const ContactSection = () => {
             </div>
 
             {/* Social Connect */}
-            <div className="pt-8 border-t border-border/10">
+            <div className="pt-8 border-t border-border/10 text-center">
               <h4 className="font-medium mb-4 text-slate-200">Connect With Me</h4>
-              <div className="flex space-x-4">
+              <div className="flex space-x-4 justify-center">
                 <a 
                   href="https://github.com/Amritesh-co" 
                   target="_blank" 
