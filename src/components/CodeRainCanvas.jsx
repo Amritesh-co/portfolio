@@ -75,7 +75,7 @@ export function CodeRainCanvas() {
     <canvas
       ref={canvasRef}
       aria-hidden="true"
-      className="absolute inset-0 w-full h-full pointer-events-none"
+      className="absolute inset-0 w-full h-full pointer-events-none blur-[1.5px]"
       style={{ opacity: 0.45 }}
     />
   );

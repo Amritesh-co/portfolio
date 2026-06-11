@@ -118,6 +118,42 @@ $ sudo systemctl status cloudflared
   }
 }`,
     skills: ["OpenClaw platform", "API Integrations", "JSON schema validation", "Model routing"]
+  },
+  {
+    title: "Phase 12: Public Hosting Challenge",
+    subtitle: "Dynamic IP · NAT · Security Risks",
+    objectives: "Identifying & Solving the Public Exposure Problem",
+    details: "Serving the portfolio locally was easy — but making it globally accessible required solving three problems: residential ISPs assign dynamic public IPs that change periodically, the server sat behind the PG router's NAT with no port-forwarding access, and opening ports 80/443 to the internet directly would expose the server to port scanning, brute-force, and DDoS. A safer architecture was needed.",
+    skills: ["NAT concepts", "Dynamic IP problems", "Port security", "Attack surface analysis"]
+  },
+  {
+    title: "Phase 13: Nginx Web Server",
+    subtitle: "Static File Hosting on Ubuntu",
+    objectives: "Serving HTML/CSS/JS Assets Over HTTP",
+    details: "Installed Nginx to serve the built portfolio files from /var/www/html. Nginx handles incoming HTTP requests and returns the correct static assets — HTML, CSS, JS, images. The Cloudflare Tunnel points to http://localhost:80, so Nginx is the last hop before content reaches the visitor. The deployment workflow became: npm run build → copy dist/ to /var/www/html → restart Nginx.",
+    code: `# Build and deploy to Nginx web root
+npm run build
+sudo rm -rf /var/www/html/*
+sudo cp -r dist/* /var/www/html/
+sudo systemctl restart nginx
+sudo systemctl restart cloudflared`,
+    skills: ["Nginx", "Static file serving", "Web root config", "systemctl", "Build pipelines"]
+  },
+  {
+    title: "Phase 14: Multi-Service Architecture",
+    subtitle: "One Laptop · Many Services",
+    objectives: "Coexisting Cloud, Website & AI on One Machine",
+    details: "The web hosting system did not replace the cloud server — both coexist on the same Ubuntu machine. Nginx serves the portfolio website, cloudflared tunnels all public traffic to Cloudflare's edge, Nextcloud runs in Docker for cloud storage, and OpenClaw handles AI workflows. A single laptop now performs compute, storage, web hosting, and AI inference simultaneously with no subscription cost.",
+    code: `# All services running on one machine
+$ sudo systemctl status nginx cloudflared
+● nginx.service        Active: active (running)
+● cloudflared.service  Active: active (running)
+
+$ docker ps
+nextcloud   Up 3 days   :8080
+db          Up 3 days
+openclaw    Up 2 days   :3000`,
+    skills: ["Multi-service hosting", "Resource management", "Service coexistence", "Production architecture"]
   }
 ];
 
@@ -352,6 +388,43 @@ export const Friday = () => {
                   </div>
                 </div>
               ))}
+            </div>
+          </div>
+
+          {/* Architecture Diagrams */}
+          <div className="space-y-6 text-left">
+            <h3 className="text-lg font-bold font-mono text-primary flex items-center gap-2 border-b border-border/10 pb-3">
+              <Network className="h-5 w-5" /> Infrastructure Diagrams
+            </h3>
+            <div className="space-y-6">
+              {/* deployment workflow */}
+              <div className="rounded-xl border border-border/40 overflow-hidden w-full">
+                <p className="text-xs font-semibold text-foreground/80 tracking-wide uppercase text-center py-3 px-4 border-b border-border/30">
+                  deployment workflow — dev machine to global visitor
+                </p>
+                <div className="w-full flex justify-center bg-[#1e1e2e] p-4">
+                  <img
+                    src="/diagrams/friday/deployment.svg"
+                    alt="deployment workflow — dev machine to global visitor"
+                    style={{ width: '100%', maxWidth: '896px', height: 'auto' }}
+                    loading="lazy"
+                  />
+                </div>
+              </div>
+              {/* multi-service architecture */}
+              <div className="rounded-xl border border-border/40 overflow-hidden w-full">
+                <p className="text-xs font-semibold text-foreground/80 tracking-wide uppercase text-center py-3 px-4 border-b border-border/30">
+                  full service architecture — one laptop, many roles
+                </p>
+                <div className="w-full flex justify-center bg-[#1e1e2e] p-4">
+                  <img
+                    src="/diagrams/friday/multi-service.svg"
+                    alt="full service architecture — one laptop, many roles"
+                    style={{ width: '100%', maxWidth: '896px', height: 'auto' }}
+                    loading="lazy"
+                  />
+                </div>
+              </div>
             </div>
           </div>
 

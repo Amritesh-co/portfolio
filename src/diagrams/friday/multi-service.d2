@@ -1,0 +1,73 @@
+direction: down
+
+classes: {
+  sky: {
+    style.fill: "#021520"
+    style.stroke: "#0ea5e9"
+    style.font-color: "#38bdf8"
+    style.border-radius: 8
+  }
+  indigo: {
+    style.fill: "#0f0e2a"
+    style.stroke: "#6366f1"
+    style.font-color: "#a5b4fc"
+    style.border-radius: 8
+  }
+  violet: {
+    style.fill: "#1e1033"
+    style.stroke: "#7c3aed"
+    style.font-color: "#c4b5fd"
+    style.border-radius: 8
+  }
+  orange: {
+    style.fill: "#1a0e00"
+    style.stroke: "#f97316"
+    style.font-color: "#fdba74"
+    style.border-radius: 8
+  }
+  emerald: {
+    style.fill: "#064e3b"
+    style.stroke: "#10b981"
+    style.font-color: "#a7f3d0"
+    style.border-radius: 8
+  }
+  amber: {
+    style.fill: "#1c1204"
+    style.stroke: "#d97706"
+    style.font-color: "#fbbf24"
+    style.border-radius: 8
+  }
+  muted: {
+    style.fill: "#10111a"
+    style.stroke: "#2d3748"
+    style.font-color: "#8896aa"
+    style.border-radius: 8
+  }
+}
+
+server: "Ubuntu Server\nHP Pavilion 14 · i5 12th Gen · 16 GB RAM\namriteshsahu.me" { class: violet }
+
+nginx: "Nginx\nportfolio.amriteshsahu.me\nstatic files · /var/www/html" { class: sky }
+
+tunnel: "cloudflared\noutbound Cloudflare Tunnel\nzero open inbound ports" { class: indigo }
+
+docker: "Docker Compose Stack" {
+  style.fill: "#060b14"
+  style.stroke: "#1e3a5f"
+  style.font-color: "#8896aa"
+  style.border-radius: 8
+
+  nextcloud: "Nextcloud\ncloud.amriteshsahu.me · :8080\npersonal cloud storage" { class: emerald }
+  openclaw: "OpenClaw\nai.amriteshsahu.me · :3000\nAI agent workspace" { class: amber }
+  db: "MariaDB\nNextcloud database\npersistent volume" { class: muted }
+}
+
+tailscale: "Tailscale\nprivate WireGuard mesh\nSSH admin · 100.x.x.x" { class: orange }
+
+server -> nginx
+server -> tunnel
+server -> docker.nextcloud
+server -> docker.openclaw
+server -> docker.db
+server -> tailscale
+docker.nextcloud -> docker.db: "SQL"

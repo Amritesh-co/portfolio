@@ -1,0 +1,55 @@
+direction: right
+
+classes: {
+  sky: {
+    style.fill: "#021520"
+    style.stroke: "#0ea5e9"
+    style.font-color: "#38bdf8"
+    style.border-radius: 8
+  }
+  indigo: {
+    style.fill: "#0f0e2a"
+    style.stroke: "#6366f1"
+    style.font-color: "#a5b4fc"
+    style.border-radius: 8
+  }
+  violet: {
+    style.fill: "#1e1033"
+    style.stroke: "#7c3aed"
+    style.font-color: "#c4b5fd"
+    style.border-radius: 8
+  }
+  orange: {
+    style.fill: "#1a0e00"
+    style.stroke: "#f97316"
+    style.font-color: "#fdba74"
+    style.border-radius: 8
+  }
+  muted: {
+    style.fill: "#10111a"
+    style.stroke: "#2d3748"
+    style.font-color: "#8896aa"
+    style.border-radius: 8
+  }
+  emerald: {
+    style.fill: "#064e3b"
+    style.stroke: "#10b981"
+    style.font-color: "#a7f3d0"
+    style.border-radius: 8
+  }
+}
+
+dev: "Dev Machine\nnpm run build" { class: sky }
+dist: "dist/ folder\nHTML · CSS · JS · assets" { class: muted }
+webroot: "/var/www/html\nNginx web root" { class: violet }
+nginx: "Nginx\nport 80 · static serving" { class: violet }
+tunnel: "cloudflared Tunnel\noutbound-only · systemd" { class: indigo }
+cf: "Cloudflare Edge\nDNS · TLS · CDN\namriteshsahu.me" { class: orange }
+user: "Global Visitor\nHTTPS · any device" { class: emerald }
+
+dev -> dist: "vite build"
+dist -> webroot: "sudo cp -r dist/* /var/www/html/"
+webroot -> nginx: "serves files"
+nginx -> tunnel: "http://localhost:80"
+tunnel -> cf: "encrypted tunnel"
+cf -> user: "HTTPS"

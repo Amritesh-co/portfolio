@@ -1201,6 +1201,36 @@ export const PROJECT_CONTENT = {
               />
             </div>
           </div>
+
+          {/* deployment workflow */}
+          <div className="rounded-xl border border-border/40 overflow-hidden w-full">
+            <p className="text-xs font-semibold text-foreground/80 tracking-wide uppercase text-center py-3 px-4 border-b border-border/30">
+              deployment workflow — dev machine to global visitor
+            </p>
+            <div className="w-full flex justify-center bg-[#1e1e2e] p-4">
+              <img
+                src="/diagrams/friday/deployment.svg"
+                alt="deployment workflow — dev machine to global visitor"
+                style={{ width: '100%', maxWidth: '896px', height: 'auto' }}
+                loading="lazy"
+              />
+            </div>
+          </div>
+
+          {/* multi-service architecture */}
+          <div className="rounded-xl border border-border/40 overflow-hidden w-full">
+            <p className="text-xs font-semibold text-foreground/80 tracking-wide uppercase text-center py-3 px-4 border-b border-border/30">
+              full service architecture — one laptop, many roles
+            </p>
+            <div className="w-full flex justify-center bg-[#1e1e2e] p-4">
+              <img
+                src="/diagrams/friday/multi-service.svg"
+                alt="full service architecture — one laptop, many roles"
+                style={{ width: '100%', maxWidth: '896px', height: 'auto' }}
+                loading="lazy"
+              />
+            </div>
+          </div>
         </div>
       </Section>
 
@@ -1252,6 +1282,21 @@ export const PROJECT_CONTENT = {
               desc: "Deployed OpenClaw to coordinate multi-model routing across OpenRouter and Anthropic APIs. Configured WhatsApp selfChatMode for automated messaging triggers. The server now doubles as a local AI inference and agent orchestration platform.",
               color: violet
             },
+            {
+              title: "Phase 12 — Public Hosting Challenge",
+              desc: "Expanding from private cloud to public web hosting introduced three new problems: the PG's dynamic residential IP changes periodically, the router's NAT blocks all inbound traffic, and opening ports 80/443 directly to the internet creates an attack surface. A safer architecture was needed.",
+              color: sky
+            },
+            {
+              title: "Phase 13 — Nginx Web Server",
+              desc: "Installed Nginx to serve the built portfolio from /var/www/html. Deployment workflow: npm run build → copy dist/ to /var/www/html → restart Nginx. The Cloudflare Tunnel points to http://localhost:80, making Nginx the final hop before content reaches any visitor globally.",
+              color: sky
+            },
+            {
+              title: "Phase 14 — Multi-Service Architecture",
+              desc: "Nginx (website), cloudflared (public tunnel), Nextcloud (cloud storage), and OpenClaw (AI) all coexist on the same Ubuntu machine. One repurposed laptop now handles compute, web hosting, cloud storage, and AI inference simultaneously — no VPS, no subscription cost.",
+              color: sky
+            },
           ].map(({ title, desc, color }) => (
             <div key={title} className={`rounded-lg border p-3.5 ${color}`}>
               <div className="font-bold mb-1.5">{title}</div>
@@ -1284,13 +1329,15 @@ export const PROJECT_CONTENT = {
       <Section title="Outcome">
         <Features items={[
           "Transformed an old HP Pavilion into a 24/7 Ubuntu Server with no additional hardware cost — the built-in battery acts as a UPS.",
-          "Cloudflare Tunnel creates an outbound-only encrypted pipe to the public internet — zero inbound firewall ports exposed, no router access needed.",
-          "Tailscale WireGuard mesh provides secure SSH and admin access from any device, anywhere in the world, without a public IP.",
-          "Nextcloud delivers a full Google Drive alternative — file sync, browser access, desktop/mobile clients — hosted on private hardware.",
-          "Multi-user architecture with RBAC: each family member has independent storage and credentials; shared folders are explicitly granted.",
-          "Docker Compose stack isolates services with persistent volumes and bridge networking, surviving reboots automatically.",
-          "OpenClaw AI workspace enables multi-model agent orchestration and WhatsApp automation, all running locally on the same server.",
-          "Gained hands-on experience in Linux administration, networking, containerisation, DNS management, zero-trust security, and self-hosting.",
+          "Cloudflare Tunnel creates an outbound-only encrypted pipe to the public internet — zero inbound firewall ports, no router access needed.",
+          "Tailscale WireGuard mesh provides encrypted SSH and admin access from any device, anywhere, without a public IP.",
+          "Nextcloud delivers a full Google Drive alternative — file sync, browser access, desktop/mobile clients — on private hardware.",
+          "Multi-user RBAC: each family member has independent credentials and storage; shared folders require explicit admin grant.",
+          "Docker Compose isolates all services with persistent volumes and bridge networking, surviving reboots automatically.",
+          "Nginx serves the portfolio website from /var/www/html; deployment is a single build → copy → restart workflow.",
+          "amriteshsahu.me is publicly accessible over HTTPS globally — DNS managed by Cloudflare, SSL automatic, zero port forwarding.",
+          "One laptop now handles web hosting, personal cloud storage, AI inference, and admin access simultaneously with no subscription cost.",
+          "Hands-on experience across Linux administration, networking, containerisation, DNS, zero-trust security, Nginx, and public web hosting.",
         ]} />
       </Section>
 
