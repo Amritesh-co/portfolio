@@ -1,5 +1,6 @@
 import {
   Github,
+  Instagram,
   Linkedin,
   Mail,
   MapPin,
@@ -96,6 +97,14 @@ export const ContactSection = () => {
                   className="p-3 rounded-full bg-zinc-900 border border-border/20 text-muted-foreground hover:text-primary hover:border-primary/40 transition-all duration-300"
                 >
                   <Linkedin className="h-5 w-5" />
+                </a>
+                <a 
+                  href="https://www.instagram.com/amritesh.sahu/" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="p-3 rounded-full bg-zinc-900 border border-border/20 text-muted-foreground hover:text-primary hover:border-primary/40 transition-all duration-300"
+                >
+                  <Instagram className="h-5 w-5" />
                 </a>
               </div>
             </div>
