@@ -10,6 +10,7 @@ const navItems = [
   { name: "Projects", href: "/projects", isRoute: true },
   { name: "Home Lab", href: "/friday", isRoute: true },
   { name: "Beyond IDE", href: "#beyond-ide" },
+  { name: "Resume", href: "/resume", isRoute: true },
   { name: "Contact", href: "#contact" },
 ];
 
