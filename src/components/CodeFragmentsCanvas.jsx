@@ -76,7 +76,7 @@ export function CodeFragmentsCanvas() {
       const rect = canvas.parentElement.getBoundingClientRect();
       w = canvas.width = rect.width;
       h = canvas.height = rect.height;
-      sprites = Array.from({ length: 38 }, () => mkSprite(w, h));
+      sprites = Array.from({ length: 70 }, () => mkSprite(w, h));
     }
 
     init();
