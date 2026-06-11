@@ -1,0 +1,43 @@
+direction: down
+
+classes: {
+  sky: {
+    style.fill: "#021520"
+    style.stroke: "#0ea5e9"
+    style.font-color: "#38bdf8"
+    style.border-radius: 8
+  }
+  indigo: {
+    style.fill: "#0f0e2a"
+    style.stroke: "#6366f1"
+    style.font-color: "#a5b4fc"
+    style.border-radius: 8
+  }
+  muted: {
+    style.fill: "#10111a"
+    style.stroke: "#2d3748"
+    style.font-color: "#8896aa"
+    style.border-radius: 8
+  }
+  orange: {
+    style.fill: "#1a0e00"
+    style.stroke: "#f97316"
+    style.font-color: "#fdba74"
+    style.border-radius: 8
+  }
+}
+
+dev: "Dev Machine\nnpm run build" { class: sky }
+dist: "dist/ folder\nstatic HTML + JS + CSS" { class: muted }
+copy: "sudo cp -r dist/*\n/var/www/html/" { class: muted }
+nginx: "Nginx\nport 80 · static file server\nUbuntu Server" { class: sky }
+tunnel: "Cloudflare Tunnel\ncloudflared · no port forwarding\nTunnel ID: 96a35dbb" { class: indigo }
+cf: "Cloudflare Edge\nDNS + TLS + CDN\namriteshsahu.me" { class: orange }
+visitor: "Visitor Browser\nHTTPS" { class: muted }
+
+dev -> dist: "vite build"
+dist -> copy
+copy -> nginx: "web root"
+nginx -> tunnel: "http://localhost:80"
+tunnel -> cf: "encrypted tunnel"
+cf -> visitor: "HTTPS"

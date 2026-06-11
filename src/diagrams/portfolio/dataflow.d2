@@ -1,0 +1,58 @@
+direction: right
+
+classes: {
+  sky: {
+    style.fill: "#021520"
+    style.stroke: "#0ea5e9"
+    style.font-color: "#38bdf8"
+    style.border-radius: 8
+  }
+  indigo: {
+    style.fill: "#0f0e2a"
+    style.stroke: "#6366f1"
+    style.font-color: "#a5b4fc"
+    style.border-radius: 8
+  }
+  muted: {
+    style.fill: "#10111a"
+    style.stroke: "#2d3748"
+    style.font-color: "#8896aa"
+    style.border-radius: 8
+  }
+}
+
+source: "Data Sources" {
+  style.fill: "#060b14"
+  style.stroke: "#1e3a5f"
+  style.font-color: "#8896aa"
+  style.border-radius: 8
+
+  pjs: "projects.js\nslug · name · tags\ngradient · github" { class: sky }
+  pcjsx: "projectContent.jsx\nOverview · Diagrams\nTech Stack · Features" { class: indigo }
+}
+
+routing: "React Router" {
+  style.fill: "#060b14"
+  style.stroke: "#1e3a5f"
+  style.font-color: "#8896aa"
+  style.border-radius: 8
+
+  grid: "/projects\nProjectCard grid" { class: sky }
+  detail: "/projects/:slug\nProjectDetail page" { class: indigo }
+}
+
+result: "Output" {
+  style.fill: "#060b14"
+  style.stroke: "#1e3a5f"
+  style.font-color: "#8896aa"
+  style.border-radius: 8
+
+  card: "ProjectCard\ngradient · name · tags\ndescription · links" { class: sky }
+  page: "Full Detail Page\ndiagrams · stack\nbullet features" { class: indigo }
+}
+
+source.pjs -> routing.grid: "maps PROJECTS[]"
+source.pjs -> routing.detail: "find by slug"
+source.pcjsx -> routing.detail: "content[slug]()"
+routing.grid -> result.card: "renders"
+routing.detail -> result.page: "renders"

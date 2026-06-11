@@ -1093,97 +1093,7 @@ export const PROJECT_CONTENT = {
     </div>
   ),
 
-  "friday": () => <FridayContent />,
-};
-
-const FridayContent = () => {
-  const [flowDirection, setFlowDirection] = useState("TB");
-
-  useEffect(() => {
-    const checkDirection = () => {
-      setFlowDirection(window.innerWidth >= 768 ? "LR" : "TB");
-    };
-    checkDirection();
-    window.addEventListener("resize", checkDirection);
-    return () => window.removeEventListener("resize", checkDirection);
-  }, []);
-
-  const FLOWCHART_NODES = [
-    {
-      id: "1",
-      type: "flowNode",
-      data: {
-        label: "Public Request",
-        sub: "amriteshsahu.me · HTTPS",
-        c: "border-sky-500/50 bg-sky-950/40 text-sky-200"
-      }
-    },
-    {
-      id: "2",
-      type: "flowNode",
-      data: {
-        label: "Cloudflare Edge",
-        sub: "SSL termination · DDoS · DNS",
-        c: "border-orange-400/50 bg-orange-950/40 text-orange-200"
-      }
-    },
-    {
-      id: "3",
-      type: "flowNode",
-      data: {
-        label: "cloudflared Tunnel",
-        sub: "0 open inbound ports",
-        c: "border-primary/60 bg-indigo-950/50 text-primary shadow-[0_0_18px_rgba(139,92,246,0.25)]"
-      }
-    },
-    {
-      id: "4",
-      type: "flowNode",
-      data: {
-        label: "Ubuntu Server",
-        sub: "ubuntu-core-01 · LAN only",
-        c: "border-violet-400/50 bg-violet-950/40 text-violet-200"
-      }
-    },
-    {
-      id: "5",
-      type: "flowNode",
-      data: {
-        label: "Docker Bridge",
-        sub: "container network · NAT",
-        c: "border-blue-400/50 bg-blue-950/40 text-blue-200"
-      }
-    },
-    {
-      id: "6",
-      type: "flowNode",
-      data: {
-        label: "Nextcloud",
-        sub: "cloud storage · :8080",
-        c: "border-emerald-400/50 bg-emerald-950/40 text-emerald-200"
-      }
-    },
-    {
-      id: "7",
-      type: "flowNode",
-      data: {
-        label: "OpenClaw",
-        sub: "AI agent workspace · :3000",
-        c: "border-amber-400/50 bg-amber-950/40 text-amber-200"
-      }
-    }
-  ];
-
-  const FLOWCHART_EDGES = [
-    { id: "e1-2", source: "1", target: "2", label: "HTTPS" },
-    { id: "e2-3", source: "2", target: "3", label: "Zero Trust" },
-    { id: "e3-4", source: "3", target: "4", label: "outbound only" },
-    { id: "e4-5", source: "4", target: "5", label: "bridge net" },
-    { id: "e5-6", source: "5", target: "6", label: ":8080" },
-    { id: "e5-7", source: "5", target: "7", label: ":3000" }
-  ];
-
-  return (
+  "friday": () => (
     <div className="space-y-10 text-muted-foreground">
       <Section title="Overview">
         <p className="text-sm leading-relaxed">
@@ -1196,17 +1106,23 @@ const FridayContent = () => {
       </Section>
 
       <Section title="System Architecture Flowchart">
-        <div className="rounded-xl border border-border/40 overflow-hidden w-full bg-[#1e1e2e]/50 p-4">
-          <FlowDiagram
-            nodes={FLOWCHART_NODES}
-            edges={FLOWCHART_EDGES}
-            direction={flowDirection}
-          />
+        <div className="rounded-xl border border-border/40 overflow-hidden w-full">
+          <p className="text-xs font-semibold text-foreground/80 tracking-wide uppercase text-center py-3 px-4 border-b border-border/30">
+            edge routing and container virtualization topology
+          </p>
+          <div className="w-full flex justify-center bg-[#1e1e2e] p-4">
+            <img
+              src="/diagrams/friday/architecture.svg"
+              alt="edge routing and container virtualization topology"
+              style={{ width: '100%', maxWidth: '938px', height: 'auto' }}
+              loading="lazy"
+            />
+          </div>
         </div>
       </Section>
 
       <Section title="Development & Configuration Phases">
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs font-mono">
           {[
             {
               title: "Phase 1: Linux Admin",
@@ -1241,7 +1157,7 @@ const FridayContent = () => {
           ].map(({ title, desc, color }) => (
              <div key={title} className={`rounded-lg border p-3.5 ${color}`}>
                <div className="font-bold mb-1">{title}</div>
-               <div className="opacity-70 leading-relaxed">{desc}</div>
+               <div className="opacity-70 leading-relaxed text-[11px]">{desc}</div>
              </div>
           ))}
         </div>
@@ -1262,5 +1178,5 @@ const FridayContent = () => {
         ]} />
       </Section>
     </div>
-  );
+  ),
 };

@@ -1,0 +1,61 @@
+direction: right
+
+classes: {
+  sky: {
+    style.fill: "#082f49"
+    style.stroke: "#0ea5e9"
+    style.font-color: "#7dd3fc"
+    style.border-radius: 8
+  }
+  orange: {
+    style.fill: "#2c1c0f"
+    style.stroke: "#fb923c"
+    style.font-color: "#fdba74"
+    style.border-radius: 8
+  }
+  indigo: {
+    style.fill: "#1e1b4b"
+    style.stroke: "#6366f1"
+    style.font-color: "#c7d2fe"
+    style.border-radius: 8
+  }
+  violet: {
+    style.fill: "#1e1033"
+    style.stroke: "#7c3aed"
+    style.font-color: "#c4b5fd"
+    style.border-radius: 8
+  }
+  blue: {
+    style.fill: "#172554"
+    style.stroke: "#3b82f6"
+    style.font-color: "#93c5fd"
+    style.border-radius: 8
+  }
+  emerald: {
+    style.fill: "#064e3b"
+    style.stroke: "#10b981"
+    style.font-color: "#a7f3d0"
+    style.border-radius: 8
+  }
+  amber: {
+    style.fill: "#1c1204"
+    style.stroke: "#d97706"
+    style.font-color: "#fbbf24"
+    style.border-radius: 8
+  }
+}
+
+public: "Public Request\namriteshsahu.me · HTTPS" { class: sky }
+cloudflare: "Cloudflare Edge\nSSL termination · DDoS · DNS" { class: orange }
+tunnel: "cloudflared Tunnel\n0 open inbound ports" { class: indigo }
+server: "Ubuntu Server\nubuntu-core-01 · LAN only" { class: violet }
+docker: "Docker Bridge\ncontainer network · NAT" { class: blue }
+nextcloud: "Nextcloud\ncloud storage · :8080" { class: emerald }
+openclaw: "OpenClaw\nAI agent workspace · :3000" { class: amber }
+
+public -> cloudflare: "HTTPS"
+cloudflare -> tunnel: "Zero Trust"
+tunnel -> server: "outbound connection"
+server -> docker: "bridge net"
+docker -> nextcloud: ":8080"
+docker -> openclaw: ":3000"

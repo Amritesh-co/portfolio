@@ -1,0 +1,59 @@
+direction: right
+
+classes: {
+  sky: {
+    style.fill: "#021520"
+    style.stroke: "#0ea5e9"
+    style.font-color: "#38bdf8"
+    style.border-radius: 8
+  }
+  indigo: {
+    style.fill: "#0f0e2a"
+    style.stroke: "#6366f1"
+    style.font-color: "#a5b4fc"
+    style.border-radius: 8
+  }
+  muted: {
+    style.fill: "#10111a"
+    style.stroke: "#2d3748"
+    style.font-color: "#8896aa"
+    style.border-radius: 8
+  }
+}
+
+browser: "Browser\namriteshsahu.me" { class: muted }
+
+spa: "React SPA\nVite + React 18" { class: sky }
+
+router: "React Router v6\nbrowser history mode" { class: sky }
+
+pages: "Pages" {
+  style.fill: "#060b14"
+  style.stroke: "#1e3a5f"
+  style.font-color: "#8896aa"
+  style.border-radius: 8
+
+  home: "Home (/)\n7 sections" { class: sky }
+  projects: "Projects (/projects)\ncard grid" { class: sky }
+  detail: "Project Detail\n(/projects/:slug)\ndiagrams + tech" { class: sky }
+  resume: "Resume (/resume)\nprint-to-PDF" { class: sky }
+  friday: "Friday (/friday)\nhome lab" { class: sky }
+}
+
+contact: "Web3Forms API\nno backend" { class: indigo }
+email: "Gmail Inbox\namriteshsahu96@gmail.com" { class: muted }
+data: "projects.js\nprojectContent.jsx" { class: indigo }
+canvas: "CodeFragments\nCanvas (Hero)" { class: muted }
+
+browser -> spa
+spa -> router
+router -> pages.home
+router -> pages.projects
+router -> pages.detail
+router -> pages.resume
+router -> pages.friday
+pages.home -> contact: "form submit"
+pages.home -> canvas: "hero bg"
+contact -> email: "POST /submit"
+data -> pages.projects: "card data"
+data -> pages.detail: "content JSX"
