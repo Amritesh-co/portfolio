@@ -1,349 +1,357 @@
-import React from "react";
 import { Link } from "react-router-dom";
 import { Navbar } from "../components/Navbar";
 import { Footer } from "../components/Footer";
-import { 
-  FileText, 
-  Download, 
-  Mail, 
-  MapPin, 
-  Github, 
-  Linkedin, 
-  ArrowLeft,
-  Calendar,
-  Briefcase,
-  GraduationCap,
-  Wrench,
-  Award
+import {
+  FileText, Download, Mail, Phone, MapPin,
+  Github, Linkedin, ArrowLeft, Calendar,
+  Briefcase, GraduationCap, Wrench, Award, ExternalLink,
 } from "lucide-react";
 
+/* ─────────────────────────────────────────────
+   DATA — sourced directly from the resume PDF
+───────────────────────────────────────────── */
+const CONTACT = [
+  { icon: Mail,    label: "amriteshsahu96@gmail.com", href: "mailto:amriteshsahu96@gmail.com" },
+  { icon: Phone,   label: "+91-8252406988",            href: "tel:+918252406988" },
+  { icon: MapPin,  label: "Bengaluru, India",          href: null },
+  { icon: Github,  label: "GitHub",                    href: "https://github.com" },
+  { icon: Linkedin,label: "LinkedIn",                  href: "https://linkedin.com" },
+];
+
+const EDUCATION = [
+  {
+    degree: "B.E. in Data Science",
+    institution: "RV College of Engineering, Bengaluru",
+    period: "2023 – Present",
+  },
+  {
+    degree: "Class XII (CBSE)",
+    institution: "Delhi Public School, Ranchi",
+    period: "2022",
+  },
+];
+
+const SKILLS = [
+  { label: "Languages",           items: ["Java", "Python", "JavaScript"] },
+  { label: "Frontend",            items: ["React", "Next.js", "Vite", "HTML", "CSS"] },
+  { label: "Backend",             items: ["Node.js", "Express", "FastAPI", "Flask"] },
+  { label: "Databases & Storage", items: ["MongoDB", "MySQL", "Redis", "localStorage"] },
+  { label: "AI / ML",             items: ["Scikit-learn", "TensorFlow Lite", "CNNs", "LSTM", "Transfer Learning", "RAG"] },
+  { label: "Systems & Tools",     items: ["Ollama", "REST APIs", "ReadableStream", "Git", "Vercel", "Firebase", "Google Earth Engine"] },
+];
+
+const PROJECTS = [
+  {
+    name: "Gemma UI — Local LLM Interaction Interface",
+    stack: "React · Vite · Ollama · Gemma 4 · D2 WASM",
+    bullets: [
+      "Built a fully local LLM interface using React and Vite integrated with Gemma 4 via Ollama (no cloud dependency).",
+      "Implemented streaming responses using fetch and ReadableStream for real-time token-level output rendering.",
+      "Designed document ingestion pipeline (PDF, DOCX, PPTX) using Node.js to enable RAG-style querying over user files.",
+      "Integrated D2 (WebAssembly) to generate and render system diagrams from model output.",
+      "Resolved React state race conditions during streaming using refs and controlled updates.",
+      "Developed local persistence with conversation history, search, and editing using browser storage.",
+    ],
+  },
+  {
+    name: "Multi-Agent Medical Assistant — AI-Powered Healthcare System",
+    stack: "LangGraph · FastAPI · PyTorch · Qdrant · Docker",
+    bullets: [
+      "Developed a multi-agent medical assistant using LangGraph and FastAPI with intelligent routing across RAG, web search, and medical imaging agents.",
+      "Built an advanced hybrid RAG pipeline with Qdrant vector database, semantic chunking, BM25 retrieval, and cross-encoder re-ranking for medical literature search.",
+      "Integrated deep learning models for chest X-ray disease detection, skin lesion classification, and brain MRI tumor analysis using PyTorch.",
+      "Implemented voice-enabled interaction with speech-to-text and ElevenLabs text-to-speech integration for accessible medical assistance.",
+      "Designed a human-in-the-loop validation workflow and safety guardrails system for secure and reliable AI-assisted medical analysis.",
+      "Deployed using Docker and FastAPI with support for real-time image uploads, session management, and scalable API endpoints.",
+    ],
+  },
+  {
+    name: "Woodcraft Furniture Store — Full-Stack E-Commerce & ERP Platform",
+    stack: "Next.js · MongoDB · Redis · NextAuth.js · Recharts",
+    bullets: [
+      "Built full-stack platform using Next.js, MongoDB, and Redis combining storefront with internal ERP.",
+      "Designed order pipeline covering cart, checkout, inventory updates, and automated invoice generation.",
+      "Implemented role-based authentication (NextAuth.js) and Redis-based rate limiting for API protection.",
+      "Developed admin dashboards for sales, orders, and analytics using Recharts.",
+      "Engineered inventory tracking system with audit logs for consistency across operations.",
+    ],
+  },
+];
+
+const LEADERSHIP = [
+  {
+    role: "International Services Director",
+    org: "Rotaract Club of RVCE",
+    period: "2025 – 2026",
+    bullets: [
+      "Led cross-club collaborations and managed international partnerships.",
+      "Coordinated events and strengthened community engagement initiatives.",
+    ],
+  },
+];
+
+const ACHIEVEMENTS = [
+  "Awarded Rotaractor of the Year (2024–2025) for outstanding dedication and service.",
+  "Strong foundation in Data Structures and Algorithms.",
+  "Active contributor to technical projects and hackathons.",
+];
+
+/* ─────────────────────────────────────────────
+   SUB-COMPONENTS
+───────────────────────────────────────────── */
+function SectionHeading({ icon: Icon, children }) {
+  return (
+    <h3 className="flex items-center gap-2 text-[11px] font-bold uppercase tracking-[0.18em] font-mono text-primary border-b border-primary/20 pb-2.5 mb-4">
+      <Icon className="h-3.5 w-3.5 shrink-0" />
+      {children}
+    </h3>
+  );
+}
+
+function Tag({ label }) {
+  return (
+    <span className="text-[10px] px-2 py-0.5 rounded-md bg-primary/10 text-primary border border-primary/20 font-mono">
+      {label}
+    </span>
+  );
+}
+
+/* ─────────────────────────────────────────────
+   PAGE
+───────────────────────────────────────────── */
 export const Resume = () => {
   return (
     <div className="min-h-screen bg-background text-foreground overflow-x-hidden">
-      {/* CSS print overrides scoped to this page */}
-      <style dangerouslySetInnerHTML={{ __html: `
-        @media print {
-          body {
-            background: white !important;
-            color: #111827 !important;
-            font-size: 12px !important;
+      <style dangerouslySetInnerHTML={{
+        __html: `
+          .resume-sheet, .resume-sheet * { text-align: left !important; }
+          @media print {
+            body { background: #fff !important; color: #111 !important; }
+            nav, footer, .print-hide { display: none !important; }
+            main { padding-top: 0 !important; padding-bottom: 0 !important; }
+            .resume-sheet {
+              border: none !important; box-shadow: none !important;
+              background: white !important; border-radius: 0 !important;
+              max-width: 100% !important;
+            }
+            .resume-sheet * { color: #111 !important; border-color: #d1d5db !important; }
+            .skill-tag { background: #f3f4f6 !important; color: #111 !important; border: 1px solid #e5e7eb !important; }
           }
-          nav, footer, .print-hide {
-            display: none !important;
-          }
-          main {
-            padding-top: 0 !important;
-            padding-bottom: 0 !important;
-          }
-          .resume-container {
-            border: none !important;
-            box-shadow: none !important;
-            background: white !important;
-            padding: 0 !important;
-            margin: 0 !important;
-            max-width: 100% !important;
-            color: #111827 !important;
-          }
-          .print-text-slate {
-            color: #1f2937 !important;
-          }
-          .print-text-muted {
-            color: #4b5563 !important;
-          }
-          .print-border-muted {
-            border-color: #d1d5db !important;
-          }
-          .print-tag {
-            background-color: #f3f4f6 !important;
-            color: #1f2937 !important;
-            border: 1px solid #e5e7eb !important;
-          }
-          .print-accent {
-            color: #0d9488 !important; /* Teal print accent */
-          }
-          .print-section {
-            page-break-inside: avoid;
-          }
-        }
-      `}} />
+        `
+      }} />
 
       <Navbar />
 
-      <main className="relative z-10 pt-32 pb-24 px-4">
-        <div className="container mx-auto max-w-4xl">
-          
-          {/* Back link */}
-          <Link
-            to="/"
-            className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-primary transition-colors duration-200 mb-8 print-hide"
-          >
-            <ArrowLeft className="h-4 w-4" />
-            Back to Home
-          </Link>
+      <main className="relative z-10 pt-24 pb-16">
 
-          {/* Action Header Panel */}
-          <div className="flex justify-between items-center bg-zinc-900/40 border border-border/20 py-4 px-6 mb-8 rounded-2xl backdrop-blur-sm print-hide">
-            <div className="flex items-center gap-2.5">
-              <FileText className="text-primary h-5 w-5" />
-              <span className="text-sm font-mono text-slate-300">Amritesh_Sahu_Resume.pdf</span>
-            </div>
-            <button 
-              onClick={() => window.print()} 
-              className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-primary text-white font-medium hover:bg-primary/90 transition-all text-sm cursor-pointer shadow-lg shadow-primary/20"
+          {/* ── top bar ── */}
+          <div className="flex items-center justify-between mb-0 px-6 md:px-12 pb-4 border-b border-border/10 print-hide">
+            <Link
+              to="/"
+              className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-primary transition-colors duration-200"
             >
-              <Download className="h-4 w-4" /> Print / Save PDF
-            </button>
+              <ArrowLeft className="h-4 w-4" />
+              Back to Home
+            </Link>
+            <div className="flex items-center gap-3">
+              <span className="flex items-center gap-2 text-xs font-mono text-muted-foreground bg-zinc-900/50 border border-border/20 px-3 py-1.5 rounded-lg">
+                <FileText className="h-3.5 w-3.5 text-primary" />
+                Amritesh_Sahu_Resume
+              </span>
+              <button
+                onClick={() => window.print()}
+                className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-primary text-white text-sm font-semibold hover:bg-primary/90 transition-all shadow-lg shadow-primary/25 cursor-pointer"
+              >
+                <Download className="h-4 w-4" />
+                Save PDF
+              </button>
+            </div>
           </div>
 
-          {/* Resume Sheet Container */}
-          <div className="resume-container bg-card border border-border/20 rounded-3xl p-8 md:p-12 shadow-2xl flex flex-col gap-10">
-            
-            {/* 1. Header Information */}
-            <div className="border-b border-border/10 pb-8 print-border-muted flex flex-col md:flex-row md:justify-between md:items-end gap-6">
-              <div className="space-y-2">
-                <h1 className="text-4xl font-extrabold tracking-tight print-text-slate">
-                  Amritesh Sahu
-                </h1>
-                <p className="text-lg font-mono text-primary font-semibold tracking-wider print-accent">
-                  AI/ML & Backend Software Engineer
-                </p>
-              </div>
+          {/* ── resume sheet ── */}
+          <div className="resume-sheet overflow-hidden">
 
-              {/* Contact details */}
-              <div className="grid grid-cols-1 sm:grid-cols-2 md:flex md:flex-col gap-2.5 text-xs text-muted-foreground font-mono print-text-muted">
-                <a href="mailto:amriteshsahu96@gmail.com" className="flex items-center gap-2 hover:text-primary transition-colors">
-                  <Mail className="h-3.5 w-3.5 text-primary print-accent" /> amriteshsahu96@gmail.com
-                </a>
-                <span className="flex items-center gap-2">
-                  <MapPin className="h-3.5 w-3.5 text-primary print-accent" /> Bengaluru, India
-                </span>
-                <a href="https://github.com/Amritesh-co" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 hover:text-primary transition-colors">
-                  <Github className="h-3.5 w-3.5 text-primary print-accent" /> github.com/Amritesh-co
-                </a>
-                <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 hover:text-primary transition-colors">
-                  <Linkedin className="h-3.5 w-3.5 text-primary print-accent" /> linkedin.com
-                </a>
+            {/* ── HEADER ── */}
+            <div className="bg-gradient-to-br from-zinc-900 to-zinc-950 border-b border-border/10 px-6 md:px-12 py-10">
+              <div className="flex items-center gap-8">
+                {/* Profile photo */}
+                <div className="shrink-0 relative">
+                  <div className="w-24 h-24 md:w-28 md:h-28 rounded-full ring-2 ring-primary/60 ring-offset-2 ring-offset-zinc-900 overflow-hidden shadow-xl shadow-primary/20">
+                    <img
+                      src="/profile.png"
+                      alt="Amritesh Sahu"
+                      className="w-full h-full object-cover object-center"
+                    />
+                  </div>
+                  {/* Online dot */}
+                  <span className="absolute bottom-1 right-1 w-3.5 h-3.5 bg-emerald-400 rounded-full ring-2 ring-zinc-900" />
+                </div>
+
+                {/* Name + subtitle + contacts */}
+                <div className="flex-1 min-w-0 space-y-3">
+                  <div>
+                    <h1 className="text-3xl md:text-4xl font-extrabold tracking-tight text-white leading-tight">
+                      Amritesh Sahu
+                    </h1>
+                    <p className="text-xs md:text-sm font-mono text-primary font-medium tracking-wide mt-1">
+                      Data Science Undergraduate — AI/ML + Backend Systems — LeetCode Enthusiast
+                    </p>
+                  </div>
+                  {/* Contact row */}
+                  <div className="flex flex-wrap gap-x-5 gap-y-1.5 pt-1 border-t border-white/10">
+                    {CONTACT.map(({ icon: Icon, label, href }) =>
+                      href ? (
+                        <a
+                          key={label}
+                          href={href}
+                          target={href.startsWith("http") ? "_blank" : undefined}
+                          rel="noopener noreferrer"
+                          className="flex items-center gap-1.5 text-[11px] font-mono text-slate-400 hover:text-primary transition-colors"
+                        >
+                          <Icon className="h-3 w-3 shrink-0 text-primary/70" />
+                          {label}
+                          {href.startsWith("http") && <ExternalLink className="h-2.5 w-2.5 opacity-50" />}
+                        </a>
+                      ) : (
+                        <span key={label} className="flex items-center gap-1.5 text-[11px] font-mono text-slate-400">
+                          <Icon className="h-3 w-3 shrink-0 text-primary/70" />
+                          {label}
+                        </span>
+                      )
+                    )}
+                  </div>
+                </div>
               </div>
             </div>
 
-            {/* 2. Professional Summary */}
-            <div className="print-section space-y-3">
-              <h2 className="text-lg font-bold uppercase tracking-widest font-mono text-primary border-b border-border/10 pb-2 print-accent print-border-muted">
-                Professional Profile
-              </h2>
-              <p className="text-sm text-muted-foreground leading-relaxed text-justify print-text-muted">
-                Aspiring software engineer focusing on AI/ML workflows, multi-agent orchestrations, and scalable backend services. Experienced in building robust pipelines that bridge the gap between research-level machine learning models and high-performance production code. Actively seeking internship opportunities where I can apply my skills in backend engineering, database optimization, and local LLM architectures.
-              </p>
-            </div>
+            {/* ── BODY ── */}
+            <div className="grid grid-cols-1 md:grid-cols-[320px_1fr] divide-y md:divide-y-0 md:divide-x divide-border/10">
 
-            {/* Main two columns */}
-            <div className="grid grid-cols-1 md:grid-cols-12 gap-8 items-start">
-              
-              {/* Left Column: Skills & Education */}
-              <div className="md:col-span-4 space-y-8">
-                
+              {/* ── LEFT SIDEBAR ── */}
+              <aside className="px-6 md:px-10 py-8 space-y-8 bg-zinc-950/30">
+
                 {/* Education */}
-                <div className="print-section space-y-4">
-                  <h3 className="text-base font-bold uppercase tracking-widest font-mono text-primary border-b border-border/10 pb-2 print-accent print-border-muted flex items-center gap-2">
-                    <GraduationCap className="h-4 w-4" /> Education
-                  </h3>
-                  <div className="space-y-3 text-xs">
-                    <div>
-                      <h4 className="font-bold text-slate-200 print-text-slate text-sm">
-                        B.E. in Data Science
-                      </h4>
-                      <p className="text-muted-foreground print-text-muted font-medium">
-                        RV College of Engineering
-                      </p>
-                      <p className="text-[10px] text-muted-foreground/60 font-mono mt-1 flex items-center gap-1.5 print-text-muted">
-                        <Calendar className="h-3 w-3" /> Expected 2027
-                      </p>
-                    </div>
-                  </div>
-                </div>
-
-                {/* Skills Grid */}
-                <div className="print-section space-y-4">
-                  <h3 className="text-base font-bold uppercase tracking-widest font-mono text-primary border-b border-border/10 pb-2 print-accent print-border-muted flex items-center gap-2">
-                    <Wrench className="h-4 w-4" /> Skills
-                  </h3>
-                  
+                <section>
+                  <SectionHeading icon={GraduationCap}>Education</SectionHeading>
                   <div className="space-y-4">
-                    {/* Languages */}
-                    <div className="space-y-1.5">
-                      <span className="text-xs font-mono font-bold text-slate-300 print-text-slate">Languages</span>
-                      <div className="flex flex-wrap gap-1">
-                        {["Python", "JavaScript", "TypeScript", "Java", "C++", "SQL"].map((s) => (
-                          <span key={s} className="text-[10px] px-2 py-0.5 rounded-md bg-zinc-900 border border-border/10 font-mono print-tag">{s}</span>
-                        ))}
+                    {EDUCATION.map((e) => (
+                      <div key={e.degree}>
+                        <p className="text-sm font-bold text-slate-200 leading-snug">{e.degree}</p>
+                        <p className="text-xs text-muted-foreground mt-0.5 leading-snug">{e.institution}</p>
+                        <p className="flex items-center gap-1 text-[11px] text-muted-foreground/60 font-mono mt-1">
+                          <Calendar className="h-2.5 w-2.5 shrink-0" />{e.period}
+                        </p>
                       </div>
-                    </div>
-
-                    {/* AI / ML */}
-                    <div className="space-y-1.5">
-                      <span className="text-xs font-mono font-bold text-slate-300 print-text-slate">AI & ML</span>
-                      <div className="flex flex-wrap gap-1">
-                        {["LangGraph", "PyTorch", "Qdrant", "TensorFlow", "Pandas", "NumPy"].map((s) => (
-                          <span key={s} className="text-[10px] px-2 py-0.5 rounded-md bg-zinc-900 border border-border/10 font-mono print-tag">{s}</span>
-                        ))}
-                      </div>
-                    </div>
-
-                    {/* Frameworks */}
-                    <div className="space-y-1.5">
-                      <span className="text-xs font-mono font-bold text-slate-300 print-text-slate">Frameworks</span>
-                      <div className="flex flex-wrap gap-1">
-                        {["FastAPI", "Node.js", "Express", "React", "Next.js"].map((s) => (
-                          <span key={s} className="text-[10px] px-2 py-0.5 rounded-md bg-zinc-900 border border-border/10 font-mono print-tag">{s}</span>
-                        ))}
-                      </div>
-                    </div>
-
-                    {/* Developer Tools */}
-                    <div className="space-y-1.5">
-                      <span className="text-xs font-mono font-bold text-slate-300 print-text-slate">Infra & Tools</span>
-                      <div className="flex flex-wrap gap-1">
-                        {["Docker", "Ubuntu Linux", "Cloudflare", "Tailscale", "Git", "PostgreSQL", "MongoDB", "Redis"].map((s) => (
-                          <span key={s} className="text-[10px] px-2 py-0.5 rounded-md bg-zinc-900 border border-border/10 font-mono print-tag">{s}</span>
-                        ))}
-                      </div>
-                    </div>
+                    ))}
                   </div>
-                </div>
+                </section>
+
+                {/* Skills */}
+                <section>
+                  <SectionHeading icon={Wrench}>Skills</SectionHeading>
+                  <div className="space-y-3">
+                    {SKILLS.map(({ label, items }) => (
+                      <div key={label}>
+                        <p className="text-[10px] font-bold font-mono text-slate-500 uppercase tracking-wider mb-1.5">{label}</p>
+                        <div className="flex flex-wrap gap-1">
+                          {items.map((s) => (
+                            <span
+                              key={s}
+                              className="skill-tag text-[10px] px-1.5 py-0.5 rounded bg-zinc-900/80 border border-border/20 font-mono text-slate-300"
+                            >
+                              {s}
+                            </span>
+                          ))}
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </section>
 
                 {/* Achievements */}
-                <div className="print-section space-y-4">
-                  <h3 className="text-base font-bold uppercase tracking-widest font-mono text-primary border-b border-border/10 pb-2 print-accent print-border-muted flex items-center gap-2">
-                    <Award className="h-4 w-4" /> Awards
-                  </h3>
-                  <div className="space-y-2 text-xs">
-                    <div>
-                      <h4 className="font-bold text-slate-200 print-text-slate">
-                        Rotaractor of the Year
-                      </h4>
-                      <p className="text-muted-foreground print-text-muted">
-                        Rotaract Club of RVCE (2024-25)
-                      </p>
-                    </div>
-                  </div>
-                </div>
+                <section>
+                  <SectionHeading icon={Award}>Achievements</SectionHeading>
+                  <ul className="space-y-2.5">
+                    {ACHIEVEMENTS.map((a, i) => (
+                      <li key={i} className="flex gap-2 text-[11px] text-muted-foreground leading-relaxed">
+                        <span className="text-primary shrink-0 mt-0.5">▸</span>
+                        <span>{a}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </section>
 
-              </div>
+              </aside>
 
-              {/* Right Column: Projects & Experience */}
-              <div className="md:col-span-8 space-y-8">
-                
-                {/* Projects Section */}
-                <div className="print-section space-y-4">
-                  <h3 className="text-base font-bold uppercase tracking-widest font-mono text-primary border-b border-border/10 pb-2 print-accent print-border-muted flex items-center gap-2">
-                    <Briefcase className="h-4 w-4" /> Selected Projects
-                  </h3>
-                  
+              {/* ── RIGHT MAIN ── */}
+              <div className="px-6 md:px-10 py-8 space-y-8">
+
+                {/* Projects */}
+                <section>
+                  <SectionHeading icon={Briefcase}>Projects</SectionHeading>
                   <div className="space-y-6">
-                    {/* Project 1 */}
-                    <div className="space-y-2 text-xs">
-                      <div className="flex flex-wrap justify-between items-baseline gap-2">
-                        <h4 className="text-sm font-bold text-slate-200 print-text-slate">
-                          Multi-Agent Medical Assistant
-                        </h4>
-                        <span className="text-[10px] font-mono text-muted-foreground/60 print-text-muted">
-                          LangGraph · FastAPI · PyTorch · Qdrant
-                        </span>
-                      </div>
-                      <ul className="list-disc pl-4 space-y-1 text-muted-foreground leading-relaxed print-text-muted">
-                        <li>Developed a multi-agent AI assistant orchestrating query routing between RAG, Tavily web search, and medical image classifiers.</li>
-                        <li>Configured a hybrid RAG pipeline with Qdrant vector store, BM25 keyword search, and Cross-Encoder re-ranking.</li>
-                        <li>Built deep learning models using PyTorch to analyze chest X-ray and brain MRI scans, executing log-probability gating for confidence checks.</li>
-                      </ul>
-                    </div>
-
-                    {/* Project 2 */}
-                    <div className="space-y-2 text-xs">
-                      <div className="flex flex-wrap justify-between items-baseline gap-2">
-                        <h4 className="text-sm font-bold text-slate-200 print-text-slate">
-                          openClaw Swarm
-                        </h4>
-                        <span className="text-[10px] font-mono text-muted-foreground/60 print-text-muted">
-                          Node.js · Ollama · MCP · YAML
-                        </span>
-                      </div>
-                      <ul className="list-disc pl-4 space-y-1 text-muted-foreground leading-relaxed print-text-muted">
-                        <li>Designed a local-first multi-agent AI framework letting specialized agents execute tasks in parallel without cloud dependencies.</li>
-                        <li>Integrated Model Context Protocol (MCP) to supply LLMs with direct access to local system files, codebases, and databases.</li>
-                        <li>Built an interactive browser-based dashboard and API adapters for Slack, Discord, and Telegram integration.</li>
-                      </ul>
-                    </div>
-
-                    {/* Project 3 */}
-                    <div className="space-y-2 text-xs">
-                      <div className="flex flex-wrap justify-between items-baseline gap-2">
-                        <h4 className="text-sm font-bold text-slate-200 print-text-slate">
-                          Woodcraft Store & ERP
-                        </h4>
-                        <span className="text-[10px] font-mono text-muted-foreground/60 print-text-muted">
-                          Next.js · Redis · MongoDB · NextAuth
-                        </span>
-                      </div>
-                      <ul className="list-disc pl-4 space-y-1 text-muted-foreground leading-relaxed print-text-muted">
-                        <li>Created a full-stack e-commerce storefront coupled with an internal Enterprise Resource Planning (ERP) database.</li>
-                        <li>Implemented secure, role-based admin routing, Redis API rate limiting, and analytics graphs with Recharts.</li>
-                      </ul>
-                    </div>
-
-                    {/* Project 4 */}
-                    <div className="space-y-2 text-xs">
-                      <div className="flex flex-wrap justify-between items-baseline gap-2">
-                        <h4 className="text-sm font-bold text-slate-200 print-text-slate">
-                          Gemma UI
-                        </h4>
-                        <span className="text-[10px] font-mono text-muted-foreground/60 print-text-muted">
-                          React · Vite · Ollama · D2 (WASM)
-                        </span>
-                      </div>
-                      <ul className="list-disc pl-4 space-y-1 text-muted-foreground leading-relaxed print-text-muted">
-                        <li>Developed a fast local chat client interface for Gemma 4 models running locally on Ollama via ReadableStream API.</li>
-                        <li>Integrated web-assembly D2 diagram compilers to dynamically render architecture flowcharts from model responses.</li>
-                      </ul>
-                    </div>
-                  </div>
-                </div>
-
-                {/* Leadership / Experience */}
-                <div className="print-section space-y-4">
-                  <h3 className="text-base font-bold uppercase tracking-widest font-mono text-primary border-b border-border/10 pb-2 print-accent print-border-muted flex items-center gap-2">
-                    <Briefcase className="h-4 w-4" /> Leadership & Experience
-                  </h3>
-                  
-                  <div className="space-y-4">
-                    <div className="space-y-2 text-xs">
-                      <div className="flex flex-wrap justify-between items-baseline gap-2">
+                    {PROJECTS.map((p) => (
+                      <div key={p.name} className="space-y-2">
+                        {/* Name on its own line, stack pill below */}
                         <div>
-                          <h4 className="text-sm font-bold text-slate-200 print-text-slate">
-                            International Services Director
-                          </h4>
-                          <p className="text-muted-foreground print-text-muted font-medium">
-                            Rotaract Club of RVCE
-                          </p>
+                          <h4 className="text-xs font-bold text-slate-200 leading-snug">{p.name}</h4>
+                          <span className="inline-block mt-1 text-[10px] font-mono text-primary/70 bg-primary/5 border border-primary/15 px-2 py-0.5 rounded-full">
+                            {p.stack}
+                          </span>
                         </div>
-                        <span className="text-[10px] font-mono text-muted-foreground/60 print-text-muted">
-                          Bengaluru · 2024 – Present
-                        </span>
+                        <ul className="space-y-1 pl-3 border-l border-border/10">
+                          {p.bullets.map((b, i) => (
+                            <li key={i} className="flex gap-2 text-[11px] text-muted-foreground leading-relaxed">
+                              <span className="text-primary/50 shrink-0 mt-[3px]">•</span>
+                              <span>{b}</span>
+                            </li>
+                          ))}
+                        </ul>
                       </div>
-                      <ul className="list-disc pl-4 space-y-1 text-muted-foreground leading-relaxed print-text-muted">
-                        <li>Leading international service projects, youth exchanges, and global community development projects.</li>
-                        <li>Orchestrated cross-chapter collaboration campaigns for educational outreach and sustainability initiatives.</li>
-                      </ul>
-                    </div>
+                    ))}
                   </div>
-                </div>
+                </section>
+
+                {/* Leadership */}
+                <section>
+                  <SectionHeading icon={Briefcase}>Leadership</SectionHeading>
+                  <div className="space-y-5">
+                    {LEADERSHIP.map((l) => (
+                      <div key={l.role} className="space-y-2">
+                        <div className="flex flex-wrap items-baseline justify-between gap-2">
+                          <div>
+                            <h4 className="text-xs font-bold text-slate-200">{l.role}</h4>
+                            <p className="text-[11px] text-muted-foreground mt-0.5">{l.org}</p>
+                          </div>
+                          <span className="flex items-center gap-1 text-[10px] font-mono text-muted-foreground/60 shrink-0">
+                            <Calendar className="h-2.5 w-2.5" />{l.period}
+                          </span>
+                        </div>
+                        <ul className="space-y-1 pl-3 border-l border-border/10">
+                          {l.bullets.map((b, i) => (
+                            <li key={i} className="flex gap-2 text-[11px] text-muted-foreground leading-relaxed">
+                              <span className="text-primary/50 shrink-0 mt-[3px]">•</span>
+                              <span>{b}</span>
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                    ))}
+                  </div>
+                </section>
 
               </div>
 
             </div>
-
           </div>
 
-        </div>
+          {/* ── footer note ── */}
+          <p className="text-center text-xs text-muted-foreground/50 mt-6 px-6 print-hide font-mono">
+            Use <span className="text-primary">Save PDF</span> to export · Or drop{" "}
+            <code className="bg-zinc-800 px-1 rounded">Amritesh_s_Resume.pdf</code> in{" "}
+            <code className="bg-zinc-800 px-1 rounded">public/</code> to enable direct download
+          </p>
+
       </main>
 
       <Footer />
