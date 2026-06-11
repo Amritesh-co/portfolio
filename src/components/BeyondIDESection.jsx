@@ -41,9 +41,6 @@ export const BeyondIDESection = () => {
         
         {/* Section Header */}
         <div className="text-center space-y-3 max-w-2xl mx-auto">
-          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-mono bg-indigo-500/10 text-indigo-400 border border-indigo-500/20">
-            <Command className="h-3 w-3" /> Behind the Screen
-          </div>
           <h2 className="text-3xl md:text-5xl font-bold tracking-tight">
             Beyond the <span className="text-primary">IDE</span>
           </h2>
