@@ -1,0 +1,39 @@
+direction: down
+
+classes: {
+  cyan: {
+    style.fill: "#042f2e"
+    style.stroke: "#06b6d4"
+    style.font-color: "#67e8f9"
+    style.border-radius: 8
+  }
+  muted: {
+    style.fill: "#10111a"
+    style.stroke: "#2d3748"
+    style.font-color: "#8896aa"
+    style.border-radius: 8
+  }
+}
+
+grid: "Grid Component\nNxM cells · pointer events" { class: cyan }
+walldrag: "Left-click drag\ntoggle wall cells" { class: muted }
+sedrag: "Start/End drag\nreposition source & target nodes" { class: muted }
+pathstore: "usePathfindingStore\ngrid[][] · walls[] · start · end · algorithm" { class: cyan }
+dijkstra: "Dijkstra\npriority queue · non-negative weights" { class: cyan }
+astar: "A*\nf = g + h · Manhattan heuristic" { class: cyan }
+bfs: "BFS\nFIFO · unweighted shortest path" { class: cyan }
+dfs: "DFS\nstack · full graph traversal" { class: cyan }
+colors: "Cell colours\nunvisited → exploring → visited → optimal path" { class: muted }
+
+grid -> walldrag
+grid -> sedrag
+walldrag -> pathstore
+sedrag -> pathstore
+pathstore -> dijkstra
+pathstore -> astar
+pathstore -> bfs
+pathstore -> dfs
+dijkstra -> colors: "step captured"
+astar -> colors
+bfs -> colors
+dfs -> colors

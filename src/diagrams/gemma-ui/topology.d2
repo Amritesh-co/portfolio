@@ -1,0 +1,45 @@
+direction: down
+
+classes: {
+  indigo: {
+    style.fill: "#1e1b4b"
+    style.stroke: "#4f46e5"
+    style.font-color: "#a5b4fc"
+    style.border-radius: 8
+  }
+  muted: {
+    style.fill: "#10111a"
+    style.stroke: "#2d3748"
+    style.font-color: "#8896aa"
+    style.border-radius: 8
+  }
+}
+
+user: "User" { class: muted }
+sidebar: "Sidebar.jsx\nconversation list · search · rename · delete" { class: indigo }
+localstor: "localStorage\ngemma_conversations · gemma_active_id" { class: muted }
+app: "App.jsx\nroot state · activeIdRef race-condition fix" { class: indigo }
+activeref: "useRef(activeId)\nalways reflects latest id during stream" { class: muted }
+chatarea: "ChatArea.jsx\ncomposer · file chips · streaming renderer" { class: indigo }
+tokenmeter: "tokens/sec meter\neval_count / eval_duration from Ollama" { class: muted }
+renderpipe: "Render Pipeline\nReactMarkdown → SyntaxHighlighter → D2 WASM" { class: muted }
+ollama: "Ollama :11434\nPOST /api/chat — streaming" { class: indigo }
+model: "gemma4:e4b\n4-bit quantised · NDJSON chunks" { class: muted }
+history: "conversation history\nmessages[] sent each request" { class: muted }
+parser: "Parser Server :3001\nserver/index.js — Express 5" { class: indigo }
+parse_api: "POST /api/parse\nmultipart/form-data · max 10 MB" { class: muted }
+parsers: "pdf-parse / officeparser\nPDF · DOCX · PPTX · XLSX · CSV · MD" { class: muted }
+
+user -> sidebar
+user -> app
+user -> chatarea
+sidebar -> localstor
+app -> activeref
+chatarea -> tokenmeter
+chatarea -> renderpipe
+chatarea -> ollama
+chatarea -> parser
+ollama -> model
+model -> history
+parser -> parse_api
+parse_api -> parsers

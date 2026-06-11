@@ -1,0 +1,37 @@
+direction: down
+
+classes: {
+  violet: {
+    style.fill: "#1e1033"
+    style.stroke: "#7c3aed"
+    style.font-color: "#c4b5fd"
+    style.border-radius: 8
+  }
+  amber: {
+    style.fill: "#1c1204"
+    style.stroke: "#d97706"
+    style.font-color: "#fbbf24"
+    style.border-radius: 8
+  }
+  muted: {
+    style.fill: "#10111a"
+    style.stroke: "#2d3748"
+    style.font-color: "#8896aa"
+    style.border-radius: 8
+  }
+}
+
+browser: "Browser — localhost:9999\nReact SPA (dashboard/public/app.js)" { class: violet }
+express: "Express API\ndashboard/server.js · CRUD routes" { class: violet }
+swamlyaml: "Read/Write swarm.yaml\nagent definitions" { class: amber }
+soulmd: "Read/Write SOUL.md\nper-agent persona files" { class: amber }
+ocjson: "Read/Write openclaw.json\ngateway + model config" { class: amber }
+sync: "Dashboard ↔ YAML in sync\nany UI change reflected in files" { class: muted }
+
+browser -> express
+express -> swamlyaml
+express -> soulmd
+express -> ocjson
+swamlyaml -> sync
+soulmd -> sync
+ocjson -> sync

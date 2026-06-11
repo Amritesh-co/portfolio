@@ -1,0 +1,41 @@
+direction: down
+
+classes: {
+  violet: {
+    style.fill: "#1e1033"
+    style.stroke: "#7c3aed"
+    style.font-color: "#c4b5fd"
+    style.border-radius: 8
+  }
+  amber: {
+    style.fill: "#1c1204"
+    style.stroke: "#d97706"
+    style.font-color: "#fbbf24"
+    style.border-radius: 8
+  }
+  muted: {
+    style.fill: "#10111a"
+    style.stroke: "#2d3748"
+    style.font-color: "#8896aa"
+    style.border-radius: 8
+  }
+}
+
+usermsg: "User message\nany channel" { class: muted }
+gateway: "OpenClaw Gateway\n:18789" { class: violet }
+cmd_rcv: "Commander\nreceives task" { class: violet }
+decomp: "Task decomposition\nCommander breaks into sub-tasks per specialist" { class: violet }
+specialists: "Specialist agents\nrun concurrently via max_concurrent: 5" { class: violet }
+mcptools: "MCP tool calls\nfilesystem · brave-search · memory · sqlite" { class: amber }
+collect: "Commander collects\nwaits for all agent replies" { class: violet }
+mergesyn: "Merge + synthesise\none coherent response" { class: violet }
+deliver: "Deliver to channel\nTelegram / Discord / TUI" { class: muted }
+
+usermsg -> gateway: "WebSocket"
+gateway -> cmd_rcv
+cmd_rcv -> decomp: "skill.md pattern match"
+decomp -> specialists: "TeammateTool.write()"
+specialists -> mcptools
+mcptools -> collect: "TeammateTool 13 ops"
+collect -> mergesyn
+mergesyn -> deliver

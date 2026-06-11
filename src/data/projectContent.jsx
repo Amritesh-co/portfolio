@@ -3,8 +3,7 @@ import {
   siGithubactions, siVitest, siChakraui, siGoogleearthengine, siLeaflet,
   siYaml, siMistralai, siQwen, siShadcnui, siGithubpages, siFramer, siRadixui,
 } from "simple-icons";
-import { FlowDiagram } from "../components/FlowDiagram";
-import { D2Diagram } from "../components/D2Diagram";
+
 
 /* ──────────────────────────────────────────────────────────────
    Local SVG logos from /public/logos/ (served at /logos/)
@@ -122,14 +121,19 @@ const Section = ({ title, children }) => (
 );
 
 const Features = ({ items }) => (
-  <ul className="space-y-2">
+  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
     {items.map((f, i) => (
-      <li key={i} className="flex gap-3 text-sm text-muted-foreground leading-relaxed">
-        <span className="text-primary mt-0.5 shrink-0">▸</span>
-        <span>{f}</span>
-      </li>
+      <div
+        key={i}
+        className="flex gap-3 items-start rounded-xl border border-border/40 bg-muted/20 px-4 py-3 hover:bg-muted/35 transition-colors"
+      >
+        <span className="shrink-0 mt-0.5 flex h-5 w-5 items-center justify-center rounded-full bg-primary/15 text-primary text-[10px] font-bold">
+          {i + 1}
+        </span>
+        <span className="text-sm text-muted-foreground leading-relaxed">{f}</span>
+      </div>
     ))}
-  </ul>
+  </div>
 );
 
 /* Accent colour aliases (used in node `c` props) */
@@ -191,110 +195,52 @@ export const PROJECT_CONTENT = {
       </Section>
 
       <Section title="System Architecture">
-        <FlowDiagram title="end-to-end agent orchestration flow"
-          nodes={[
-            n('text',        'Text Query',             null,                                      muted),
-            n('voice',       'Voice Input',            'ElevenLabs STT',                          muted),
-            n('image',       'Medical Image',          'PNG / JPG upload',                        muted),
-            n('gateway',     'FastAPI Gateway',        'POST /chat · /upload-image · /voice',     emerald),
-            n('orchestrator','LangGraph Orchestrator', 'agent_decision.py · StateGraph',          emerald),
-            n('rag',         'RAG Agent',              'agents/rag_agent/',                       emerald),
-            n('qexp',        'Query Expansion',        'LLM generates domain terms',              muted),
-            n('hybrid',      'Hybrid Retrieval',       'Qdrant dense + BM25 sparse',              emerald),
-            n('rerank',      'Cross-Encoder Rerank',   'ms-marco-TinyBERT',                       emerald),
-            n('logprob',     'Log-Prob Gate',          'confidence threshold check',              amber),
-            n('web',         'Web Search Agent',       'web_search_processor_agent/',             emerald),
-            n('tavily',      'Tavily API',             'real-time medical papers',                muted),
-            n('websyn',      'Result synthesis',       'LLM summarises web hits',                 muted),
-            n('imaging',     'Imaging Agent',          'image_analysis_agent/',                   emerald),
-            n('brain',       'Brain Tumour',           'PyTorch classifier',                      muted),
-            n('chest',       'Chest X-Ray',            'PyTorch classifier',                      muted),
-            n('skin',        'Skin Lesion',            'PyTorch segmentation',                    muted),
-            n('hitl',        'HITL NodeInterrupt',     'professional review gate',                amber),
-            n('guardrails',  'LangChain Guardrails',   'input safety + output relevance filter',  amber),
-            n('composer',    'Response Composer',      'text + source citations + thumbnails',    emerald),
-            n('tts',         'ElevenLabs TTS',         'POST /voice · audio stream to browser',   emerald),
-          ]}
-          edges={[
-            e('e1',  'text',         'gateway'),
-            e('e2',  'voice',        'gateway'),
-            e('e3',  'image',        'gateway'),
-            e('e4',  'gateway',      'orchestrator'),
-            e('e5',  'orchestrator', 'rag',        'classifies intent'),
-            e('e6',  'orchestrator', 'web'),
-            e('e7',  'orchestrator', 'imaging'),
-            e('e8',  'rag',          'qexp'),
-            e('e9',  'qexp',         'hybrid'),
-            e('e10', 'hybrid',       'rerank'),
-            e('e11', 'rerank',       'logprob'),
-            e('e12', 'logprob',      'guardrails'),
-            e('e13', 'web',          'tavily'),
-            e('e14', 'tavily',       'websyn'),
-            e('e15', 'websyn',       'guardrails'),
-            e('e16', 'imaging',      'brain'),
-            e('e17', 'brain',        'chest'),
-            e('e18', 'chest',        'skin'),
-            e('e19', 'skin',         'hitl'),
-            e('e20', 'hitl',         'guardrails'),
-            e('e21', 'guardrails',   'composer'),
-            e('e22', 'composer',     'tts'),
-          ]}
-        />
+        <div className="space-y-6">
+          {/* end-to-end agent orchestration flow */}
+          <div className="rounded-xl border border-border/40 overflow-hidden w-full">
+            <p className="text-xs font-semibold text-foreground/80 tracking-wide uppercase text-center py-3 px-4 border-b border-border/30">
+              end-to-end agent orchestration flow
+            </p>
+            <div className="w-full flex justify-center bg-[#1e1e2e] p-4">
+              <img
+                src="/diagrams/multi-agent-medical-assistant/orchestration.svg"
+                alt="end-to-end agent orchestration flow"
+                style={{ width: '100%', maxWidth: '723px', height: 'auto' }}
+                loading="lazy"
+              />
+            </div>
+          </div>
 
-        <FlowDiagram title="RAG ingestion pipeline (ingest_rag_data.py)"
-          nodes={[
-            n('pdf',      'Medical PDF',         'data/raw/ directory',                        muted),
-            n('docling',  'Docling v2.31',        'text · tables · embedded images',            emerald),
-            n('chunker',  'Semantic Chunker',     'LLM boundary-aware splits',                  emerald),
-            n('dense',    'Dense Embeddings',     'Azure text-embedding-ada-002',               muted),
-            n('floatvec', 'Float32 vectors',      null,                                         muted),
-            n('qdrant1',  'Qdrant Collection',    'data/qdrant_db/ — hybrid store',             emerald),
-            n('bm25',     'BM25 Sparse Index',    'keyword inverted index',                     muted),
-            n('tfidf',    'TF-IDF tokens',        null,                                         muted),
-            n('qdrant2',  'Qdrant Collection',    'sparse vectors side',                        emerald),
-            n('userq',    'User query',           null,                                         muted),
-            n('expanded', 'Expanded query',       'LLM adds medical synonyms',                  emerald),
-            n('hybrids',  'Hybrid search',        'dense + sparse RRF fusion',                  emerald),
-            n('topk',     'Top-K → reranker',     'ms-marco-TinyBERT cross-encoder',            emerald),
-            n('context',  'Final context window', 'source URLs + reference images injected',    emerald),
-          ]}
-          edges={[
-            e('e1',  'pdf',      'docling'),
-            e('e2',  'docling',  'chunker'),
-            e('e3',  'chunker',  'dense',     'per chunk'),
-            e('e4',  'chunker',  'bm25'),
-            e('e5',  'dense',    'floatvec'),
-            e('e6',  'floatvec', 'qdrant1',   'stored in'),
-            e('e7',  'bm25',     'tfidf'),
-            e('e8',  'tfidf',    'qdrant2',   'stored in'),
-            e('e9',  'qdrant1',  'hybrids',   'query time'),
-            e('e10', 'qdrant2',  'hybrids'),
-            e('e11', 'userq',    'expanded'),
-            e('e12', 'expanded', 'hybrids'),
-            e('e13', 'hybrids',  'topk'),
-            e('e14', 'topk',     'context'),
-          ]}
-        />
+          {/* RAG ingestion pipeline */}
+          <div className="rounded-xl border border-border/40 overflow-hidden w-full">
+            <p className="text-xs font-semibold text-foreground/80 tracking-wide uppercase text-center py-3 px-4 border-b border-border/30">
+              RAG ingestion pipeline (ingest_rag_data.py)
+            </p>
+            <div className="w-full flex justify-center bg-[#1e1e2e] p-4">
+              <img
+                src="/diagrams/multi-agent-medical-assistant/ingestion.svg"
+                alt="RAG ingestion pipeline"
+                style={{ width: '100%', maxWidth: '722px', height: 'auto' }}
+                loading="lazy"
+              />
+            </div>
+          </div>
 
-        <FlowDiagram title="confidence-based agent handoff"
-          nodes={[
-            n('rag_resp', 'RAG Agent response',     null,                                     emerald),
-            n('logprob',  'Confidence score',       'mean token log-prob threshold',          amber),
-            n('high',     'score ≥ threshold',      'HIGH confidence',                        emerald),
-            n('rag_ans',  'Return RAG answer',      '+ source citations',                     emerald),
-            n('low',      'score < threshold',      'LOW confidence',                         red),
-            n('escalate', 'Escalate to Tavily',     'web_search_processor_agent/',            amber),
-            n('combine',  'Combine RAG + web hits', 'LLM synthesises final answer',           emerald),
-          ]}
-          edges={[
-            e('e1', 'rag_resp', 'logprob',  'extract log-probabilities'),
-            e('e2', 'logprob',  'high'),
-            e('e3', 'logprob',  'low'),
-            e('e4', 'high',     'rag_ans'),
-            e('e5', 'low',      'escalate'),
-            e('e6', 'escalate', 'combine'),
-          ]}
-        />
+          {/* confidence-based agent handoff */}
+          <div className="rounded-xl border border-border/40 overflow-hidden w-full">
+            <p className="text-xs font-semibold text-foreground/80 tracking-wide uppercase text-center py-3 px-4 border-b border-border/30">
+              confidence-based agent handoff
+            </p>
+            <div className="w-full flex justify-center bg-[#1e1e2e] p-4">
+              <img
+                src="/diagrams/multi-agent-medical-assistant/handoff.svg"
+                alt="confidence-based agent handoff"
+                style={{ width: '100%', maxWidth: '495px', height: 'auto' }}
+                loading="lazy"
+              />
+            </div>
+          </div>
+        </div>
       </Section>
 
       <Section title="LLM Configuration">
@@ -370,117 +316,110 @@ export const PROJECT_CONTENT = {
       </Section>
 
       <Section title="System Architecture">
-        <FlowDiagram title="full swarm topology"
-          nodes={[
-            n('telegram',  'Telegram',              null,                                       muted),
-            n('discord',   'Discord',               null,                                       muted),
-            n('slack',     'Slack / WhatsApp',      null,                                       muted),
-            n('tui',       'TUI / CLI',             null,                                       muted),
-            n('gateway',   'OpenClaw Gateway',      'ws://127.0.0.1:18789 · openclaw.json',     violet),
-            n('commander', 'COMMANDER',             'qwen3:8b · agents/commander/SOUL.md',      violet),
-            n('researcher','RESEARCHER',            'qwen3:8b',                                 violet),
-            n('brave',     'brave-search',          'MCP web tool',                             amber),
-            n('puppeteer', 'puppeteer',             'MCP scrape tool',                          amber),
-            n('coder',     'CODER',                 'qwen2.5-coder:14b',                        violet),
-            n('fsmcp',     'filesystem MCP',        'Read · Write · Bash',                      amber),
-            n('memmcp',    'memory MCP',            'persistent KV store',                      amber),
-            n('analyst',   'ANALYST',               'qwen2.5-coder:14b',                        violet),
-            n('sqlitemcp', 'sqlite MCP',            'structured queries',                       amber),
-            n('fsmcp2',    'filesystem MCP',        'CSV / JSON read',                          amber),
-            n('writer',    'WRITER',                'mistral:7b',                               violet),
-            n('fsmcp3',    'filesystem MCP',        'Write output files',                       amber),
-            n('merge',     'COMMANDER merges',      'synthesises final response · replies',     violet),
-          ]}
-          edges={[
-            e('e1',  'telegram',   'gateway'),
-            e('e2',  'discord',    'gateway'),
-            e('e3',  'slack',      'gateway'),
-            e('e4',  'tui',        'gateway'),
-            e('e5',  'gateway',    'commander'),
-            e('e6',  'commander',  'researcher', 'TeammateTool.write()'),
-            e('e7',  'commander',  'coder'),
-            e('e8',  'commander',  'analyst'),
-            e('e9',  'commander',  'writer'),
-            e('e10', 'researcher', 'brave'),
-            e('e11', 'brave',      'puppeteer'),
-            e('e12', 'coder',      'fsmcp'),
-            e('e13', 'fsmcp',      'memmcp'),
-            e('e14', 'analyst',    'sqlitemcp'),
-            e('e15', 'sqlitemcp',  'fsmcp2'),
-            e('e16', 'writer',     'fsmcp3'),
-            e('e17', 'puppeteer',  'merge',      'results → Commander'),
-            e('e18', 'memmcp',     'merge'),
-            e('e19', 'fsmcp2',     'merge'),
-            e('e20', 'fsmcp3',     'merge'),
-          ]}
-        />
+        <div className="space-y-6">
+          {/* full swarm topology */}
+          <div className="rounded-xl border border-border/40 overflow-hidden w-full">
+            <p className="text-xs font-semibold text-foreground/80 tracking-wide uppercase text-center py-3 px-4 border-b border-border/30">
+              full swarm topology
+            </p>
+            <div className="w-full flex justify-center bg-[#1e1e2e] p-4">
+              <img
+                src="/diagrams/openclaw-swarm/topology.svg"
+                alt="full swarm topology"
+                style={{ width: '100%', maxWidth: '744px', height: 'auto' }}
+                loading="lazy"
+              />
+            </div>
+          </div>
 
-        <FlowDiagram title="request lifecycle — message to response"
-          nodes={[
-            n('usermsg',    'User message',        'any channel',                                  muted),
-            n('gateway',    'OpenClaw Gateway',    ':18789',                                       violet),
-            n('cmd_rcv',    'Commander',           'receives task',                                violet),
-            n('decomp',     'Task decomposition',  'Commander breaks into sub-tasks per specialist',violet),
-            n('specialists','Specialist agents',   'run concurrently via max_concurrent: 5',       violet),
-            n('mcptools',   'MCP tool calls',      'filesystem · brave-search · memory · sqlite',  amber),
-            n('collect',    'Commander collects',  'waits for all agent replies',                  violet),
-            n('mergesyn',   'Merge + synthesise',  'one coherent response',                        violet),
-            n('deliver',    'Deliver to channel',  'Telegram / Discord / TUI',                     muted),
-          ]}
-          edges={[
-            e('e1', 'usermsg',    'gateway',    'WebSocket'),
-            e('e2', 'gateway',    'cmd_rcv'),
-            e('e3', 'cmd_rcv',    'decomp',     'skill.md pattern match'),
-            e('e4', 'decomp',     'specialists','TeammateTool.write()'),
-            e('e5', 'specialists','mcptools'),
-            e('e6', 'mcptools',   'collect',    'TeammateTool 13 ops'),
-            e('e7', 'collect',    'mergesyn'),
-            e('e8', 'mergesyn',   'deliver'),
-          ]}
-        />
+          {/* request lifecycle — message to response */}
+          <div className="rounded-xl border border-border/40 overflow-hidden w-full">
+            <p className="text-xs font-semibold text-foreground/80 tracking-wide uppercase text-center py-3 px-4 border-b border-border/30">
+              request lifecycle — message to response
+            </p>
+            <div className="w-full flex justify-center bg-[#1e1e2e] p-4">
+              <img
+                src="/diagrams/openclaw-swarm/lifecycle.svg"
+                alt="request lifecycle — message to response"
+                style={{ width: '100%', maxWidth: '411px', height: 'auto' }}
+                loading="lazy"
+              />
+            </div>
+          </div>
 
-        <FlowDiagram title="Agent Manager Dashboard (localhost:9999)"
-          nodes={[
-            n('browser',  'Browser — localhost:9999', 'React SPA (dashboard/public/app.js)',  violet),
-            n('express',  'Express API',              'dashboard/server.js · CRUD routes',    violet),
-            n('swamlyaml','Read/Write swarm.yaml',    'agent definitions',                    amber),
-            n('soulmd',   'Read/Write SOUL.md',       'per-agent persona files',              amber),
-            n('ocjson',   'Read/Write openclaw.json', 'gateway + model config',               amber),
-            n('sync',     'Dashboard ↔ YAML in sync', 'any UI change reflected in files',     muted),
-          ]}
-          edges={[
-            e('e1', 'browser',  'express'),
-            e('e2', 'express',  'swamlyaml'),
-            e('e3', 'express',  'soulmd'),
-            e('e4', 'express',  'ocjson'),
-            e('e5', 'swamlyaml','sync'),
-            e('e6', 'soulmd',   'sync'),
-            e('e7', 'ocjson',   'sync'),
-          ]}
-        />
+          {/* Agent Manager Dashboard */}
+          <div className="rounded-xl border border-border/40 overflow-hidden w-full">
+            <p className="text-xs font-semibold text-foreground/80 tracking-wide uppercase text-center py-3 px-4 border-b border-border/30">
+              Agent Manager Dashboard (localhost:9999)
+            </p>
+            <div className="w-full flex justify-center bg-[#1e1e2e] p-4">
+              <img
+                src="/diagrams/openclaw-swarm/dashboard.svg"
+                alt="Agent Manager Dashboard"
+                style={{ width: '100%', maxWidth: '686px', height: 'auto' }}
+                loading="lazy"
+              />
+            </div>
+          </div>
+        </div>
       </Section>
 
       <Section title="Configuration (swarm.yaml structure)">
-        <div className={`rounded-xl border p-4 text-xs font-mono leading-relaxed ${violet}`}>
-          <div className="opacity-50 text-[10px] tracking-widest uppercase mb-2">swarm.yaml</div>
-          <pre className="text-[11px] opacity-80">{`swarm:
-  name: openClaw-swarm
-  max_concurrent: 5
-  agents:
-    commander:
-      model: "ollama/qwen3:8b"
-      soul: agents/commander/SOUL.md
-      tools: [Read, Write, WebSearch, WebFetch]
-    coder:
-      model: "ollama/qwen2.5-coder:14b"
-      soul: agents/coder/SOUL.md
-      tools: [Read, Write, Bash, Grep, filesystem-mcp]
-    researcher:
-      model: "ollama/qwen3:8b"
-      soul: agents/researcher/SOUL.md
-      tools: [brave-search-mcp, puppeteer-mcp]`}</pre>
+        <div className="rounded-xl overflow-hidden border border-white/10 shadow-2xl">
+
+          {/* ── title bar ── */}
+          <div className="flex items-center gap-2 bg-[#2d2d2d] px-4 py-2.5 border-b border-white/10">
+            <span className="w-3 h-3 rounded-full bg-[#ff5f57] shrink-0" />
+            <span className="w-3 h-3 rounded-full bg-[#febc2e] shrink-0" />
+            <span className="w-3 h-3 rounded-full bg-[#28c840] shrink-0" />
+            <span className="ml-3 text-[11px] font-mono text-white/40 tracking-wide">
+              zsh — openclaw-swarm — 120×40
+            </span>
+          </div>
+
+          {/* ── terminal body: dangerouslySetInnerHTML guarantees exact whitespace ── */}
+          <pre
+            className="bg-[#0d0d0d] px-6 py-5 font-mono text-[12.5px] leading-[1.8] overflow-x-auto select-text text-left"
+            dangerouslySetInnerHTML={{ __html:
+`<span class="text-[#28c840]">amritesh</span><span class="text-white/40">@</span><span class="text-[#5ac8fa]">openclaw</span><span class="text-white/40"> ~/openclaw-swarm </span><span class="text-[#bf5af2]">‹main›</span><span class="text-white/60"> $</span><span class="text-white"> cat swarm.yaml</span>
+
+<span class="text-[#5ac8fa]">swarm</span><span class="text-white/50">:</span>
+<span class="text-white/50">  </span><span class="text-[#5ac8fa]">name</span><span class="text-white/50">:</span><span class="text-[#ff9f0a]"> openClaw-swarm</span>
+<span class="text-white/50">  </span><span class="text-[#5ac8fa]">max_concurrent</span><span class="text-white/50">:</span><span class="text-[#ff453a]"> 5</span>
+<span class="text-white/50">  </span><span class="text-[#5ac8fa]">agents</span><span class="text-white/50">:</span>
+
+<span class="text-white/50">    </span><span class="text-[#28c840]">commander</span><span class="text-white/50">:</span>
+<span class="text-white/50">      </span><span class="text-[#5ac8fa]">model</span><span class="text-white/50">:</span><span class="text-[#ff9f0a]"> "ollama/qwen3:8b"</span>
+<span class="text-white/50">      </span><span class="text-[#5ac8fa]">soul</span><span class="text-white/50">:</span><span class="text-white/70"> agents/commander/SOUL.md</span>
+<span class="text-white/50">      </span><span class="text-[#5ac8fa]">tools</span><span class="text-white/50">: [</span><span class="text-[#64d2ff]">Read, Write, WebSearch, WebFetch</span><span class="text-white/50">]</span>
+
+<span class="text-white/50">    </span><span class="text-[#28c840]">coder</span><span class="text-white/50">:</span>
+<span class="text-white/50">      </span><span class="text-[#5ac8fa]">model</span><span class="text-white/50">:</span><span class="text-[#ff9f0a]"> "ollama/qwen2.5-coder:14b"</span>
+<span class="text-white/50">      </span><span class="text-[#5ac8fa]">soul</span><span class="text-white/50">:</span><span class="text-white/70"> agents/coder/SOUL.md</span>
+<span class="text-white/50">      </span><span class="text-[#5ac8fa]">tools</span><span class="text-white/50">: [</span><span class="text-[#64d2ff]">Read, Write, Bash, Grep, filesystem-mcp</span><span class="text-white/50">]</span>
+
+<span class="text-white/50">    </span><span class="text-[#28c840]">researcher</span><span class="text-white/50">:</span>
+<span class="text-white/50">      </span><span class="text-[#5ac8fa]">model</span><span class="text-white/50">:</span><span class="text-[#ff9f0a]"> "ollama/qwen3:8b"</span>
+<span class="text-white/50">      </span><span class="text-[#5ac8fa]">soul</span><span class="text-white/50">:</span><span class="text-white/70"> agents/researcher/SOUL.md</span>
+<span class="text-white/50">      </span><span class="text-[#5ac8fa]">tools</span><span class="text-white/50">: [</span><span class="text-[#64d2ff]">brave-search-mcp, puppeteer-mcp</span><span class="text-white/50">]</span>
+
+<span class="text-white/50">    </span><span class="text-[#28c840]">analyst</span><span class="text-white/50">:</span>
+<span class="text-white/50">      </span><span class="text-[#5ac8fa]">model</span><span class="text-white/50">:</span><span class="text-[#ff9f0a]"> "ollama/qwen2.5-coder:14b"</span>
+<span class="text-white/50">      </span><span class="text-[#5ac8fa]">soul</span><span class="text-white/50">:</span><span class="text-white/70"> agents/analyst/SOUL.md</span>
+<span class="text-white/50">      </span><span class="text-[#5ac8fa]">tools</span><span class="text-white/50">: [</span><span class="text-[#64d2ff]">sqlite-mcp, filesystem-mcp</span><span class="text-white/50">]</span>
+
+<span class="text-white/50">    </span><span class="text-[#28c840]">writer</span><span class="text-white/50">:</span>
+<span class="text-white/50">      </span><span class="text-[#5ac8fa]">model</span><span class="text-white/50">:</span><span class="text-[#ff9f0a]"> "ollama/mistral:7b"</span>
+<span class="text-white/50">      </span><span class="text-[#5ac8fa]">soul</span><span class="text-white/50">:</span><span class="text-white/70"> agents/writer/SOUL.md</span>
+<span class="text-white/50">      </span><span class="text-[#5ac8fa]">tools</span><span class="text-white/50">: [</span><span class="text-[#64d2ff]">filesystem-mcp</span><span class="text-white/50">]</span>
+
+<span class="text-[#28c840]">amritesh</span><span class="text-white/40">@</span><span class="text-[#5ac8fa]">openclaw</span><span class="text-white/40"> ~/openclaw-swarm </span><span class="text-[#bf5af2]">‹main›</span><span class="text-white/60"> $ </span><span style="display:inline-block;width:8px;height:1em;background:rgba(255,255,255,0.7);vertical-align:middle;animation:pulse 1s cubic-bezier(0.4,0,0.6,1) infinite"></span>`
+            }}
+          />
+
         </div>
       </Section>
+
 
       <Section title="Tech Stack">
         <TechStack items={["Node.js","Ollama","Qwen","Mistral","Express","YAML"]} />
@@ -550,14 +489,37 @@ export const PROJECT_CONTENT = {
       </Section>
 
       <Section title="System Architecture">
-        <D2Diagram
-          title="request lifecycle — auth + validation + data layer"
-          src="/diagrams/woodcraft-store/auth-flow.svg"
-        />
-        <D2Diagram
-          title="order creation → invoice → email flow"
-          src="/diagrams/woodcraft-store/order-flow.svg"
-        />
+        <div className="space-y-6">
+          {/* auth flow */}
+          <div className="rounded-xl border border-border/40 overflow-hidden w-full">
+            <p className="text-xs font-semibold text-foreground/80 tracking-wide uppercase text-center py-3 px-4 border-b border-border/30">
+              request lifecycle — auth + validation + data layer
+            </p>
+            <div className="w-full flex justify-center bg-[#1e1e2e] p-4">
+              <img
+                src="/diagrams/woodcraft-store/auth-flow.svg"
+                alt="request lifecycle — auth + validation + data layer"
+                style={{ width: '100%', maxWidth: '896px', height: 'auto' }}
+                loading="lazy"
+              />
+            </div>
+          </div>
+
+          {/* order flow */}
+          <div className="rounded-xl border border-border/40 overflow-hidden w-full">
+            <p className="text-xs font-semibold text-foreground/80 tracking-wide uppercase text-center py-3 px-4 border-b border-border/30">
+              order creation → invoice → email flow
+            </p>
+            <div className="w-full flex justify-center bg-[#1e1e2e] p-4">
+              <img
+                src="/diagrams/woodcraft-store/order-flow.svg"
+                alt="order creation → invoice → email flow"
+                style={{ width: '100%', maxWidth: '443px', height: 'auto' }}
+                loading="lazy"
+              />
+            </div>
+          </div>
+        </div>
       </Section>
 
       <Section title="MongoDB Data Models">
@@ -621,134 +583,70 @@ export const PROJECT_CONTENT = {
         </p>
       </Section>
 
-      <Section title="Design Tokens">
-        <div className={`rounded-xl border p-4 text-xs font-mono leading-relaxed ${indigo}`}>
-          <div className="opacity-50 text-[10px] tracking-widest uppercase mb-2">App.css — CSS variables</div>
-          <pre className="text-[11px] opacity-80 leading-loose">{`--bg:             #212121   /* main chat background */
---sidebar-bg:     #171717   /* sidebar panel */
---surface:        #2f2f2f   /* message bubbles */
---accent:         #10a37f   /* primary action colour */
---text:           #ececec   /* primary text */
---text-secondary: #8e8ea0   /* metadata / timestamps */
---border:         #383838   /* dividers */
---warn:           #f5a623   /* warnings */
---danger:         #e53e3e   /* errors / delete actions */`}</pre>
-        </div>
-      </Section>
+
 
       <Section title="System Architecture">
-        <FlowDiagram title="component & service topology"
-          nodes={[
-            n('user',       'User',                 null,                                             muted),
-            n('sidebar',    'Sidebar.jsx',           'conversation list · search · rename · delete',   indigo),
-            n('localstor',  'localStorage',          'gemma_conversations · gemma_active_id',          muted),
-            n('app',        'App.jsx',               'root state · activeIdRef race-condition fix',     indigo),
-            n('activeref',  'useRef(activeId)',      'always reflects latest id during stream',         muted),
-            n('chatarea',   'ChatArea.jsx',          'composer · file chips · streaming renderer',      indigo),
-            n('tokenmeter', 'tokens/sec meter',      'eval_count / eval_duration from Ollama',          muted),
-            n('renderpipe', 'Render Pipeline',       'ReactMarkdown → SyntaxHighlighter → D2 WASM',    muted),
-            n('ollama',     'Ollama :11434',         'POST /api/chat — streaming',                      indigo),
-            n('model',      'gemma4:e4b',            '4-bit quantised · NDJSON chunks',                 muted),
-            n('history',    'conversation history',  'messages[] sent each request',                    muted),
-            n('parser',     'Parser Server :3001',   'server/index.js — Express 5',                     indigo),
-            n('parse_api',  'POST /api/parse',       'multipart/form-data · max 10 MB',                 muted),
-            n('parsers',    'pdf-parse / officeparser','PDF · DOCX · PPTX · XLSX · CSV · MD',           muted),
-          ]}
-          edges={[
-            e('e1',  'user',      'sidebar'),
-            e('e2',  'user',      'app'),
-            e('e3',  'user',      'chatarea'),
-            e('e4',  'sidebar',   'localstor'),
-            e('e5',  'app',       'activeref'),
-            e('e6',  'chatarea',  'tokenmeter'),
-            e('e7',  'chatarea',  'renderpipe'),
-            e('e8',  'chatarea',  'ollama'),
-            e('e9',  'chatarea',  'parser'),
-            e('e10', 'ollama',    'model'),
-            e('e11', 'model',     'history'),
-            e('e12', 'parser',    'parse_api'),
-            e('e13', 'parse_api', 'parsers'),
-          ]}
-        />
+        <div className="space-y-6">
+          {/* component & service topology */}
+          <div className="rounded-xl border border-border/40 overflow-hidden w-full">
+            <p className="text-xs font-semibold text-foreground/80 tracking-wide uppercase text-center py-3 px-4 border-b border-border/30">
+              component &amp; service topology
+            </p>
+            <div className="w-full flex justify-center bg-[#1e1e2e] p-4">
+              <img
+                src="/diagrams/gemma-ui/topology.svg"
+                alt="component and service topology"
+                style={{ width: '100%', maxWidth: '896px', height: 'auto' }}
+                loading="lazy"
+              />
+            </div>
+          </div>
 
-        <FlowDiagram title="streaming chat flow — token-by-token"
-          nodes={[
-            n('submit',    'User submits prompt',    'ChatArea.jsx',                                    indigo),
-            n('docctx',    'Attach document context','if files uploaded',                               muted),
-            n('parse_req', 'POST /api/parse :3001',  'multipart FormData',                              indigo),
-            n('filetext',  '{ filename, text }',     null,                                              muted),
-            n('prepend',   'Prepend as context',     '"Document context: [text]"',                      indigo),
-            n('chat_req',  'POST /api/chat :11434',  'messages[] + augmented prompt',                   indigo),
-            n('ndjson',    'Ollama NDJSON stream',   '{ message: { content }, done }',                  indigo),
-            n('tokenacc',  'Token accumulator',      'local variable — avoids React batching lag',      muted),
-            n('update',    'updateMessages()',       'functional updater — reads activeIdRef.current',   indigo),
-            n('done',      'done: true received',    'stream ends · localStorage sync',                 muted),
-            n('render',    'Render pipeline',        'markdown → highlight → D2 compile → inject',      indigo),
-          ]}
-          edges={[
-            e('e1',  'submit',    'docctx'),
-            e('e2',  'docctx',    'parse_req',  'for each file'),
-            e('e3',  'parse_req', 'filetext'),
-            e('e4',  'filetext',  'prepend'),
-            e('e5',  'prepend',   'chat_req'),
-            e('e6',  'submit',    'chat_req'),
-            e('e7',  'chat_req',  'ndjson'),
-            e('e8',  'ndjson',    'tokenacc',   'NDJSON parser'),
-            e('e9',  'tokenacc',  'update'),
-            e('e10', 'update',    'done'),
-            e('e11', 'done',      'render'),
-          ]}
-        />
+          {/* streaming chat flow */}
+          <div className="rounded-xl border border-border/40 overflow-hidden w-full">
+            <p className="text-xs font-semibold text-foreground/80 tracking-wide uppercase text-center py-3 px-4 border-b border-border/30">
+              streaming chat flow — token-by-token
+            </p>
+            <div className="w-full flex justify-center bg-[#1e1e2e] p-4">
+              <img
+                src="/diagrams/gemma-ui/streaming.svg"
+                alt="streaming chat flow — token-by-token"
+                style={{ width: '100%', maxWidth: '413px', height: 'auto' }}
+                loading="lazy"
+              />
+            </div>
+          </div>
 
-        <FlowDiagram title="D2 diagram compilation pipeline"
-          nodes={[
-            n('d2code',     'Model outputs d2 block',  null,                                          muted),
-            n('cache_look', 'Cache lookup',            'Map(source → compiled SVG)',                   indigo),
-            n('cache_hit',  'Cache HIT',               null,                                           indigo),
-            n('ret_cached', 'Return cached SVG',       null,                                           muted),
-            n('inject1',    'containerRef.innerHTML',  'sanitized SVG injected',                       indigo),
-            n('cache_miss', 'Cache MISS',              null,                                           red),
-            n('compile',    'new D2().compile(source)','WASM · layout: dagre',                         indigo),
-            n('d2render',   'd2.render(diagram)',      'themeID: 4',                                   indigo),
-            n('sanitize',   'DOMPurify.sanitize(svg)', 'XSS protection before DOM injection',          amber),
-            n('store',      'Store in cache',          null,                                           muted),
-            n('inject2',    'containerRef.innerHTML',  'sanitized SVG injected',                       indigo),
-          ]}
-          edges={[
-            e('e1',  'd2code',     'cache_look'),
-            e('e2',  'cache_look', 'cache_hit'),
-            e('e3',  'cache_look', 'cache_miss'),
-            e('e4',  'cache_hit',  'ret_cached'),
-            e('e5',  'ret_cached', 'inject1'),
-            e('e6',  'cache_miss', 'compile'),
-            e('e7',  'compile',    'd2render'),
-            e('e8',  'd2render',   'sanitize'),
-            e('e9',  'sanitize',   'store'),
-            e('e10', 'store',      'inject2'),
-          ]}
-        />
+          {/* D2 diagram compilation pipeline */}
+          <div className="rounded-xl border border-border/40 overflow-hidden w-full">
+            <p className="text-xs font-semibold text-foreground/80 tracking-wide uppercase text-center py-3 px-4 border-b border-border/30">
+              D2 diagram compilation pipeline
+            </p>
+            <div className="w-full flex justify-center bg-[#1e1e2e] p-4">
+              <img
+                src="/diagrams/gemma-ui/compilation.svg"
+                alt="D2 diagram compilation pipeline"
+                style={{ width: '100%', maxWidth: '509px', height: 'auto' }}
+                loading="lazy"
+              />
+            </div>
+          </div>
 
-        <FlowDiagram title="race condition fix — ghost conversation bug"
-          nodes={[
-            n('stream_start', 'Stream starts',           'activeId = "conv-A" in state',               muted),
-            n('state_change', 'activeId state → conv-B', 'stale in closure — user switched mid-stream', red),
-            n('without_fix',  'Without fix',             'stale closure',                              red),
-            n('bad_write',    'updateMessages writes',   'tokens to "conv-A" (wrong!)',                 red),
-            n('ghost',        'Ghost conversations',     null,                                          red),
-            n('with_fix',     'With fix',                'activeIdRef',                                indigo),
-            n('sync_ref',     'useEffect syncs ref',     'activeIdRef.current = activeId always',       indigo),
-            n('correct',      'Callback reads ref',      'always correct conversation ID',              indigo),
-          ]}
-          edges={[
-            e('e1', 'stream_start', 'state_change',  'user clicks different conversation'),
-            e('e2', 'state_change', 'without_fix'),
-            e('e3', 'state_change', 'with_fix'),
-            e('e4', 'without_fix',  'bad_write'),
-            e('e5', 'bad_write',    'ghost'),
-            e('e6', 'with_fix',     'sync_ref'),
-            e('e7', 'sync_ref',     'correct'),
-          ]}
-        />
+          {/* race condition fix */}
+          <div className="rounded-xl border border-border/40 overflow-hidden w-full">
+            <p className="text-xs font-semibold text-foreground/80 tracking-wide uppercase text-center py-3 px-4 border-b border-border/30">
+              race condition fix — ghost conversation bug
+            </p>
+            <div className="w-full flex justify-center bg-[#1e1e2e] p-4">
+              <img
+                src="/diagrams/gemma-ui/racecondition.svg"
+                alt="race condition fix — ghost conversation bug"
+                style={{ width: '100%', maxWidth: '572px', height: 'auto' }}
+                loading="lazy"
+              />
+            </div>
+          </div>
+        </div>
       </Section>
 
       <Section title="Tech Stack">
@@ -807,69 +705,37 @@ export const PROJECT_CONTENT = {
       </Section>
 
       <Section title="Architecture">
-        <FlowDiagram title="component / store / algorithm pattern"
-          nodes={[
-            n('nextjs',    'Next.js 14 App Router',  'app/visualizers/[algorithm]/page.tsx',          cyan),
-            n('visualizer','Visualiser Component',   'reads store state: steps[] · currentStep',      cyan),
-            n('framer',    'Framer Motion',          'step transitions · element highlights',          muted),
-            n('controls',  'Controls Component',    'play · pause · step fwd/back · speed slider',    muted),
-            n('interval',  'interval timer',         'dispatches nextStep action on tick',             muted),
-            n('metrics',   'Metrics Panel',          'live complexity display per run',                muted),
-            n('sortstore', 'Sorting',                'useSortingStore',                               cyan),
-            n('pathstore', 'Pathfinding',            'usePathfindingStore',                           cyan),
-            n('graphstore','Graph',                  'useGraphStore',                                 cyan),
-            n('dpstore',   'Dynamic Programming',    'useDPStore',                                    cyan),
-            n('nqstore',   'N-Queens',               'useNQueensStore',                               cyan),
-            n('stepgen',   'Step generator',         'runs full algorithm · captures every decision',  muted),
-            n('stepsarr',  'steps[] + metrics',      'stored in Zustand — replayed by player/scrubber',cyan),
-          ]}
-          edges={[
-            e('e1',  'nextjs',    'visualizer'),
-            e('e2',  'nextjs',    'controls'),
-            e('e3',  'nextjs',    'metrics'),
-            e('e4',  'visualizer','framer'),
-            e('e5',  'controls',  'interval'),
-            e('e6',  'visualizer','sortstore'),
-            e('e7',  'visualizer','pathstore'),
-            e('e8',  'visualizer','graphstore'),
-            e('e9',  'visualizer','dpstore'),
-            e('e10', 'visualizer','nqstore'),
-            e('e11', 'sortstore', 'stepgen', 'Run Algorithm'),
-            e('e12', 'pathstore', 'stepgen'),
-            e('e13', 'graphstore','stepgen'),
-            e('e14', 'dpstore',   'stepgen'),
-            e('e15', 'nqstore',   'stepgen'),
-            e('e16', 'stepgen',   'stepsarr'),
-          ]}
-        />
+        <div className="space-y-6">
+          {/* component / store / algorithm pattern */}
+          <div className="rounded-xl border border-border/40 overflow-hidden w-full">
+            <p className="text-xs font-semibold text-foreground/80 tracking-wide uppercase text-center py-3 px-4 border-b border-border/30">
+              component / store / algorithm pattern
+            </p>
+            <div className="w-full flex justify-center bg-[#1e1e2e] p-4">
+              <img
+                src="/diagrams/algo-visualizer/architecture.svg"
+                alt="component / store / algorithm pattern"
+                style={{ width: '100%', maxWidth: '896px', height: 'auto' }}
+                loading="lazy"
+              />
+            </div>
+          </div>
 
-        <FlowDiagram title="pathfinding visualiser — interactive grid"
-          nodes={[
-            n('grid',      'Grid Component',       'NxM cells · pointer events',                     cyan),
-            n('walldrag',  'Left-click drag',      'toggle wall cells',                               muted),
-            n('sedrag',    'Start/End drag',        'reposition source & target nodes',               muted),
-            n('pathstore', 'usePathfindingStore',  'grid[][] · walls[] · start · end · algorithm',    cyan),
-            n('dijkstra',  'Dijkstra',             'priority queue · non-negative weights',            cyan),
-            n('astar',     'A*',                   'f = g + h · Manhattan heuristic',                 cyan),
-            n('bfs',       'BFS',                  'FIFO · unweighted shortest path',                 cyan),
-            n('dfs',       'DFS',                  'stack · full graph traversal',                    cyan),
-            n('colors',    'Cell colours',         'unvisited → exploring → visited → optimal path',  muted),
-          ]}
-          edges={[
-            e('e1',  'grid',      'walldrag'),
-            e('e2',  'grid',      'sedrag'),
-            e('e3',  'walldrag',  'pathstore'),
-            e('e4',  'sedrag',    'pathstore'),
-            e('e5',  'pathstore', 'dijkstra'),
-            e('e6',  'pathstore', 'astar'),
-            e('e7',  'pathstore', 'bfs'),
-            e('e8',  'pathstore', 'dfs'),
-            e('e9',  'dijkstra',  'colors', 'step captured'),
-            e('e10', 'astar',     'colors'),
-            e('e11', 'bfs',       'colors'),
-            e('e12', 'dfs',       'colors'),
-          ]}
-        />
+          {/* pathfinding visualiser — interactive grid */}
+          <div className="rounded-xl border border-border/40 overflow-hidden w-full">
+            <p className="text-xs font-semibold text-foreground/80 tracking-wide uppercase text-center py-3 px-4 border-b border-border/30">
+              pathfinding visualiser — interactive grid
+            </p>
+            <div className="w-full flex justify-center bg-[#1e1e2e] p-4">
+              <img
+                src="/diagrams/algo-visualizer/grid.svg"
+                alt="pathfinding visualiser — interactive grid"
+                style={{ width: '100%', maxWidth: '896px', height: 'auto' }}
+                loading="lazy"
+              />
+            </div>
+          </div>
+        </div>
       </Section>
 
       <Section title="Tech Stack">
@@ -1014,79 +880,52 @@ export const PROJECT_CONTENT = {
       </Section>
 
       <Section title="Architecture">
-        <FlowDiagram title="full application flow"
-          nodes={[
-            n('csv_upload', 'CSV Upload',           'edge list: source, target, weight',                muted),
-            n('parse',      'parseGraphFromCsv.js', 'PapaParse 5.5 → nodes[] + edges[] objects',        pink),
-            n('graphstore', 'graphStore (Zustand 5)','nodes · edges · selectedAlgorithm · src · tgt',   pink),
-            n('viewer3d',   'GraphViewer3D',         '@react-three/drei · all nodes + edges',            pink),
-            n('threescene', 'Three.js scene',        'sphere nodes · line edges · orbit controls',       muted),
-            n('forcelayout','Force-directed layout', 'spring physics positioning',                       muted),
-            n('algengine',  'Algorithm engine',      'src/algorithms/ — on Run click',                   pink),
-            n('dijkstra',   'Dijkstra',              'priority queue',                                   pink),
-            n('bellman',    'Bellman-Ford',          'V-1 relaxations',                                  pink),
-            n('astar',      'A*',                   'f = g + h',                                        pink),
-            n('pathresult', 'pathNodes[] + cost',    'pathEdges[] + totalCost',                          muted),
-            n('pathviewer', 'PathGraphViewer3D',     'isolated 3D scene — highlighted path + cost',      pink),
-          ]}
-          edges={[
-            e('e1',  'csv_upload', 'parse',      'or select demo_input/'),
-            e('e2',  'parse',      'graphstore'),
-            e('e3',  'graphstore', 'viewer3d'),
-            e('e4',  'graphstore', 'algengine'),
-            e('e5',  'viewer3d',   'threescene'),
-            e('e6',  'threescene', 'forcelayout'),
-            e('e7',  'algengine',  'dijkstra'),
-            e('e8',  'algengine',  'bellman'),
-            e('e9',  'algengine',  'astar'),
-            e('e10', 'dijkstra',   'pathresult'),
-            e('e11', 'bellman',    'pathresult'),
-            e('e12', 'astar',      'pathresult'),
-            e('e13', 'pathresult', 'pathviewer'),
-          ]}
-        />
+        <div className="space-y-6">
+          {/* full application flow */}
+          <div className="rounded-xl border border-border/40 overflow-hidden w-full">
+            <p className="text-xs font-semibold text-foreground/80 tracking-wide uppercase text-center py-3 px-4 border-b border-border/30">
+              full application flow
+            </p>
+            <div className="w-full flex justify-center bg-[#1e1e2e] p-4">
+              <img
+                src="/diagrams/graph-path-models/fullflow.svg"
+                alt="full application flow"
+                style={{ width: '100%', maxWidth: '778px', height: 'auto' }}
+                loading="lazy"
+              />
+            </div>
+          </div>
 
-        <FlowDiagram title="algorithm complexity comparison"
-          nodes={[
-            n('dijk',       'Dijkstra',              'greedy · O((V+E) log V)',                          pink),
-            n('dijk_heap',  'Min-heap priority queue',null,                                              muted),
-            n('dijk_lim',   'non-negative weights',  null,                                              muted),
-            n('dijk_opt',   'optimal for dense graphs',null,                                            muted),
-            n('bell',       'Bellman-Ford',          'DP · O(V·E)',                                      pink),
-            n('bell_relax', 'V−1 relaxation passes', null,                                              muted),
-            n('bell_neg',   'handles negative weights',null,                                            muted),
-            n('bell_cycle', 'detects negative cycles',null,                                             muted),
-            n('as',         'A*',                    'heuristic · O(E log V) typical',                   pink),
-            n('as_fn',      'f(n) = g(n) + h(n)',    null,                                              muted),
-            n('as_heur',    'Euclidean/custom heuristic',null,                                          muted),
-            n('as_fast',    'fastest when h admissible',null,                                           muted),
-          ]}
-          edges={[
-            e('e1', 'dijk',      'dijk_heap'),
-            e('e2', 'dijk_heap', 'dijk_lim'),
-            e('e3', 'dijk_lim',  'dijk_opt'),
-            e('e4', 'bell',      'bell_relax'),
-            e('e5', 'bell_relax','bell_neg'),
-            e('e6', 'bell_neg',  'bell_cycle'),
-            e('e7', 'as',        'as_fn'),
-            e('e8', 'as_fn',     'as_heur'),
-            e('e9', 'as_heur',   'as_fast'),
-          ]}
-        />
+          {/* algorithm complexity comparison */}
+          <div className="rounded-xl border border-border/40 overflow-hidden w-full">
+            <p className="text-xs font-semibold text-foreground/80 tracking-wide uppercase text-center py-3 px-4 border-b border-border/30">
+              algorithm complexity comparison
+            </p>
+            <div className="w-full flex justify-center bg-[#1e1e2e] p-4">
+              <img
+                src="/diagrams/graph-path-models/complexity.svg"
+                alt="algorithm complexity comparison"
+                style={{ width: '100%', maxWidth: '702px', height: 'auto' }}
+                loading="lazy"
+              />
+            </div>
+          </div>
 
-        <FlowDiagram title="CSV generator (cs_generator/)"
-          nodes={[
-            n('cli',      'python csv_gen.py',       '--nodes N --edges E --max-weight W',              muted),
-            n('genedges', 'Random edge list',         'nodes 0..N-1 · random source/target pairs',       pink),
-            n('output',   'Output CSV',               'columns: source, target, weight — 500+ nodes',    muted),
-            n('drop',     'Drop into Upload UI',      'instantly visualised in 3D',                      pink),
-          ]}
-          edges={[
-            e('e1', 'cli',      'genedges'),
-            e('e2', 'genedges', 'output'),
-            e('e3', 'output',   'drop'),
-          ]}
-        />
+          {/* CSV generator */}
+          <div className="rounded-xl border border-border/40 overflow-hidden w-full">
+            <p className="text-xs font-semibold text-foreground/80 tracking-wide uppercase text-center py-3 px-4 border-b border-border/30">
+              CSV generator (cs_generator/)
+            </p>
+            <div className="w-full flex justify-center bg-[#1e1e2e] p-4">
+              <img
+                src="/diagrams/graph-path-models/generator.svg"
+                alt="CSV generator"
+                style={{ width: '100%', maxWidth: '399px', height: 'auto' }}
+                loading="lazy"
+              />
+            </div>
+          </div>
+        </div>
       </Section>
 
       <Section title="Tech Stack">
@@ -1126,65 +965,37 @@ export const PROJECT_CONTENT = {
       </Section>
 
       <Section title="Application Modules">
-        <FlowDiagram title="site structure — three pages"
-          nodes={[
-            n('index',    'index.html',              'EcoTrack landing · awareness + eco-tips',         green),
-            n('calindex', 'calindex.html',           'Carbon Footprint Calculator',                     green),
-            n('material', 'Material selector',       'Cement · Steel · Sand · Bricks · Concrete',       muted),
-            n('grade',    'Grade dropdown',          'per-material grade options',                       muted),
-            n('quantity', 'Quantity input',          'validated (must be > 0)',                          muted),
-            n('formula',  'CO₂ = qty × coeff',      'coefficient[material][grade]',                    green),
-            n('result',   'Result card',             'kg CO₂ equivalent · inline validation',            muted),
-            n('cities',   'cities_index.html',       'City Emissions Dashboard',                        green),
-            n('fetch',    'fetch(cities_data.json)', 'on DOMContentLoaded',                             green),
-            n('citylist', 'City list rendered',      'input[type=text] live search filter',             green),
-            n('clickcity','Click city',              'load 2012–2021 data',                             green),
-            n('table',    'Year-by-year table',      'transport · industry · residential · other',       muted),
-            n('total',    'Total column',            'sum of all categories per year',                   muted),
-          ]}
-          edges={[
-            e('e1',  'index',    'calindex',  'smooth-scroll nav'),
-            e('e2',  'index',    'cities'),
-            e('e3',  'calindex', 'material'),
-            e('e4',  'material', 'grade'),
-            e('e5',  'grade',    'quantity'),
-            e('e6',  'quantity', 'formula'),
-            e('e7',  'formula',  'result'),
-            e('e8',  'cities',   'fetch'),
-            e('e9',  'fetch',    'citylist'),
-            e('e10', 'citylist', 'clickcity'),
-            e('e11', 'clickcity','table'),
-            e('e12', 'table',    'total'),
-          ]}
-        />
+        <div className="space-y-6">
+          {/* site structure — three pages */}
+          <div className="rounded-xl border border-border/40 overflow-hidden w-full">
+            <p className="text-xs font-semibold text-foreground/80 tracking-wide uppercase text-center py-3 px-4 border-b border-border/30">
+              site structure — three pages
+            </p>
+            <div className="w-full flex justify-center bg-[#1e1e2e] p-4">
+              <img
+                src="/diagrams/eco-tracker/modules.svg"
+                alt="site structure — three pages"
+                style={{ width: '100%', maxWidth: '610px', height: 'auto' }}
+                loading="lazy"
+              />
+            </div>
+          </div>
 
-        <FlowDiagram title="cities_data.json schema"
-          nodes={[
-            n('json',      'cities_data.json',  'static file — no backend',                           green),
-            n('array',     'Array of city objects',null,                                              muted),
-            n('city_name', 'city',              '"Mumbai" · "Delhi" · …',                             green),
-            n('carbon',    'carbonFootprint',   'float — tonnes CO₂e',                               green),
-            n('population','population',        'integer',                                            muted),
-            n('region',    'region',            '"Asia"',                                             muted),
-            n('edata',     'emission_data[]',   'year: 2012–2021',                                   green),
-            n('transport', 'transportation',    'integer kt CO₂',                                    muted),
-            n('industry',  'industry',          'integer kt CO₂',                                    muted),
-            n('residential','residential',      'integer kt CO₂',                                    muted),
-            n('others',    'others',            'integer kt CO₂',                                    muted),
-          ]}
-          edges={[
-            e('e1',  'json',    'array'),
-            e('e2',  'array',   'city_name'),
-            e('e3',  'array',   'carbon'),
-            e('e4',  'array',   'population'),
-            e('e5',  'array',   'region'),
-            e('e6',  'array',   'edata',      'cities_scrip.js extends'),
-            e('e7',  'edata',   'transport'),
-            e('e8',  'edata',   'industry'),
-            e('e9',  'edata',   'residential'),
-            e('e10', 'edata',   'others'),
-          ]}
-        />
+          {/* cities_data.json schema */}
+          <div className="rounded-xl border border-border/40 overflow-hidden w-full">
+            <p className="text-xs font-semibold text-foreground/80 tracking-wide uppercase text-center py-3 px-4 border-b border-border/30">
+              cities_data.json schema
+            </p>
+            <div className="w-full flex justify-center bg-[#1e1e2e] p-4">
+              <img
+                src="/diagrams/eco-tracker/schema.svg"
+                alt="cities_data.json schema"
+                style={{ width: '100%', maxWidth: '896px', height: 'auto' }}
+                loading="lazy"
+              />
+            </div>
+          </div>
+        </div>
       </Section>
 
       <Section title="JavaScript Modules">

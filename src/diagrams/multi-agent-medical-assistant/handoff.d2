@@ -1,0 +1,37 @@
+direction: down
+
+classes: {
+  emerald: {
+    style.fill: "#022c22"
+    style.stroke: "#10b981"
+    style.font-color: "#6ee7b7"
+    style.border-radius: 8
+  }
+  amber: {
+    style.fill: "#1c1204"
+    style.stroke: "#d97706"
+    style.font-color: "#fbbf24"
+    style.border-radius: 8
+  }
+  red: {
+    style.fill: "#1c0505"
+    style.stroke: "#dc2626"
+    style.font-color: "#fca5a5"
+    style.border-radius: 8
+  }
+}
+
+rag_resp: "RAG Agent response" { class: emerald }
+logprob: "Confidence score\nmean token log-prob threshold" { class: amber }
+high: "score ≥ threshold\nHIGH confidence" { class: emerald }
+rag_ans: "Return RAG answer\n+ source citations" { class: emerald }
+low: "score < threshold\nLOW confidence" { class: red }
+escalate: "Escalate to Tavily\nweb_search_processor_agent/" { class: amber }
+combine: "Combine RAG + web hits\nLLM synthesises final answer" { class: emerald }
+
+rag_resp -> logprob: "extract log-probabilities"
+logprob -> high
+logprob -> low
+high -> rag_ans
+low -> escalate
+escalate -> combine

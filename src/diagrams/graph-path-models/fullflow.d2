@@ -1,0 +1,43 @@
+direction: down
+
+classes: {
+  pink: {
+    style.fill: "#1f0a13"
+    style.stroke: "#ec4899"
+    style.font-color: "#fbcfe8"
+    style.border-radius: 8
+  }
+  muted: {
+    style.fill: "#10111a"
+    style.stroke: "#2d3748"
+    style.font-color: "#8896aa"
+    style.border-radius: 8
+  }
+}
+
+csv_upload: "CSV Upload\nedge list: source, target, weight" { class: muted }
+parse: "parseGraphFromCsv.js\nPapaParse 5.5 → nodes[] + edges[] objects" { class: pink }
+graphstore: "graphStore (Zustand 5)\nnodes · edges · selectedAlgorithm · src · tgt" { class: pink }
+viewer3d: "GraphViewer3D\n@react-three/drei · all nodes + edges" { class: pink }
+threescene: "Three.js scene\nsphere nodes · line edges · orbit controls" { class: muted }
+forcelayout: "Force-directed layout\nspring physics positioning" { class: muted }
+algengine: "Algorithm engine\nsrc/algorithms/ — on Run click" { class: pink }
+dijkstra: "Dijkstra\npriority queue" { class: pink }
+bellman: "Bellman-Ford\nV-1 relaxations" { class: pink }
+astar: "A*\nf = g + h" { class: pink }
+pathresult: "pathNodes[] + cost\npathEdges[] + totalCost" { class: muted }
+pathviewer: "PathGraphViewer3D\nisolated 3D scene — highlighted path + cost" { class: pink }
+
+csv_upload -> parse: "or select demo_input/"
+parse -> graphstore
+graphstore -> viewer3d
+graphstore -> algengine
+viewer3d -> threescene
+threescene -> forcelayout
+algengine -> dijkstra
+algengine -> bellman
+algengine -> astar
+dijkstra -> pathresult
+bellman -> pathresult
+astar -> pathresult
+pathresult -> pathviewer

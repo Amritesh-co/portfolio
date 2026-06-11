@@ -1,0 +1,47 @@
+direction: down
+
+classes: {
+  cyan: {
+    style.fill: "#042f2e"
+    style.stroke: "#06b6d4"
+    style.font-color: "#67e8f9"
+    style.border-radius: 8
+  }
+  muted: {
+    style.fill: "#10111a"
+    style.stroke: "#2d3748"
+    style.font-color: "#8896aa"
+    style.border-radius: 8
+  }
+}
+
+nextjs: "Next.js 14 App Router\napp/visualizers/[algorithm]/page.tsx" { class: cyan }
+visualizer: "Visualiser Component\nreads store state: steps[] · currentStep" { class: cyan }
+framer: "Framer Motion\nstep transitions · element highlights" { class: muted }
+controls: "Controls Component\nplay · pause · step fwd/back · speed slider" { class: muted }
+interval: "interval timer\ndispatches nextStep action on tick" { class: muted }
+metrics: "Metrics Panel\nlive complexity display per run" { class: muted }
+sortstore: "Sorting\nuseSortingStore" { class: cyan }
+pathstore: "Pathfinding\nusePathfindingStore" { class: cyan }
+graphstore: "Graph\nuseGraphStore" { class: cyan }
+dpstore: "Dynamic Programming\nuseDPStore" { class: cyan }
+nqstore: "N-Queens\nuseNQueensStore" { class: cyan }
+stepgen: "Step generator\nruns full algorithm · captures every decision" { class: muted }
+stepsarr: "steps[] + metrics\nstored in Zustand — replayed by player/scrubber" { class: cyan }
+
+nextjs -> visualizer
+nextjs -> controls
+nextjs -> metrics
+visualizer -> framer
+controls -> interval
+visualizer -> sortstore
+visualizer -> pathstore
+visualizer -> graphstore
+visualizer -> dpstore
+visualizer -> nqstore
+sortstore -> stepgen: "Run Algorithm"
+pathstore -> stepgen
+graphstore -> stepgen
+dpstore -> stepgen
+nqstore -> stepgen
+stepgen -> stepsarr

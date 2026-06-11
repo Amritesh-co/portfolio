@@ -6,7 +6,7 @@ export const Footer = () => {
       {" "}
       <p className="text-sm text-muted-foreground">
         {" "}
-        &copy; {new Date().getFullYear()} Pedrotech.co. All rights reserved.
+        © {new Date().getFullYear()} Amritesh Sahu. All rights reserved.
       </p>
       <button
         onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}

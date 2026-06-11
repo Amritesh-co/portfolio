@@ -1,0 +1,39 @@
+direction: down
+
+classes: {
+  pink: {
+    style.fill: "#1f0a13"
+    style.stroke: "#ec4899"
+    style.font-color: "#fbcfe8"
+    style.border-radius: 8
+  }
+  muted: {
+    style.fill: "#10111a"
+    style.stroke: "#2d3748"
+    style.font-color: "#8896aa"
+    style.border-radius: 8
+  }
+}
+
+dijk: "Dijkstra\ngreedy · O((V+E) log V)" { class: pink }
+dijk_heap: "Min-heap priority queue" { class: muted }
+dijk_lim: "non-negative weights" { class: muted }
+dijk_opt: "optimal for dense graphs" { class: muted }
+bell: "Bellman-Ford\nDP · O(V·E)" { class: pink }
+bell_relax: "V−1 relaxation passes" { class: muted }
+bell_neg: "handles negative weights" { class: muted }
+bell_cycle: "detects negative cycles" { class: muted }
+as: "A*\nheuristic · O(E log V) typical" { class: pink }
+as_fn: "f(n) = g(n) + h(n)" { class: muted }
+as_heur: "Euclidean/custom heuristic" { class: muted }
+as_fast: "fastest when h admissible" { class: muted }
+
+dijk -> dijk_heap
+dijk_heap -> dijk_lim
+dijk_lim -> dijk_opt
+bell -> bell_relax
+bell_relax -> bell_neg
+bell_neg -> bell_cycle
+as -> as_fn
+as_fn -> as_heur
+as_heur -> as_fast

@@ -1,0 +1,46 @@
+direction: down
+
+classes: {
+  emerald: {
+    style.fill: "#022c22"
+    style.stroke: "#10b981"
+    style.font-color: "#6ee7b7"
+    style.border-radius: 8
+  }
+  muted: {
+    style.fill: "#10111a"
+    style.stroke: "#2d3748"
+    style.font-color: "#8896aa"
+    style.border-radius: 8
+  }
+}
+
+pdf: "Medical PDF\ndata/raw/ directory" { class: muted }
+docling: "Docling v2.31\ntext · tables · embedded images" { class: emerald }
+chunker: "Semantic Chunker\nLLM boundary-aware splits" { class: emerald }
+dense: "Dense Embeddings\nAzure text-embedding-ada-002" { class: muted }
+floatvec: "Float32 vectors" { class: muted }
+qdrant1: "Qdrant Collection\ndata/qdrant_db/ — hybrid store" { class: emerald }
+bm25: "BM25 Sparse Index\nkeyword inverted index" { class: muted }
+tfidf: "TF-IDF tokens" { class: muted }
+qdrant2: "Qdrant Collection\nsparse vectors side" { class: emerald }
+userq: "User query" { class: muted }
+expanded: "Expanded query\nLLM adds medical synonyms" { class: emerald }
+hybrids: "Hybrid search\ndense + sparse RRF fusion" { class: emerald }
+topk: "Top-K → reranker\nms-marco-TinyBERT cross-encoder" { class: emerald }
+context: "Final context window\nsource URLs + reference images injected" { class: emerald }
+
+pdf -> docling
+docling -> chunker
+chunker -> dense: "per chunk"
+chunker -> bm25
+dense -> floatvec
+floatvec -> qdrant1: "stored in"
+bm25 -> tfidf
+tfidf -> qdrant2: "stored in"
+qdrant1 -> hybrids: "query time"
+qdrant2 -> hybrids
+userq -> expanded
+expanded -> hybrids
+hybrids -> topk
+topk -> context

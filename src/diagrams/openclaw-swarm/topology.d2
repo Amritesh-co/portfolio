@@ -1,0 +1,62 @@
+direction: down
+
+classes: {
+  violet: {
+    style.fill: "#1e1033"
+    style.stroke: "#7c3aed"
+    style.font-color: "#c4b5fd"
+    style.border-radius: 8
+  }
+  amber: {
+    style.fill: "#1c1204"
+    style.stroke: "#d97706"
+    style.font-color: "#fbbf24"
+    style.border-radius: 8
+  }
+  muted: {
+    style.fill: "#10111a"
+    style.stroke: "#2d3748"
+    style.font-color: "#8896aa"
+    style.border-radius: 8
+  }
+}
+
+telegram: "Telegram" { class: muted }
+discord: "Discord" { class: muted }
+slack: "Slack / WhatsApp" { class: muted }
+tui: "TUI / CLI" { class: muted }
+gateway: "OpenClaw Gateway\nws://127.0.0.1:18789 · openclaw.json" { class: violet }
+commander: "COMMANDER\nqwen3:8b · agents/commander/SOUL.md" { class: violet }
+researcher: "RESEARCHER\nqwen3:8b" { class: violet }
+brave: "brave-search\nMCP web tool" { class: amber }
+puppeteer: "puppeteer\nMCP scrape tool" { class: amber }
+coder: "CODER\nqwen2.5-coder:14b" { class: violet }
+fsmcp: "filesystem MCP\nRead · Write · Bash" { class: amber }
+memmcp: "memory MCP\npersistent KV store" { class: amber }
+analyst: "ANALYST\nqwen2.5-coder:14b" { class: violet }
+sqlitemcp: "sqlite MCP\nstructured queries" { class: amber }
+fsmcp2: "filesystem MCP\nCSV / JSON read" { class: amber }
+writer: "WRITER\nmistral:7b" { class: violet }
+fsmcp3: "filesystem MCP\nWrite output files" { class: amber }
+merge: "COMMANDER merges\nsynthesises final response · replies" { class: violet }
+
+telegram -> gateway
+discord -> gateway
+slack -> gateway
+tui -> gateway
+gateway -> commander
+commander -> researcher: "TeammateTool.write()"
+commander -> coder
+commander -> analyst
+commander -> writer
+researcher -> brave
+brave -> puppeteer
+coder -> fsmcp
+fsmcp -> memmcp
+analyst -> sqlitemcp
+sqlitemcp -> fsmcp2
+writer -> fsmcp3
+puppeteer -> merge: "results → Commander"
+memmcp -> merge
+fsmcp2 -> merge
+fsmcp3 -> merge

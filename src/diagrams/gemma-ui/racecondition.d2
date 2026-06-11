@@ -1,0 +1,39 @@
+direction: down
+
+classes: {
+  indigo: {
+    style.fill: "#1e1b4b"
+    style.stroke: "#4f46e5"
+    style.font-color: "#a5b4fc"
+    style.border-radius: 8
+  }
+  red: {
+    style.fill: "#1c0505"
+    style.stroke: "#dc2626"
+    style.font-color: "#fca5a5"
+    style.border-radius: 8
+  }
+  muted: {
+    style.fill: "#10111a"
+    style.stroke: "#2d3748"
+    style.font-color: "#8896aa"
+    style.border-radius: 8
+  }
+}
+
+stream_start: "Stream starts\nactiveId = \"conv-A\" in state" { class: muted }
+state_change: "activeId state → conv-B\nstale in closure — user switched mid-stream" { class: red }
+without_fix: "Without fix\nstale closure" { class: red }
+bad_write: "updateMessages writes\ntokens to \"conv-A\" (wrong!)" { class: red }
+ghost: "Ghost conversations" { class: red }
+with_fix: "With fix\nactiveIdRef" { class: indigo }
+sync_ref: "useEffect syncs ref\nactiveIdRef.current = activeId always" { class: indigo }
+correct: "Callback reads ref\nalways correct conversation ID" { class: indigo }
+
+stream_start -> state_change: "user clicks different conversation"
+state_change -> without_fix
+state_change -> with_fix
+without_fix -> bad_write
+bad_write -> ghost
+with_fix -> sync_ref
+sync_ref -> correct

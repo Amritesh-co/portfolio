@@ -1,0 +1,25 @@
+direction: down
+
+classes: {
+  pink: {
+    style.fill: "#1f0a13"
+    style.stroke: "#ec4899"
+    style.font-color: "#fbcfe8"
+    style.border-radius: 8
+  }
+  muted: {
+    style.fill: "#10111a"
+    style.stroke: "#2d3748"
+    style.font-color: "#8896aa"
+    style.border-radius: 8
+  }
+}
+
+cli: "python csv_gen.py\n--nodes N --edges E --max-weight W" { class: muted }
+genedges: "Random edge list\nnodes 0..N-1 · random source/target pairs" { class: pink }
+output: "Output CSV\ncolumns: source, target, weight — 500+ nodes" { class: muted }
+drop: "Drop into Upload UI\ninstantly visualised in 3D" { class: pink }
+
+cli -> genedges
+genedges -> output
+output -> drop

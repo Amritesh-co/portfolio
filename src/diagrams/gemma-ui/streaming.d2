@@ -1,0 +1,40 @@
+direction: down
+
+classes: {
+  indigo: {
+    style.fill: "#1e1b4b"
+    style.stroke: "#4f46e5"
+    style.font-color: "#a5b4fc"
+    style.border-radius: 8
+  }
+  muted: {
+    style.fill: "#10111a"
+    style.stroke: "#2d3748"
+    style.font-color: "#8896aa"
+    style.border-radius: 8
+  }
+}
+
+submit: "User submits prompt\nChatArea.jsx" { class: indigo }
+docctx: "Attach document context\nif files uploaded" { class: muted }
+parse_req: "POST /api/parse :3001\nmultipart FormData" { class: indigo }
+filetext: "{ filename, text }" { class: muted }
+prepend: "Prepend as context\n\"Document context: [text]\"" { class: indigo }
+chat_req: "POST /api/chat :11434\nmessages[] + augmented prompt" { class: indigo }
+ndjson: "Ollama NDJSON stream\n{ message: { content }, done }" { class: indigo }
+tokenacc: "Token accumulator\nlocal variable — avoids React batching lag" { class: muted }
+update: "updateMessages()\nfunctional updater — reads activeIdRef.current" { class: indigo }
+done: "done: true received\nstream ends · localStorage sync" { class: muted }
+render: "Render pipeline\nmarkdown → highlight → D2 compile → inject" { class: indigo }
+
+submit -> docctx
+docctx -> parse_req: "for each file"
+parse_req -> filetext
+filetext -> prepend
+prepend -> chat_req
+submit -> chat_req
+chat_req -> ndjson
+ndjson -> tokenacc: "NDJSON parser"
+tokenacc -> update
+update -> done
+done -> render

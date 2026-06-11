@@ -1,0 +1,39 @@
+direction: down
+
+classes: {
+  green: {
+    style.fill: "#022c22"
+    style.stroke: "#10b981"
+    style.font-color: "#6ee7b7"
+    style.border-radius: 8
+  }
+  muted: {
+    style.fill: "#10111a"
+    style.stroke: "#2d3748"
+    style.font-color: "#8896aa"
+    style.border-radius: 8
+  }
+}
+
+json: "cities_data.json\nstatic file — no backend" { class: green }
+array: "Array of city objects" { class: muted }
+city_name: "city\n\"Mumbai\" · \"Delhi\" · …" { class: green }
+carbon: "carbonFootprint\nfloat — tonnes CO₂e" { class: green }
+population: "population\ninteger" { class: muted }
+region: "region\n\"Region\"" { class: muted }
+edata: "emission_data[]\nyear: 2012–2021" { class: green }
+transport: "transportation\ninteger kt CO₂" { class: muted }
+industry: "industry\ninteger kt CO₂" { class: muted }
+residential: "residential\ninteger kt CO₂" { class: muted }
+others: "others\ninteger kt CO₂" { class: muted }
+
+json -> array
+array -> city_name
+array -> carbon
+array -> population
+array -> region
+array -> edata: "cities_scrip.js extends"
+edata -> transport
+edata -> industry
+edata -> residential
+edata -> others

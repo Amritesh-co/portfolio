@@ -417,8 +417,79 @@ export const Friday = () => {
             <p className="text-muted-foreground text-sm md:text-base leading-relaxed">
               An enterprise-replicated cloud ecosystem built on Ubuntu Server to host a personal storage cloud, WireGuard overlay VPN, Zero-Trust Cloudflare edge tunnels, and multi-model AI agent workspaces.
             </p>
-
           </div>
+
+          {/* ── Intro: What it is & How it's built ── */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-5xl mx-auto w-full">
+
+            {/* What it is */}
+            <div className="space-y-4">
+              <div className="flex items-center gap-2">
+                <span className="inline-flex h-7 w-7 items-center justify-center rounded-lg bg-primary/15">
+                  <Zap className="h-4 w-4 text-primary" />
+                </span>
+                <h2 className="text-sm font-semibold font-mono text-primary uppercase tracking-widest">What it is</h2>
+              </div>
+              <p className="text-sm text-muted-foreground leading-relaxed text-justify">
+                Friday is a fully self-hosted private cloud running 24/7 on a bare-metal Ubuntu Server box.
+                It replicates enterprise cloud infrastructure — compute, storage, networking, and AI inference —
+                entirely on-prem, with <strong className="text-foreground">zero inbound router ports exposed</strong>.
+                All external access flows through outbound-only encrypted tunnels, making it as secure as a managed cloud
+                without any subscription cost.
+              </p>
+              <ul className="space-y-1.5 text-xs font-mono text-muted-foreground">
+                {[
+                  "☁️  Personal S3-compatible cloud storage (Nextcloud)",
+                  "🤖  Multi-model AI workspace (Ollama · Open WebUI)",
+                  "🔐  Zero-Trust edge tunnels (Cloudflare Tunnel)",
+                  "🌐  Private overlay VPN mesh (WireGuard)",
+                  "📊  Containerised services via Docker Compose",
+                ].map((item) => (
+                  <li key={item} className="flex items-start gap-2">
+                    <span>{item}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            {/* How it's built */}
+            <div className="space-y-4">
+              <div className="flex items-center gap-2">
+                <span className="inline-flex h-7 w-7 items-center justify-center rounded-lg bg-indigo-500/15">
+                  <Network className="h-4 w-4 text-indigo-400" />
+                </span>
+                <h2 className="text-sm font-semibold font-mono text-indigo-400 uppercase tracking-widest">How it's built</h2>
+              </div>
+              <p className="text-sm text-muted-foreground leading-relaxed text-justify">
+                The host runs <strong className="text-foreground">Ubuntu Server 22.04 LTS</strong> with a static
+                Netplan IP, serving as the hypervisor for all services.
+                Docker Compose stacks handle service isolation and restarts.
+                A <strong className="text-foreground">Cloudflare Tunnel</strong> daemon creates an outbound-only
+                encrypted pipe from the host to Cloudflare's edge — no port forwarding needed.
+                <strong className="text-foreground"> WireGuard</strong> provides an always-on private mesh for
+                device-to-server access from anywhere.
+              </p>
+              <div className="grid grid-cols-2 gap-2">
+                {[
+                  { label: "OS",        value: "Ubuntu 22.04 LTS" },
+                  { label: "Runtime",   value: "Docker Compose" },
+                  { label: "Tunnel",    value: "Cloudflare Tunnel" },
+                  { label: "VPN",       value: "WireGuard" },
+                  { label: "Storage",   value: "Nextcloud + HDD" },
+                  { label: "AI",        value: "Ollama · Open WebUI" },
+                  { label: "DNS",       value: "Cloudflare DNS" },
+                  { label: "SSL",       value: "Cloudflare Edge TLS" },
+                ].map(({ label, value }) => (
+                  <div key={label} className="rounded-lg border border-indigo-500/15 bg-indigo-500/5 px-3 py-2">
+                    <div className="text-[10px] font-mono text-indigo-400/60 uppercase">{label}</div>
+                    <div className="text-xs font-mono text-foreground/80 truncate">{value}</div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+
+
 
           {/* Flowchart Section (Horizontal/Vertical ReactFlow Flowchart) */}
           <div className="space-y-6 text-left group/flow">

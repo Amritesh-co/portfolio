@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import { Navbar } from "../components/Navbar";
 import { Footer } from "../components/Footer";
 import { PROJECTS } from "../data/projects";
+import { ParticleNetworkCanvas } from "../components/ParticleNetworkCanvas";
 
 function LaptopCard({ project }) {
   return (
@@ -105,9 +106,10 @@ function LaptopCard({ project }) {
 
 export const Projects = () => {
   return (
-    <div className="min-h-screen bg-background text-foreground overflow-x-hidden">
+    <div className="min-h-screen bg-background text-foreground overflow-x-hidden relative">
+      <ParticleNetworkCanvas />
       <Navbar />
-      <main className="pt-32 pb-24 px-4">
+      <main className="relative z-10 pt-32 pb-24 px-4">
         <div className="container mx-auto max-w-6xl">
           <h1 className="text-4xl md:text-5xl font-bold text-center mb-4">
             My <span className="text-primary">Projects</span>

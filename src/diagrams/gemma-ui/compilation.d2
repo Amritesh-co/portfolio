@@ -1,0 +1,51 @@
+direction: down
+
+classes: {
+  indigo: {
+    style.fill: "#1e1b4b"
+    style.stroke: "#4f46e5"
+    style.font-color: "#a5b4fc"
+    style.border-radius: 8
+  }
+  amber: {
+    style.fill: "#1c1204"
+    style.stroke: "#d97706"
+    style.font-color: "#fbbf24"
+    style.border-radius: 8
+  }
+  red: {
+    style.fill: "#1c0505"
+    style.stroke: "#dc2626"
+    style.font-color: "#fca5a5"
+    style.border-radius: 8
+  }
+  muted: {
+    style.fill: "#10111a"
+    style.stroke: "#2d3748"
+    style.font-color: "#8896aa"
+    style.border-radius: 8
+  }
+}
+
+d2code: "Model outputs d2 block" { class: muted }
+cache_look: "Cache lookup\nMap(source → compiled SVG)" { class: indigo }
+cache_hit: "Cache HIT" { class: indigo }
+ret_cached: "Return cached SVG" { class: muted }
+inject1: "containerRef.innerHTML\nsanitized SVG injected" { class: indigo }
+cache_miss: "Cache MISS" { class: red }
+compile: "new D2().compile(source)\nWASM · layout: dagre" { class: indigo }
+d2render: "d2.render(diagram)\nthemeID: 4" { class: indigo }
+sanitize: "DOMPurify.sanitize(svg)\nXSS protection before DOM injection" { class: amber }
+store: "Store in cache" { class: muted }
+inject2: "containerRef.innerHTML\nsanitized SVG injected" { class: indigo }
+
+d2code -> cache_look
+cache_look -> cache_hit
+cache_look -> cache_miss
+cache_hit -> ret_cached
+ret_cached -> inject1
+cache_miss -> compile
+compile -> d2render
+d2render -> sanitize
+sanitize -> store
+store -> inject2

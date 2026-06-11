@@ -1,0 +1,67 @@
+direction: down
+
+classes: {
+  emerald: {
+    style.fill: "#022c22"
+    style.stroke: "#10b981"
+    style.font-color: "#6ee7b7"
+    style.border-radius: 8
+  }
+  amber: {
+    style.fill: "#1c1204"
+    style.stroke: "#d97706"
+    style.font-color: "#fbbf24"
+    style.border-radius: 8
+  }
+  muted: {
+    style.fill: "#10111a"
+    style.stroke: "#2d3748"
+    style.font-color: "#8896aa"
+    style.border-radius: 8
+  }
+}
+
+text: "Text Query" { class: muted }
+voice: "Voice Input\nElevenLabs STT" { class: muted }
+image: "Medical Image\nPNG / JPG upload" { class: muted }
+gateway: "FastAPI Gateway\nPOST /chat · /upload-image · /voice" { class: emerald }
+orchestrator: "LangGraph Orchestrator\nagent_decision.py · StateGraph" { class: emerald }
+rag: "RAG Agent\nagents/rag_agent/" { class: emerald }
+qexp: "Query Expansion\nLLM generates domain terms" { class: muted }
+hybrid: "Hybrid Retrieval\nQdrant dense + BM25 sparse" { class: emerald }
+rerank: "Cross-Encoder Rerank\nms-marco-TinyBERT" { class: emerald }
+logprob: "Log-Prob Gate\nconfidence threshold check" { class: amber }
+web: "Web Search Agent\nweb_search_processor_agent/" { class: emerald }
+tavily: "Tavily API\nreal-time medical papers" { class: muted }
+websyn: "Result synthesis\nLLM summarises web hits" { class: muted }
+imaging: "Imaging Agent\nimage_analysis_agent/" { class: emerald }
+brain: "Brain Tumour\nPyTorch classifier" { class: muted }
+chest: "Chest X-Ray\nPyTorch classifier" { class: muted }
+skin: "Skin Lesion\nPyTorch segmentation" { class: muted }
+hitl: "HITL NodeInterrupt\nprofessional review gate" { class: amber }
+guardrails: "LangChain Guardrails\ninput safety + output relevance filter" { class: amber }
+composer: "Response Composer\ntext + source citations + thumbnails" { class: emerald }
+tts: "ElevenLabs TTS\nPOST /voice · audio stream to browser" { class: emerald }
+
+text -> gateway
+voice -> gateway
+image -> gateway
+gateway -> orchestrator
+orchestrator -> rag: "classifies intent"
+orchestrator -> web
+orchestrator -> imaging
+rag -> qexp
+qexp -> hybrid
+hybrid -> rerank
+rerank -> logprob
+logprob -> guardrails
+web -> tavily
+tavily -> websyn
+websyn -> guardrails
+imaging -> brain
+brain -> chest
+chest -> skin
+skin -> hitl
+hitl -> guardrails
+guardrails -> composer
+composer -> tts

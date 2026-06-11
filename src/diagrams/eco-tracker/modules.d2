@@ -1,0 +1,43 @@
+direction: down
+
+classes: {
+  green: {
+    style.fill: "#022c22"
+    style.stroke: "#10b981"
+    style.font-color: "#6ee7b7"
+    style.border-radius: 8
+  }
+  muted: {
+    style.fill: "#10111a"
+    style.stroke: "#2d3748"
+    style.font-color: "#8896aa"
+    style.border-radius: 8
+  }
+}
+
+index: "index.html\nEcoTrack landing · awareness + eco-tips" { class: green }
+calindex: "calindex.html\nCarbon Footprint Calculator" { class: green }
+material: "Material selector\nCement · Steel · Sand · Bricks · Concrete" { class: muted }
+grade: "Grade dropdown\nper-material grade options" { class: muted }
+quantity: "Quantity input\nvalidated (must be > 0)" { class: muted }
+formula: "CO₂ = qty × coeff\ncoefficient[material][grade]" { class: green }
+result: "Result card\nkg CO₂ equivalent · inline validation" { class: muted }
+cities: "cities_index.html\nCity Emissions Dashboard" { class: green }
+fetch: "fetch(cities_data.json)\non DOMContentLoaded" { class: green }
+citylist: "City list rendered\ninput[type=text] live search filter" { class: green }
+clickcity: "Click city\nload 2012–2021 data" { class: green }
+table: "Year-by-year table\ntransport · industry · residential · other" { class: muted }
+total: "Total column\nsum of all categories per year" { class: muted }
+
+index -> calindex: "smooth-scroll nav"
+index -> cities
+calindex -> material
+material -> grade
+grade -> quantity
+quantity -> formula
+formula -> result
+cities -> fetch
+fetch -> citylist
+citylist -> clickcity
+clickcity -> table
+table -> total
