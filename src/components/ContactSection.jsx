@@ -1,12 +1,9 @@
 import {
-  Instagram,
+  Github,
   Linkedin,
   Mail,
   MapPin,
-  Phone,
   Send,
-  Twitch,
-  Twitter,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useToast } from "@/hooks/use-toast";
@@ -18,7 +15,6 @@ export const ContactSection = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-
     setIsSubmitting(true);
 
     setTimeout(() => {
@@ -27,13 +23,15 @@ export const ContactSection = () => {
         description: "Thank you for your message. I'll get back to you soon.",
       });
       setIsSubmitting(false);
+      e.target.reset(); // clear form inputs on success
     }, 1500);
   };
+
   return (
     <section id="contact" className="py-24 px-4 relative bg-secondary/30">
       <div className="container mx-auto max-w-5xl">
         <h2 className="text-3xl md:text-4xl font-bold mb-4 text-center">
-          Get In <span className="text-primary"> Touch</span>
+          Get In <span className="text-primary">Touch</span>
         </h2>
 
         <p className="text-center text-muted-foreground mb-12 max-w-2xl mx-auto">
@@ -42,86 +40,77 @@ export const ContactSection = () => {
         </p>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
-          <div className="space-y-8">
-            <h3 className="text-2xl font-semibold mb-6">
-              {" "}
-              Contact Information
-            </h3>
+          {/* Left Column: Contact info */}
+          <div className="space-y-8 flex flex-col justify-between">
+            <div className="space-y-6">
+              <h3 className="text-2xl font-semibold mb-6">Contact Information</h3>
 
-            <div className="space-y-6 justify-center">
-              <div className="flex items-start space-x-4">
-                <div className="p-3 rounded-full bg-primary/10">
-                  <Mail className="h-6 w-6 text-primary" />{" "}
+              <div className="space-y-6">
+                {/* Email */}
+                <div className="flex items-start space-x-4">
+                  <div className="p-3 rounded-full bg-primary/10 shrink-0">
+                    <Mail className="h-6 w-6 text-primary" />
+                  </div>
+                  <div>
+                    <h4 className="font-medium text-slate-200">Email</h4>
+                    <a
+                      href="mailto:amriteshsahu96@gmail.com"
+                      className="text-muted-foreground hover:text-primary transition-colors text-sm"
+                    >
+                      amriteshsahu96@gmail.com
+                    </a>
+                  </div>
                 </div>
-                <div>
-                  <h4 className="font-medium"> Email</h4>
-                  <a
-                    href="mailto:hello@gmail.com"
-                    className="text-muted-foreground hover:text-primary transition-colors"
-                  >
-                    hello@gmail.com
-                  </a>
-                </div>
-              </div>
-              <div className="flex items-start space-x-4">
-                <div className="p-3 rounded-full bg-primary/10">
-                  <Phone className="h-6 w-6 text-primary" />{" "}
-                </div>
-                <div>
-                  <h4 className="font-medium"> Phone</h4>
-                  <a
-                    href="tel:+11234567890"
-                    className="text-muted-foreground hover:text-primary transition-colors"
-                  >
-                    +1 (123) 456-7890
-                  </a>
-                </div>
-              </div>
-              <div className="flex items-start space-x-4">
-                <div className="p-3 rounded-full bg-primary/10">
-                  <MapPin className="h-6 w-6 text-primary" />{" "}
-                </div>
-                <div>
-                  <h4 className="font-medium"> Location</h4>
-                  <a className="text-muted-foreground hover:text-primary transition-colors">
-                    Vancouver, BC, Canada
-                  </a>
+
+                {/* Location */}
+                <div className="flex items-start space-x-4">
+                  <div className="p-3 rounded-full bg-primary/10 shrink-0">
+                    <MapPin className="h-6 w-6 text-primary" />
+                  </div>
+                  <div>
+                    <h4 className="font-medium text-slate-200">Location</h4>
+                    <span className="text-muted-foreground text-sm">
+                      Bengaluru, India
+                    </span>
+                  </div>
                 </div>
               </div>
             </div>
 
-            <div className="pt-8">
-              <h4 className="font-medium mb-4"> Connect With Me</h4>
-              <div className="flex space-x-4 justify-center">
-                <a href="#" target="_blank">
-                  <Linkedin />
+            {/* Social Connect */}
+            <div className="pt-8 border-t border-border/10">
+              <h4 className="font-medium mb-4 text-slate-200">Connect With Me</h4>
+              <div className="flex space-x-4">
+                <a 
+                  href="https://github.com/Amritesh-co" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="p-3 rounded-full bg-zinc-900 border border-border/20 text-muted-foreground hover:text-primary hover:border-primary/40 transition-all duration-300"
+                >
+                  <Github className="h-5 w-5" />
                 </a>
-                <a href="#" target="_blank">
-                  <Twitter />
-                </a>
-                <a href="#" target="_blank">
-                  <Instagram />
-                </a>
-                <a href="#" target="_blank">
-                  <Twitch />
+                <a 
+                  href="https://linkedin.com" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="p-3 rounded-full bg-zinc-900 border border-border/20 text-muted-foreground hover:text-primary hover:border-primary/40 transition-all duration-300"
+                >
+                  <Linkedin className="h-5 w-5" />
                 </a>
               </div>
             </div>
           </div>
 
-          <div
-            className="bg-card p-8 rounded-lg shadow-xs"
-            onSubmit={handleSubmit}
-          >
-            <h3 className="text-2xl font-semibold mb-6"> Send a Message</h3>
+          {/* Right Column: Contact form */}
+          <div className="bg-card p-8 rounded-lg border border-border/20 shadow-xs">
+            <h3 className="text-2xl font-semibold mb-6 text-slate-100">Send a Message</h3>
 
-            <form className="space-y-6">
+            <form onSubmit={handleSubmit} className="space-y-6">
               <div>
                 <label
                   htmlFor="name"
-                  className="block text-sm font-medium mb-2"
+                  className="block text-sm font-medium mb-2 text-slate-300"
                 >
-                  {" "}
                   Your Name
                 </label>
                 <input
@@ -129,7 +118,7 @@ export const ContactSection = () => {
                   id="name"
                   name="name"
                   required
-                  className="w-full px-4 py-3 rounded-md border border-input bg-background focus:outline-hidden foucs:ring-2 focus:ring-primary"
+                  className="w-full px-4 py-3 rounded-md border border-input bg-background focus:outline-hidden focus:ring-2 focus:ring-primary text-sm text-slate-200"
                   placeholder="Amritesh Sahu..."
                 />
               </div>
@@ -137,9 +126,8 @@ export const ContactSection = () => {
               <div>
                 <label
                   htmlFor="email"
-                  className="block text-sm font-medium mb-2"
+                  className="block text-sm font-medium mb-2 text-slate-300"
                 >
-                  {" "}
                   Your Email
                 </label>
                 <input
@@ -147,7 +135,7 @@ export const ContactSection = () => {
                   id="email"
                   name="email"
                   required
-                  className="w-full px-4 py-3 rounded-md border border-input bg-background focus:outline-hidden foucs:ring-2 focus:ring-primary"
+                  className="w-full px-4 py-3 rounded-md border border-input bg-background focus:outline-hidden focus:ring-2 focus:ring-primary text-sm text-slate-200"
                   placeholder="john@gmail.com"
                 />
               </div>
@@ -155,16 +143,16 @@ export const ContactSection = () => {
               <div>
                 <label
                   htmlFor="message"
-                  className="block text-sm font-medium mb-2"
+                  className="block text-sm font-medium mb-2 text-slate-300"
                 >
-                  {" "}
                   Your Message
                 </label>
                 <textarea
                   id="message"
                   name="message"
                   required
-                  className="w-full px-4 py-3 rounded-md border border-input bg-background focus:outline-hidden foucs:ring-2 focus:ring-primary resize-none"
+                  rows={4}
+                  className="w-full px-4 py-3 rounded-md border border-input bg-background focus:outline-hidden focus:ring-2 focus:ring-primary resize-none text-sm text-slate-200"
                   placeholder="Hello, I'd like to talk about..."
                 />
               </div>
@@ -173,7 +161,7 @@ export const ContactSection = () => {
                 type="submit"
                 disabled={isSubmitting}
                 className={cn(
-                  "cosmic-button w-full flex items-center justify-center gap-2"
+                  "cosmic-button w-full flex items-center justify-center gap-2 cursor-pointer"
                 )}
               >
                 {isSubmitting ? "Sending..." : "Send Message"}

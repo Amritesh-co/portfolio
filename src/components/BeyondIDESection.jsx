@@ -1,34 +1,13 @@
 import React from "react";
-import { 
-  Cpu, 
-  Camera,
-  Bike,
-  BookOpen,
-  Sparkles,
-  Command
-} from "lucide-react";
+import { Sparkles } from "lucide-react";
 
-const HOBBIES = [
-  {
-    icon: <Cpu className="h-6 w-6 text-emerald-400" />,
-    title: "Hardware & IoT",
-    description: "Integrating hardware with software. Building custom smart home sensors, microcontrollers (ESP32, Raspberry Pi Pico), and writing firmware to automate environments."
-  },
-  {
-    icon: <Camera className="h-6 w-6 text-sky-400" />,
-    title: "Photography",
-    description: "Exploring urban architecture, minimal geometry, and low-light long exposures. Framing the world through a lens to train design patterns and composition eyes."
-  },
-  {
-    icon: <Bike className="h-6 w-6 text-orange-400" />,
-    title: "Cycling & Outdoors",
-    description: "Long-distance gravel cycling and mountain trail hiking. Challenging physical limits, exploring new landscapes, and stepping away to solve complex engineering challenges with a clear mind."
-  },
-  {
-    icon: <BookOpen className="h-6 w-6 text-purple-400" />,
-    title: "Sci-Fi & Philosophy",
-    description: "Reading broadly across hard science fiction, systems theory, and classic philosophy (Stoicism) to build mental models and resilient logical frameworks."
-  }
+const IMAGES = [
+  { src: "/beyond-ide/badminton.jpeg", label: "Badminton" },
+  { src: "/beyond-ide/img1.jpeg", label: "Adventure & Outdoors" },
+  { src: "/beyond-ide/img2.jpeg", label: "Travel & Culture" },
+  { src: "/beyond-ide/img3.jpeg", label: "Photography & Landscapes" },
+  { src: "/beyond-ide/img4.jpeg", label: "Socials & Community" },
+  { src: "/beyond-ide/img5.jpeg", label: "Recreation & Off-Duty" },
 ];
 
 export const BeyondIDESection = () => {
@@ -49,19 +28,26 @@ export const BeyondIDESection = () => {
           </p>
         </div>
 
-        {/* Clean Grid of Hobbies */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 pt-6">
-          {HOBBIES.map((hobby, idx) => (
+        {/* 3-Column Image Grid */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 pt-6">
+          {IMAGES.map((img, idx) => (
             <div 
               key={idx} 
-              className="p-6 rounded-2xl border border-border/20 bg-zinc-900/10 hover:bg-zinc-900/30 hover:border-border/60 transition-all duration-300 group flex flex-col space-y-4"
+              className="rounded-2xl overflow-hidden border border-border/20 bg-zinc-900/10 hover:border-border/60 transition-all duration-300 group h-[280px] relative"
             >
-              <div className="p-2.5 w-fit rounded-lg bg-zinc-900 border border-border/10 group-hover:border-primary/30 transition-colors shrink-0">
-                {hobby.icon}
-              </div>
-              <div className="space-y-2">
-                <h3 className="text-base font-bold text-slate-200">{hobby.title}</h3>
-                <p className="text-xs text-muted-foreground leading-relaxed">{hobby.description}</p>
+              <img 
+                src={img.src} 
+                alt={img.label} 
+                className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                loading="lazy"
+              />
+              
+              {/* Glassmorphic label panel */}
+              <div className="absolute bottom-4 left-4 right-4 bg-zinc-950/80 backdrop-blur-md border border-border/20 py-2.5 px-3.5 rounded-xl transition-colors group-hover:border-primary/30 flex items-center justify-between">
+                <span className="text-xs font-mono font-bold text-slate-200 tracking-wide">
+                  {img.label}
+                </span>
+                <Sparkles className="h-3.5 w-3.5 text-primary opacity-60 group-hover:opacity-100 transition-opacity" />
               </div>
             </div>
           ))}
