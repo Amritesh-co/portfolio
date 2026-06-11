@@ -44,6 +44,17 @@ export const PROJECTS = [
     github: "https://github.com/Amritesh-co/portfolio",
   },
   {
+    slug: "friday",
+    name: "Project Friday",
+    tagline: "Self-Hosted Private Cloud Platform",
+    description:
+      "An enterprise-replicated cloud ecosystem built on Ubuntu Server to host a personal storage cloud, WireGuard overlay VPN, Zero-Trust Cloudflare edge tunnels, and multi-model AI agent workspaces.",
+    tags: ["Ubuntu Server", "Docker", "Tailscale", "Cloudflare Tunnel", "Nextcloud"],
+    gradient: "from-indigo-600 to-violet-700",
+    url: "github.com/Amritesh-co/portfolio",
+    github: "https://github.com/Amritesh-co/portfolio",
+  },
+  {
     slug: "gemma-ui",
     name: "Gemma UI",
     tagline: "Local LLM Interaction Interface",
@@ -97,16 +108,5 @@ export const PROJECTS = [
     gradient: "from-green-500 to-emerald-600",
     url: "github.com/Amritesh-co/Eco-tracker",
     github: "https://github.com/Amritesh-co/Eco-tracker",
-  },
-  {
-    slug: "friday",
-    name: "Project Friday",
-    tagline: "Self-Hosted Private Cloud Platform",
-    description:
-      "An enterprise-replicated cloud ecosystem built on Ubuntu Server to host a personal storage cloud, WireGuard overlay VPN, Zero-Trust Cloudflare edge tunnels, and multi-model AI agent workspaces.",
-    tags: ["Ubuntu Server", "Docker", "Tailscale", "Cloudflare Tunnel", "Nextcloud"],
-    gradient: "from-indigo-600 to-violet-700",
-    url: "github.com/Amritesh-co/portfolio",
-    github: "https://github.com/Amritesh-co/portfolio",
   },
 ];
