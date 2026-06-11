@@ -120,12 +120,12 @@ export const ProjectsSection = () => {
         </div>
 
         <div className="flex justify-center mt-16">
-          <a
-            href="/projects"
+          <Link
+            to="/projects"
             className="px-8 py-3 rounded-full border border-primary text-primary hover:bg-primary/10 transition-colors duration-300 font-medium"
           >
             View All Projects →
-          </a>
+          </Link>
         </div>
       </div>
     </section>
