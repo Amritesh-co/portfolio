@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { Helmet } from "react-helmet-async";
 import { Navbar } from "../components/Navbar";
 import { Footer } from "../components/Footer";
 import { FlowDiagram } from "../components/FlowDiagram";
@@ -251,6 +252,14 @@ export const Friday = () => {
 
   return (
     <div className="min-h-screen bg-background text-foreground overflow-x-hidden relative">
+      <Helmet>
+        <title>Project Friday | Self-Hosted Cloud Platform — Amritesh Sahu</title>
+        <meta name="description" content="Project Friday: a self-hosted cloud ecosystem built on Ubuntu Server with Docker, Cloudflare Tunnel, Tailscale, Nextcloud, and multi-model AI workspaces." />
+        <link rel="canonical" href="https://amriteshsahu.me/friday" />
+        <meta property="og:title" content="Project Friday | Self-Hosted Cloud Platform" />
+        <meta property="og:description" content="Project Friday: a self-hosted cloud ecosystem built on Ubuntu Server with Docker, Cloudflare Tunnel, Tailscale, Nextcloud, and multi-model AI workspaces." />
+        <meta property="og:url" content="https://amriteshsahu.me/friday" />
+      </Helmet>
       <CodeFragmentsCanvas />
       <Navbar />
 

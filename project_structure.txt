@@ -1,0 +1,441 @@
+.
+├── .env
+├── .eslintrc.cjs
+├── .gitignore
+├── 1RV23CD006.png
+├── DIAGRAMS.md
+├── README.md
+├── banner.png
+├── beyound ide
+│   ├── WhatsApp Image 2026-06-11 at 17.11.00.jpeg
+│   ├── WhatsApp Image 2026-06-11 at 17.11.56.jpeg
+│   ├── WhatsApp Image 2026-06-11 at 17.12.46.jpeg
+│   ├── WhatsApp Image 2026-06-11 at 17.13.31.jpeg
+│   ├── WhatsApp Image 2026-06-11 at 17.22.39.jpeg
+│   ├── WhatsApp Image 2026-06-11 at 17.30.46.jpeg
+│   ├── WhatsApp Image 2026-06-11 at 17.36.58.jpeg
+│   └── WhatsApp Image 2026-06-11 at 17.47.45.jpeg
+├── convert-logos.mjs
+├── favicon.png
+├── high-resolution-color-logo.png
+├── index.html
+├── logos
+│   ├── anthropic.svg
+│   ├── cloudflare.svg
+│   ├── css3.svg
+│   ├── docker.svg
+│   ├── express.svg
+│   ├── fastapi.svg
+│   ├── firebase.svg
+│   ├── flask.svg
+│   ├── git.svg
+│   ├── github.svg
+│   ├── html5.svg
+│   ├── java.svg
+│   ├── javascript.svg
+│   ├── langchain.svg
+│   ├── langgraph.svg
+│   ├── linux.svg
+│   ├── mongodb.svg
+│   ├── mysql.svg
+│   ├── nextcloud.svg
+│   ├── nextjs.svg
+│   ├── nodejs.svg
+│   ├── numpy.svg
+│   ├── nvidia-nim.svg
+│   ├── ollama.svg
+│   ├── openai.svg
+│   ├── openrouter.svg
+│   ├── pandas.svg
+│   ├── python.svg
+│   ├── pytorch.svg
+│   ├── qdrant.svg
+│   ├── react.svg
+│   ├── redis.svg
+│   ├── scikit-learn.svg
+│   ├── tailscale.svg
+│   ├── tailwindcss.svg
+│   ├── tensorflow.svg
+│   ├── typescript.svg
+│   ├── ubuntu.svg
+│   └── vite.svg
+├── package-lock.json
+├── package.json
+├── pro pic 2.png
+├── pro pic.png
+├── proflie photo.png
+├── project_structure.txt
+├── public
+│   ├── Amritesh_s_Resume.pdf
+│   ├── beyond-ide
+│   │   ├── badminton.jpeg
+│   │   ├── cycling.jpeg
+│   │   ├── img1.jpeg
+│   │   ├── img2.jpeg
+│   │   ├── img3.jpeg
+│   │   ├── img4.jpeg
+│   │   ├── img5.jpeg
+│   │   ├── rotaract_rvce.jpeg
+│   │   ├── travel.jpeg
+│   │   └── trekking.jpeg
+│   ├── diagrams
+│   │   ├── algo-visualizer
+│   │   │   ├── architecture.svg
+│   │   │   └── grid.svg
+│   │   ├── eco-tracker
+│   │   │   ├── modules.svg
+│   │   │   └── schema.svg
+│   │   ├── friday
+│   │   │   ├── architecture.svg
+│   │   │   ├── deployment.svg
+│   │   │   ├── multi-service.svg
+│   │   │   ├── nextcloud-users.svg
+│   │   │   └── tailscale-mesh.svg
+│   │   ├── gemma-ui
+│   │   │   ├── compilation.svg
+│   │   │   ├── racecondition.svg
+│   │   │   ├── streaming.svg
+│   │   │   └── topology.svg
+│   │   ├── graph-path-models
+│   │   │   ├── complexity.svg
+│   │   │   ├── fullflow.svg
+│   │   │   └── generator.svg
+│   │   ├── multi-agent-medical-assistant
+│   │   │   ├── handoff.svg
+│   │   │   ├── ingestion.svg
+│   │   │   └── orchestration.svg
+│   │   ├── openclaw-swarm
+│   │   │   ├── dashboard.svg
+│   │   │   ├── lifecycle.svg
+│   │   │   └── topology.svg
+│   │   ├── portfolio
+│   │   │   ├── architecture.svg
+│   │   │   ├── dataflow.svg
+│   │   │   └── deployment.svg
+│   │   ├── stubble-vision
+│   │   │   ├── dnbr.svg
+│   │   │   ├── pipeline.svg
+│   │   │   └── schema.svg
+│   │   └── woodcraft-store
+│   │       ├── auth-flow.svg
+│   │       └── order-flow.svg
+│   ├── favicon.png
+│   ├── high-resolution-color-logo.png
+│   ├── logos
+│   │   ├── anthropic.svg
+│   │   ├── cloudflare.svg
+│   │   ├── css3.svg
+│   │   ├── docker.svg
+│   │   ├── express.svg
+│   │   ├── fastapi.svg
+│   │   ├── firebase.svg
+│   │   ├── flask.svg
+│   │   ├── git.svg
+│   │   ├── github.svg
+│   │   ├── html5.svg
+│   │   ├── java.svg
+│   │   ├── javascript.svg
+│   │   ├── langchain.svg
+│   │   ├── langgraph.svg
+│   │   ├── linux.svg
+│   │   ├── mongodb.svg
+│   │   ├── mysql.svg
+│   │   ├── nextcloud.svg
+│   │   ├── nextjs.svg
+│   │   ├── nodejs.svg
+│   │   ├── numpy.svg
+│   │   ├── nvidia-nim.svg
+│   │   ├── ollama.svg
+│   │   ├── openai.svg
+│   │   ├── openrouter.svg
+│   │   ├── pandas.svg
+│   │   ├── png
+│   │   │   ├── anthropic.png
+│   │   │   ├── cloudflare.png
+│   │   │   ├── css3.png
+│   │   │   ├── docker.png
+│   │   │   ├── express.png
+│   │   │   ├── fastapi.png
+│   │   │   ├── firebase.png
+│   │   │   ├── flask.png
+│   │   │   ├── git.png
+│   │   │   ├── github.png
+│   │   │   ├── html5.png
+│   │   │   ├── java.png
+│   │   │   ├── javascript.png
+│   │   │   ├── langchain.png
+│   │   │   ├── langgraph.png
+│   │   │   ├── linux.png
+│   │   │   ├── mongodb.png
+│   │   │   ├── mysql.png
+│   │   │   ├── nextcloud.png
+│   │   │   ├── nextjs.png
+│   │   │   ├── nodejs.png
+│   │   │   ├── numpy.png
+│   │   │   ├── nvidia-nim.png
+│   │   │   ├── ollama.png
+│   │   │   ├── openai.png
+│   │   │   ├── openrouter.png
+│   │   │   ├── pandas.png
+│   │   │   ├── python.png
+│   │   │   ├── pytorch.png
+│   │   │   ├── qdrant.png
+│   │   │   ├── react.png
+│   │   │   ├── redis.png
+│   │   │   ├── scikit-learn.png
+│   │   │   ├── supabase.png
+│   │   │   ├── tailscale.png
+│   │   │   ├── tailwindcss.png
+│   │   │   ├── tensorflow.png
+│   │   │   ├── typescript.png
+│   │   │   ├── ubuntu.png
+│   │   │   └── vite.png
+│   │   ├── python.svg
+│   │   ├── pytorch.svg
+│   │   ├── qdrant.svg
+│   │   ├── react.svg
+│   │   ├── redis.svg
+│   │   ├── scikit-learn.svg
+│   │   ├── supabase.svg
+│   │   ├── tailscale.svg
+│   │   ├── tailwindcss.svg
+│   │   ├── tensorflow.svg
+│   │   ├── typescript.svg
+│   │   ├── ubuntu.svg
+│   │   └── vite.svg
+│   ├── profile.png
+│   ├── projects
+│   │   ├── project1.png
+│   │   ├── project2.png
+│   │   └── project3.png
+│   ├── robots.txt
+│   ├── sitemap.xml
+│   └── vite.svg
+├── references
+│   ├── .gitkeep
+│   └── project_3D_developer_portfolio
+│       ├── .gitignore
+│       ├── README.md
+│       ├── index.html
+│       ├── package-lock.json
+│       ├── package.json
+│       ├── postcss.config.cjs
+│       ├── public
+│       │   ├── desktop_pc
+│       │   │   ├── license.txt
+│       │   │   ├── scene.bin
+│       │   │   ├── scene.gltf
+│       │   │   └── textures
+│       │   │       ├── Material.002_baseColor.png
+│       │   │       ├── Material.023_baseColor.jpeg
+│       │   │       ├── Material.024_baseColor.jpeg
+│       │   │       ├── Material.074_0_baseColor.png
+│       │   │       ├── Material.074_10_baseColor.jpeg
+│       │   │       ├── Material.074_11_baseColor.png
+│       │   │       ├── Material.074_12_baseColor.jpeg
+│       │   │       ├── Material.074_13_baseColor.png
+│       │   │       ├── Material.074_14_baseColor.png
+│       │   │       ├── Material.074_15_baseColor.png
+│       │   │       ├── Material.074_16_baseColor.png
+│       │   │       ├── Material.074_17_baseColor.png
+│       │   │       ├── Material.074_18_baseColor.png
+│       │   │       ├── Material.074_18_emissive.png
+│       │   │       ├── Material.074_19_baseColor.png
+│       │   │       ├── Material.074_1_baseColor.jpeg
+│       │   │       ├── Material.074_20_baseColor.png
+│       │   │       ├── Material.074_21_baseColor.png
+│       │   │       ├── Material.074_22_baseColor.png
+│       │   │       ├── Material.074_23_baseColor.png
+│       │   │       ├── Material.074_24_baseColor.png
+│       │   │       ├── Material.074_24_emissive.png
+│       │   │       ├── Material.074_25_baseColor.jpeg
+│       │   │       ├── Material.074_26_baseColor.png
+│       │   │       ├── Material.074_27_baseColor.png
+│       │   │       ├── Material.074_27_emissive.png
+│       │   │       ├── Material.074_28_baseColor.png
+│       │   │       ├── Material.074_29_baseColor.png
+│       │   │       ├── Material.074_2_baseColor.jpeg
+│       │   │       ├── Material.074_30_baseColor.png
+│       │   │       ├── Material.074_31_baseColor.png
+│       │   │       ├── Material.074_32_baseColor.jpeg
+│       │   │       ├── Material.074_33_baseColor.png
+│       │   │       ├── Material.074_34_baseColor.jpeg
+│       │   │       ├── Material.074_35_baseColor.png
+│       │   │       ├── Material.074_36_baseColor.jpeg
+│       │   │       ├── Material.074_39_baseColor.jpeg
+│       │   │       ├── Material.074_3_baseColor.png
+│       │   │       ├── Material.074_40_baseColor.png
+│       │   │       ├── Material.074_4_baseColor.png
+│       │   │       ├── Material.074_4_emissive.png
+│       │   │       ├── Material.074_5_baseColor.png
+│       │   │       ├── Material.074_6_baseColor.png
+│       │   │       ├── Material.074_7_baseColor.png
+│       │   │       ├── Material.074_8_baseColor.png
+│       │   │       ├── Material.074_9_baseColor.png
+│       │   │       ├── Material.074_9_emissive.png
+│       │   │       ├── Material.074_baseColor.png
+│       │   │       ├── Material_baseColor.jpeg
+│       │   │       ├── Material_metallicRoughness.png
+│       │   │       └── Tasten_2_baseColor.jpeg
+│       │   ├── logo.svg
+│       │   └── planet
+│       │       ├── license.txt
+│       │       ├── scene.bin
+│       │       ├── scene.gltf
+│       │       └── textures
+│       │           ├── Clouds_baseColor.png
+│       │           └── Planet_baseColor.png
+│       ├── src
+│       │   ├── App.jsx
+│       │   ├── assets
+│       │   │   ├── backend.png
+│       │   │   ├── carrent.png
+│       │   │   ├── close.svg
+│       │   │   ├── company
+│       │   │   │   ├── meta.png
+│       │   │   │   ├── shopify.png
+│       │   │   │   ├── starbucks.png
+│       │   │   │   └── tesla.png
+│       │   │   ├── creator.png
+│       │   │   ├── github.png
+│       │   │   ├── herobg.png
+│       │   │   ├── index.js
+│       │   │   ├── jobit.png
+│       │   │   ├── logo.svg
+│       │   │   ├── menu.svg
+│       │   │   ├── mobile.png
+│       │   │   ├── tech
+│       │   │   │   ├── css.png
+│       │   │   │   ├── docker.png
+│       │   │   │   ├── figma.png
+│       │   │   │   ├── git.png
+│       │   │   │   ├── html.png
+│       │   │   │   ├── javascript.png
+│       │   │   │   ├── mongodb.png
+│       │   │   │   ├── nodejs.png
+│       │   │   │   ├── reactjs.png
+│       │   │   │   ├── redux.png
+│       │   │   │   ├── tailwind.png
+│       │   │   │   ├── threejs.svg
+│       │   │   │   └── typescript.png
+│       │   │   ├── tripguide.png
+│       │   │   └── web.png
+│       │   ├── components
+│       │   │   ├── About.jsx
+│       │   │   ├── Contact.jsx
+│       │   │   ├── Experience.jsx
+│       │   │   ├── Feedbacks.jsx
+│       │   │   ├── Hero.jsx
+│       │   │   ├── Loader.jsx
+│       │   │   ├── Navbar.jsx
+│       │   │   ├── Tech.jsx
+│       │   │   ├── Works.jsx
+│       │   │   ├── canvas
+│       │   │   │   ├── Ball.jsx
+│       │   │   │   ├── Computers.jsx
+│       │   │   │   ├── Earth.jsx
+│       │   │   │   ├── Stars.jsx
+│       │   │   │   └── index.js
+│       │   │   └── index.js
+│       │   ├── constants
+│       │   │   └── index.js
+│       │   ├── hoc
+│       │   │   ├── SectionWrapper.jsx
+│       │   │   └── index.js
+│       │   ├── index.css
+│       │   ├── main.jsx
+│       │   ├── styles.js
+│       │   └── utils
+│       │       └── motion.js
+│       ├── tailwind.config.cjs
+│       └── vite.config.js
+├── regen-logos.mjs
+├── scratch
+├── scripts
+│   ├── build-diagrams.mjs
+│   ├── fix-svg.mjs
+│   └── test-d2.mjs
+├── src
+│   ├── App.jsx
+│   ├── assets
+│   │   └── react.svg
+│   ├── components
+│   │   ├── AboutSection.jsx
+│   │   ├── Ball.jsx
+│   │   ├── BeyondIDESection.jsx
+│   │   ├── CodeFragmentsCanvas.jsx
+│   │   ├── CodeRainCanvas.jsx
+│   │   ├── ContactSection.jsx
+│   │   ├── D2Diagram.jsx
+│   │   ├── FlowDiagram.jsx
+│   │   ├── Footer.jsx
+│   │   ├── HeroSection.jsx
+│   │   ├── HomeLabSection.jsx
+│   │   ├── Navbar.jsx
+│   │   ├── ParticleNetworkBackground.jsx
+│   │   ├── ParticleNetworkCanvas.jsx
+│   │   ├── ProjectsSection.jsx
+│   │   ├── SkillsSection.jsx
+│   │   ├── StarBackground.jsx
+│   │   └── ui
+│   │       ├── toast.jsx
+│   │       └── toaster.jsx
+│   ├── data
+│   │   ├── projectContent.jsx
+│   │   └── projects.js
+│   ├── diagrams
+│   │   ├── algo-visualizer
+│   │   │   ├── architecture.d2
+│   │   │   └── grid.d2
+│   │   ├── eco-tracker
+│   │   │   ├── modules.d2
+│   │   │   └── schema.d2
+│   │   ├── friday
+│   │   │   ├── architecture.d2
+│   │   │   ├── deployment.d2
+│   │   │   ├── multi-service.d2
+│   │   │   ├── nextcloud-users.d2
+│   │   │   └── tailscale-mesh.d2
+│   │   ├── gemma-ui
+│   │   │   ├── compilation.d2
+│   │   │   ├── racecondition.d2
+│   │   │   ├── streaming.d2
+│   │   │   └── topology.d2
+│   │   ├── graph-path-models
+│   │   │   ├── complexity.d2
+│   │   │   ├── fullflow.d2
+│   │   │   └── generator.d2
+│   │   ├── multi-agent-medical-assistant
+│   │   │   ├── handoff.d2
+│   │   │   ├── ingestion.d2
+│   │   │   └── orchestration.d2
+│   │   ├── openclaw-swarm
+│   │   │   ├── dashboard.d2
+│   │   │   ├── lifecycle.d2
+│   │   │   └── topology.d2
+│   │   ├── portfolio
+│   │   │   ├── architecture.d2
+│   │   │   ├── dataflow.d2
+│   │   │   └── deployment.d2
+│   │   ├── stubble-vision
+│   │   │   ├── dnbr.d2
+│   │   │   ├── pipeline.d2
+│   │   │   └── schema.d2
+│   │   └── woodcraft-store
+│   │       ├── auth-flow.d2
+│   │       └── order-flow.d2
+│   ├── hooks
+│   │   └── use-toast.js
+│   ├── index.css
+│   ├── lib
+│   │   └── utils.js
+│   ├── main.jsx
+│   └── pages
+│       ├── Friday.jsx
+│       ├── Home.jsx
+│       ├── NotFound.jsx
+│       ├── ProjectDetail.jsx
+│       ├── Projects.jsx
+│       └── Resume.jsx
+├── threejs_skills_analysis.md
+└── vite.config.js

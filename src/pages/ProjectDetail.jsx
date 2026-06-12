@@ -1,5 +1,6 @@
 import { useParams, Link } from "react-router-dom";
 import { ArrowLeft, Github } from "lucide-react";
+import { Helmet } from "react-helmet-async";
 import { Navbar } from "../components/Navbar";
 import { Footer } from "../components/Footer";
 import { PROJECTS } from "../data/projects";
@@ -23,6 +24,23 @@ export const ProjectDetail = () => {
 
   return (
     <div className="min-h-screen bg-background text-foreground overflow-x-hidden relative">
+      <Helmet>
+        <title>{project.name} | Amritesh Sahu</title>
+        <meta name="description" content={project.description.slice(0, 155)} />
+        <link rel="canonical" href={`https://amriteshsahu.me/projects/${project.slug}`} />
+        <meta property="og:title" content={`${project.name} | Amritesh Sahu`} />
+        <meta property="og:description" content={project.description.slice(0, 155)} />
+        <meta property="og:url" content={`https://amriteshsahu.me/projects/${project.slug}`} />
+        <script type="application/ld+json">{JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "SoftwareSourceCode",
+          "name": project.name,
+          "description": project.description,
+          "codeRepository": project.github,
+          "programmingLanguage": project.tags,
+          "author": { "@type": "Person", "name": "Amritesh Sahu", "url": "https://amriteshsahu.me" }
+        })}</script>
+      </Helmet>
       <CodeFragmentsCanvas />
       <Navbar />
 

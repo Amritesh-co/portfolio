@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import { Helmet } from "react-helmet-async";
 import { Navbar } from "../components/Navbar";
 import { Footer } from "../components/Footer";
 import { PROJECTS } from "../data/projects";
@@ -107,6 +108,14 @@ function LaptopCard({ project }) {
 export const Projects = () => {
   return (
     <div className="min-h-screen bg-background text-foreground overflow-x-hidden relative">
+      <Helmet>
+        <title>Projects | Amritesh Sahu</title>
+        <meta name="description" content="Explore Amritesh Sahu's projects spanning agentic AI, multi-agent systems, full-stack web apps, geospatial tools, and self-hosted infrastructure." />
+        <link rel="canonical" href="https://amriteshsahu.me/projects" />
+        <meta property="og:title" content="Projects | Amritesh Sahu" />
+        <meta property="og:description" content="Explore Amritesh Sahu's projects spanning agentic AI, multi-agent systems, full-stack web apps, geospatial tools, and self-hosted infrastructure." />
+        <meta property="og:url" content="https://amriteshsahu.me/projects" />
+      </Helmet>
       <CodeFragmentsCanvas />
       <Navbar />
       <main className="relative z-10 pt-32 pb-24 px-4">

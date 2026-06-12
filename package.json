@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "vite build",
+    "build": "node scripts/generate-sitemap.mjs && vite build",
     "lint": "eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview",
     "diagrams": "node scripts/build-diagrams.mjs"
@@ -22,6 +22,7 @@
     "lucide-react": "^0.501.0",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
+    "react-helmet-async": "^3.0.0",
     "react-router-dom": "^7.5.1",
     "simple-icons": "^16.23.0",
     "tailwind-merge": "^3.2.0",

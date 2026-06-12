@@ -1,5 +1,6 @@
 import { useEffect } from "react";
 import { BrowserRouter, Route, Routes, useLocation } from "react-router-dom";
+import { HelmetProvider } from "react-helmet-async";
 import { Home } from "./pages/Home";
 import { Projects } from "./pages/Projects";
 import { ProjectDetail } from "./pages/ProjectDetail";
@@ -34,7 +35,7 @@ function ScrollHandler() {
 
 function App() {
   return (
-    <>
+    <HelmetProvider>
       <Toaster />
       <BrowserRouter>
         <ScrollHandler />
@@ -47,7 +48,7 @@ function App() {
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>
-    </>
+    </HelmetProvider>
   );
 }
 

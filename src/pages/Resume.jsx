@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import { Helmet } from "react-helmet-async";
 import { Navbar } from "../components/Navbar";
 import { Footer } from "../components/Footer";
 import {
@@ -121,6 +122,14 @@ function Tag({ label }) {
 export const Resume = () => {
   return (
     <div className="min-h-screen bg-background text-foreground overflow-x-hidden">
+      <Helmet>
+        <title>Resume | Amritesh Sahu</title>
+        <meta name="description" content="Resume of Amritesh Sahu — Data Science undergraduate at RVCE with expertise in AI/ML, LangGraph, FastAPI, Docker, and self-hosted infrastructure." />
+        <link rel="canonical" href="https://amriteshsahu.me/resume" />
+        <meta property="og:title" content="Resume | Amritesh Sahu" />
+        <meta property="og:description" content="Resume of Amritesh Sahu — Data Science undergraduate at RVCE with expertise in AI/ML, LangGraph, FastAPI, Docker, and self-hosted infrastructure." />
+        <meta property="og:url" content="https://amriteshsahu.me/resume" />
+      </Helmet>
       <style dangerouslySetInnerHTML={{
         __html: `
           .resume-sheet, .resume-sheet * { text-align: left !important; }
